@@ -14,5 +14,5 @@ includes[] = drupal-org-core.make
 projects[farm][type] = profile
 ;projects[farm][version] = 7.x-1.2
 projects[farm][download][type] = git
-projects[farm][download][url] = http://git.drupal.org/project/farm.git
-projects[farm][download][branch] = 7.x-1.x
+projects[farm][download][url] = https://github.com/paul121/farmOS.git
+projects[farm][download][branch] = buildtest
