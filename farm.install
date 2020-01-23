@@ -817,6 +817,13 @@ function farm_update_7049(&$sandbox) {
 }
 
 /**
+ * Enable farm_api_oauth module.
+ */
+function farm_update_7050(&$sandbox) {
+  _farm_update_enable_modules(array('farm_api_oauth'));
+}
+
+/**
  * Update helper function: enable modules.
  */
 function _farm_update_enable_modules($modules = array()) {
