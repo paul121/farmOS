@@ -22,3 +22,18 @@ function farm_client_farm_info() {
 
   return $info;
 }
+
+/**
+ * Implements hook_farm_api_oauth2_client().
+ */
+function farm_client_farm_api_oauth2_client() {
+  $clients = array();
+
+  $clients['farmos_field_kit'] = array(
+    'label' => 'farmOS Field Kit',
+    'client_key' => 'farmos_field_kit',
+    'redirect_uri' => '',
+  );
+
+  return $clients;
+}
