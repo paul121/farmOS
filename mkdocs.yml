@@ -1,6 +1,8 @@
 site_name: farmOS 2.x
 nav:
   - farmOS: index.md
+  - API:
+    - Introduction: api/index.md
   - Development:
     - Getting started: development/index.md
     - Drush: development/drush.md
