@@ -1,6 +1,94 @@
 <template>
   <div class="container-fluid">
     <br>
+    <div
+      id="areas-and-location">
+      <h4>Sensor Location</h4>
+
+      <!-- We're using a radio button to choose whether areas are selected
+      automatically based on device location, or using an autocomplete.
+      This will use the useLocalAreas conditional var -->
+      <div  v-if="useGeolocation" class="form-item form-item-name form-group">
+        <div class="form-check">
+          <input
+          v-model="useLocalAreas"
+          type="radio"
+          class="form-check-input"
+          id="dontUseGeo"
+          name="geoRadioGroup"
+          v-bind:value="false"
+          checked>
+          <label class="form-check-label" for="dontUseGeo">Search areas</label>
+        </div>
+        <div class="form-check">
+          <input
+          v-model="useLocalAreas"
+          type="radio"
+          class="form-check-input"
+          id="doUseGeo"
+          name="geoRadioGroup"
+          v-bind:value="true"
+          >
+          <label class="form-check-label" for="doUseGeo">Use my location</label>
+        </div>
+      </div>
+
+      <!-- If using the user's, show a select menu of nearby locations -->
+      <div v-if="useLocalAreas" class="form-group">
+        <label for="areaSelector">Filter sensors by their current location.</label>
+        <select
+          @input="selectedAreaTid = $event.target.value"
+          class="form-control"
+          name="areas">
+          <option v-if="localAreas.length < 1" value="">No other areas nearby</option>
+          <option v-if="localAreas.length > 0" value="" selected>-- Select an Area --</option>
+          <option
+            v-for="area in localAreas"
+            :value="area.tid"
+            v-bind:key="`area-${area.tid}`">
+            {{area.name}}
+          </option>
+        </select>
+      </div>
+
+      <!-- If not using the user's location, show a search bar -->
+      <farm-autocomplete
+        v-if="!useLocalAreas"
+        :objects="areas"
+        searchKey="name"
+        searchId="tid"
+        label="Filter sensors by their current location."
+        v-on:results="selectedAreaTid = $event">
+        <template slot="empty">
+          <div class="empty-slot">
+            <em>No areas found.</em>
+            <br>
+            <button
+              type="button"
+              class="btn btn-light"
+              name="button">
+              Sync Now
+            </button>
+          </div>
+        </template>
+      </farm-autocomplete>
+
+      <!-- Display the areas attached to each log -->
+      <div class="form-item form-item-name form-group">
+        <ul class="list-group">
+          <li
+            v-if="selectedAreaTid"
+            v-bind:key="`log-${selectedArea.tid}-${Math.floor(Math.random() * 1000000)}`"
+            class="list-group-item">
+            {{ selectedArea.name }}
+            <span class="remove-list-item" @click="selectedAreaTid = null">
+              &#x2715;
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <br>
     <select v-model="selectedAsset" @change="loadValues">
             <option
               v-for="(asset, i) in sensorAssets"
@@ -36,11 +124,15 @@
 <script>
 import LineChart from './Chart.vue';
 
-const { parseNotes } = window.farmOS.utils;
+const { isNearby } = window.farmOS.utils;
+
 export default {
   name: 'Precipitation',
   components: { LineChart },
   data: () => ({
+    useLocalAreas: false,
+    localAreas: [],
+    selectedAreaTid: null,
     startTimestamp: Date.now() / 1000,
     endTimestamp: Date.now() / 1000,
     selectedAsset: null,
@@ -54,12 +146,23 @@ export default {
     },
     loaded: false,
   }),
-  props: ['assets'],
+  props: ['assets', 'areas', 'useGeolocation'],
   created() {
     this.$store.dispatch('updateAssets');
   },
   computed: {
-    sensorAssets() { return this.assets.filter(asset => asset.type === "sensor")},
+    selectedArea() { return this.areas.find(area => area.tid === this.selectedAreaTid)},
+    sensorAssets() { 
+      const sensorAssets = this.assets.filter(asset => asset.type === "sensor");
+
+      let filteredAssets = sensorAssets;
+
+      if (this.selectedArea) {
+        filteredAssets = sensorAssets.filter(asset => asset.location.find(loc => loc.id === this.selectedArea.tid));
+      }
+
+      return filteredAssets;
+     },
   },
   methods: {
     updateStart(event) {
@@ -154,6 +257,38 @@ export default {
       return fetch(url)
       .then(response => response.json())
     }
+  },
+  watch: {
+    useLocalAreas() {
+      function filterAreasByProximity(position) {
+        this.localAreas = this.areas.filter(area => !!area.geofield[0] && isNearby(
+          [position.coords.longitude, position.coords.latitude],
+          area.geofield[0].geom,
+          (position.coords.accuracy),
+        ));
+      }
+      function onError({ message }) {
+        const errorPayload = { message, level: 'warning', show: false };
+        this.$store.commit('logError', errorPayload);
+      }
+      // If useLocalAreas is set to true, get geolocation and nearby areas
+      if (this.useLocalAreas) {
+        const options = {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        };
+
+        const watch = navigator.geolocation.watchPosition(
+          filterAreasByProximity.bind(this),
+          onError.bind(this),
+          options,
+        );
+        setTimeout(() => {
+          navigator.geolocation.clearWatch(watch);
+        }, 5000);
+      }
+    },
   },
 };
 </script>
