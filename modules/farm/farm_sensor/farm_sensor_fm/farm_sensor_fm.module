@@ -1,0 +1,18 @@
+<?php
+/**
+ * @file
+ * Code for the Farm Sensor Field Module.
+ */
+
+/**
+ * Implements hook_farm_client_module_info()
+ */
+function farm_sensor_fm_farm_client_module_info() {
+  return array(
+    'sensors' => array(
+      'name' => 'sensors',
+      'label' => t('Sensors Field Module'),
+      'js' => drupal_get_path('module', 'farm_sensor_fm') . '/dist/FieldModule/Sensors/index.js',
+    ),
+  );
+}

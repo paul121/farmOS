@@ -1,0 +1,54 @@
+{
+  "name": "sensors",
+  "version": "0.0.1",
+  "description": "A field module for viewing sensor data in farmOS Field Kit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "build": "webpack --config build/webpack.config.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farmos/farmos.git"
+  },
+  "author": "Paul Weidner",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/farmos/farmos/issues"
+  },
+  "homepage": "https://github.com/farmos/farmos",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "@babel/preset-env": "^7.8.7",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-airbnb": "^4.4.0",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-import-resolver-webpack": "^0.12.1",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "farmos-client": "github:farmOS/farmOS-client#3e4221f7871a73b39cea1930f939230b5f43086c",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^4.0.4",
+    "portfinder": "^1.0.25",
+    "vue-loader": "^15.9.0",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "chart.js": "^2.9.3",
+    "vue-chartjs": "^3.5.0"
+  }
+}

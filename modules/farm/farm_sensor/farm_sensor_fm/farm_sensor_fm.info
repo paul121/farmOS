@@ -1,0 +1,6 @@
+name = Farm Sensor Field Module
+description = Field module for viewing sensor data in Field Kit.
+core = 7.x
+package = farmOS
+dependencies[] = farm_client
+dependencies[] = farm_sensor
