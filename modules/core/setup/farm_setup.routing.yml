@@ -1,0 +1,16 @@
+
+farm_setup.setup_page:
+  path: 'farm/setup'
+  defaults:
+    _controller: '\Drupal\farm_setup\Controller\FarmSetupController::setupPage'
+    _title: 'farmOS Setup'
+  requirements:
+    _permission: 'access content'
+
+farm_setup.setup_wizard:
+  path: 'farm/setup/wizard'
+  defaults:
+    _title: 'Setup Wizard'
+    _form: 'Drupal\farm_setup\Form\FarmSetupModulesForm'
+  requirements:
+    _permission: 'access content'
