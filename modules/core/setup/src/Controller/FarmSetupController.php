@@ -12,12 +12,12 @@ use Drupal\Core\Url;
 class FarmSetupController extends ControllerBase {
 
   /**
-   * Setup page.
+   * Settings page.
    *
    * @return array
    *   Markup.
    */
-  public function setupPage() {
+  public function settingsPage() {
     $setup_wizard_url = Url::fromRoute('farm_setup.setup_wizard');
     $setup_wizard_link = Link::fromTextAndUrl('Go to the wizard', $setup_wizard_url);
     return [

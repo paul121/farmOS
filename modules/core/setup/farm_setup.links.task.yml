@@ -1,0 +1,8 @@
+farm_setup.local_tasks:
+  deriver: 'Drupal\farm_setup\Plugin\Derivative\FarmSetupLocalTasks'
+  weight: 100
+
+farm_setup.settings:
+  route_name: farm_setup.settings
+  title: 'Wizard'
+  base_route: farm_setup.settings

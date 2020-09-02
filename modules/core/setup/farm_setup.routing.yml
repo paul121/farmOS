@@ -1,9 +1,11 @@
+route_callbacks:
+  - 'plugin.manager.farm_setup:routes'
 
-farm_setup.setup_page:
-  path: 'farm/setup'
+farm_setup.settings:
+  path: 'farm/settings'
   defaults:
-    _controller: '\Drupal\farm_setup\Controller\FarmSetupController::setupPage'
-    _title: 'farmOS Setup'
+    _controller: '\Drupal\farm_setup\Controller\FarmSetupController::settingsPage'
+    _title: 'farmOS Settings'
   requirements:
     _permission: 'access content'
 
