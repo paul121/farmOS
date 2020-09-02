@@ -10,9 +10,9 @@ farm_setup.settings:
     _permission: 'access content'
 
 farm_setup.setup_wizard:
-  path: 'farm/setup/wizard'
+  path: 'farm/setup-wizard'
   defaults:
     _title: 'Setup Wizard'
-    _form: 'Drupal\farm_setup\Form\FarmSetupModulesForm'
+    _form: '\Drupal\farm_setup\Form\FarmSetupWizardForm'
   requirements:
     _permission: 'access content'
