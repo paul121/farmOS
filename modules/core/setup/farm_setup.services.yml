@@ -2,3 +2,9 @@ services:
   plugin.manager.farm_setup:
     class: Drupal\farm_setup\FarmSetupPluginManager
     parent: default_plugin_manager
+
+  farm_setup.subscriber:
+    class: '\Drupal\farm_setup\EventSubscriber\FarmSetupSubscriber'
+    arguments: ['@state', '@path.current', '@current_user']
+    tags:
+      - { name: 'event_subscriber' }
