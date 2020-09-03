@@ -6,6 +6,7 @@ use Drupal\Core\DependencyInjection\ClassResolver;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\farm_setup\FarmSetupPluginManager;
+use Drupal\Core\State\StateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -19,6 +20,13 @@ class FarmSetupWizardForm extends FormBase {
    * @var \Drupal\Core\DependencyInjection\ClassResolver
    */
   protected $classResolver;
+
+  /**
+   * State service.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
 
   /**
    * The FarmSetup plugin manager.
@@ -42,14 +50,17 @@ class FarmSetupWizardForm extends FormBase {
    * @param \Drupal\Core\DependencyInjection\ClassResolver $class_resolver
    *   Used to create instances of Form classes before calling their buildForm
    *   method.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   State service. Used to update the farm_setup.wizard state.
    * @param \Drupal\farm_setup\FarmSetupPluginManager $farm_setup_manager
    *   The farm setup plugin manger service. We're injecting this service so
    *   that we can use it to access the FarmSetup plugins.
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  public function __construct(ClassResolver $class_resolver, FarmSetupPluginManager $farm_setup_manager) {
+  public function __construct(ClassResolver $class_resolver, StateInterface $state, FarmSetupPluginManager $farm_setup_manager) {
     $this->classResolver = $class_resolver;
+    $this->state = $state;
     $this->farmSetupManager = $farm_setup_manager;
 
     // Get setup_wizard form definitions sorted by weight.
@@ -111,6 +122,10 @@ class FarmSetupWizardForm extends FormBase {
 
     // Render a plugin's form if we are not on the first or last step.
     if ($current_step > 0 && $current_step <= $this->totalSteps()) {
+
+      // Once the user has started the setup wizard, unset the
+      // 'farm_setup.wizard_force_run' state.
+      $this->state->set('farm_setup.wizard_force_run', FALSE);
 
       // Get the form class.
       $form_class = $this->getStepFormClass($current_step);
@@ -260,6 +275,7 @@ class FarmSetupWizardForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('class_resolver'),
+      $container->get('state'),
       $container->get('plugin.manager.farm_setup')
     );
   }
