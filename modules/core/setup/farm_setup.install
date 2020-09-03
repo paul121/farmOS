@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for farm_setup module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function farm_setup_install() {
+
+  // Get the state service.
+  $state = \Drupal::state();
+
+  // Set the setup wizard to run after install.
+  $state->set('farm_setup.wizard_force_run', TRUE);
+}
