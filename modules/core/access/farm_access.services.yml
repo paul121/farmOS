@@ -3,4 +3,8 @@ services:
     class: '\Drupal\farm_access\FarmRolesManager'
     tags:
       - { name: service_collector, tag: farm_roles, call: addRole }
-
+  farm_access.config.overrider:
+    class: '\Drupal\farm_access\ConfigOverrider'
+    tags:
+      - { name: config.factory.override, priority: 300 }
+    arguments: ['@config.factory', '@farm_roles_manager']
