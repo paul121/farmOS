@@ -1,0 +1,6 @@
+services:
+  farm_roles_manager:
+    class: '\Drupal\farm_access\FarmRolesManager'
+    tags:
+      - { name: service_collector, tag: farm_roles, call: addRole }
+
