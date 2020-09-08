@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: farm_manager
+label: 'Farm manager'
+weight: 1
+is_admin: false
+permissions: { }
