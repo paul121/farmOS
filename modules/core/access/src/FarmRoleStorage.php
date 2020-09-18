@@ -80,62 +80,118 @@ class FarmRoleStorage extends RoleStorage {
     // Managed entity types.
     $managed_entity_types = ['log', 'taxonomy_term'];
 
-    // Build permissions for each entity type.
+    // Start an array of permissions rules. This will be a multi-dimensional
+    // array that ultimately defines which permission strings will be given to
+    // the managed role. Each entity type's operations can be granted to
+    // individual bundles or all bundles by providing 'all' as a bundle name.
+    // Once built, the array will contain the following structure:
+    // $permission_rules[$entity_types][$operations][$bundles];.
+    $permission_rules = [];
+
+    // Build permission rules for each entity type.
     foreach ($managed_entity_types as $entity_type) {
 
+      // Create empty array of operations for the entity_type.
+      $permission_rules[$entity_type] = [];
+
+      // Different entity types support different operations. Allow each entity
+      // type to map the high level 'create_all', 'view all', 'update all' and
+      // 'delete_all' operations to their specific operations.
+      switch ($entity_type) {
+
+        // Log entities.
+        case 'log':
+
+          // Create.
+          if (!empty($entity_settings['create all'])) {
+            $permission_rules[$entity_type]['create'] = ['all'];
+          }
+
+          // View.
+          if (!empty($entity_settings['view all'])) {
+            $permission_rules[$entity_type]['view any'] = ['all'];
+            $permission_rules[$entity_type]['view own'] = ['all'];
+          }
+
+          // Update.
+          if (!empty($entity_settings['update all'])) {
+            $permission_rules[$entity_type]['update any'] = ['all'];
+            $permission_rules[$entity_type]['update own'] = ['all'];
+          }
+
+          // Delete.
+          if (!empty($entity_settings['delete all'])) {
+            $permission_rules[$entity_type]['delete any'] = ['all'];
+            $permission_rules[$entity_type]['delete own'] = ['all'];
+          }
+          break;
+
+        // Taxonomy entities.
+        case 'taxonomy_term':
+
+          // Create.
+          if (!empty($entity_settings['create all'])) {
+            $permission_rules[$entity_type]['create'] = ['all'];
+          }
+
+          // Update.
+          if (!empty($entity_settings['update all'])) {
+            $permission_rules[$entity_type]['update'] = ['all'];
+          }
+
+          // Delete.
+          if (!empty($entity_settings['delete all'])) {
+            $permission_rules[$entity_type]['delete'] = ['all'];
+          }
+          break;
+      }
+    }
+
+    // Include granular entity + bundle permissions if defined on the role.
+    if (!empty($entity_settings['type'])) {
+
+      // Recursively merge granular permissions into the permission_rules array.
+      $permission_rules = array_merge_recursive(
+        $permission_rules,
+        $entity_settings['type']
+      );
+    }
+
+    // Build permissions for each entity type as defined in the
+    // permission_rules array.
+    foreach ($permission_rules as $entity_type => $operations) {
+
       // Load all bundles of this entity type.
-      $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type);
-      $bundles = array_keys($bundles);
+      $entity_bundle_info = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type);
+      $entity_bundles = array_keys($entity_bundle_info);
 
-      // Build permissions for each bundle.
-      foreach ($bundles as $bundle) {
-        switch ($entity_type) {
+      // Build permissions for each operation associated with the entity.
+      foreach ($operations as $operation => $allowed_bundles) {
 
-          // Log entities.
-          case 'log':
+        // Build operation permission for each bundle in the entity.
+        foreach ($entity_bundles as $bundle) {
 
-            // Create.
-            if (!empty($entity_settings['create all'])) {
-              $perms[] = 'create ' . $bundle . ' log';
-            }
+          // Build the operation permission string for each entity type. The
+          // permission syntax may be different for each entity type so build
+          // permission strings according to the entity type. Only add
+          // permissions if the operation explicitly lists the bundle name or
+          // specifies 'all' bundles.
+          switch ($entity_type) {
 
-            // View.
-            if (!empty($entity_settings['view all'])) {
-              $perms[] = 'view any ' . $bundle . ' log';
-              $perms[] = 'view own ' . $bundle . ' log';
-            }
+            // Log entities.
+            case 'log':
+              if (array_intersect(['all', $bundle], $allowed_bundles)) {
+                $perms[] = $operation . ' ' . $bundle . ' log';
+              }
+              break;
 
-            // Update.
-            if (!empty($entity_settings['update all'])) {
-              $perms[] = 'update any ' . $bundle . ' log';
-              $perms[] = 'update own ' . $bundle . ' log';
-            }
-
-            // Delete.
-            if (!empty($entity_settings['delete all'])) {
-              $perms[] = 'delete any ' . $bundle . ' log';
-              $perms[] = 'delete own ' . $bundle . ' log';
-            }
-            break;
-
-          // Taxonomy entities.
-          case 'taxonomy_term':
-
-            // Create.
-            if (!empty($entity_settings['create all'])) {
-              $perms[] = 'create terms in ' . $bundle;
-            }
-
-            // Update.
-            if (!empty($entity_settings['update all'])) {
-              $perms[] = 'edit terms in ' . $bundle;
-            }
-
-            // Delete.
-            if (!empty($entity_settings['delete all'])) {
-              $perms[] = 'delete terms in ' . $bundle;
-            }
-            break;
+            // Taxonomy entities.
+            case 'taxonomy_term':
+              if (array_intersect(['all', $bundle], $allowed_bundles)) {
+                $perms[] = $operation . ' terms in ' . $bundle;
+              }
+              break;
+          }
         }
       }
     }
