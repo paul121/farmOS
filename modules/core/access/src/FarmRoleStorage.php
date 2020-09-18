@@ -5,6 +5,7 @@ namespace Drupal\farm_access;
 use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Cache\MemoryCache\MemoryCacheInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Controller\ControllerResolverInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -38,6 +39,13 @@ class FarmRoleStorage extends RoleStorage {
   protected $entityTypeBundleInfo;
 
   /**
+   * The controller resolver interface.
+   *
+   * @var \Drupal\Core\Controller\ControllerResolverInterface
+   */
+  protected $controllerResolver;
+
+  /**
    * Constructs a ConfigEntityStorage object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
@@ -54,12 +62,15 @@ class FarmRoleStorage extends RoleStorage {
    *   The entity type manager service.
    * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
    *   The entity type bundle info service.
+   * @param \Drupal\Core\Controller\ControllerResolverInterface $controller_resolver
+   *   The controller resolver service.
    */
-  public function __construct(EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
+  public function __construct(EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, ControllerResolverInterface $controller_resolver) {
     parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager, $memory_cache);
 
     $this->entityTypeManager = $entity_type_manager;
     $this->entityTypeBundleInfo = $entity_type_bundle_info;
+    $this->controllerResolver = $controller_resolver;
   }
 
   /**
@@ -73,7 +84,8 @@ class FarmRoleStorage extends RoleStorage {
       $container->get('language_manager'),
       $container->get('entity.memory_cache'),
       $container->get('entity_type.manager'),
-      $container->get('entity_type.bundle.info')
+      $container->get('entity_type.bundle.info'),
+      $container->get('controller_resolver')
     );
   }
 
@@ -133,6 +145,19 @@ class FarmRoleStorage extends RoleStorage {
       if (!empty($access_settings['config'])) {
         $config_perms = $role_permissions->getConfigPermissions();
         $perms = array_merge($perms, $config_perms);
+      }
+
+      // Include permissions defined by permission callbacks.
+      foreach ($role_permissions->getPermissionCallbacks() as $permission_callback) {
+
+        // Resolve callback name and call the function. Pass the Role object as
+        // a parameter so the callback can access the role's settings.
+        $callback = $this->controllerResolver->getControllerFromDefinition($permission_callback);
+        if ($callback_permissions = call_user_func($callback, $role)) {
+
+          // Add any callback permissions to the array of permissions.
+          $perms = array_merge($perms, $callback_permissions);
+        }
       }
     }
 

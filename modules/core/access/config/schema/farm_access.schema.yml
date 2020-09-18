@@ -58,3 +58,9 @@ farm_access.managed_role_permissions.*:
       sequence:
         type: string
         label: 'Permission'
+    permission_callbacks:
+      type: sequence
+      label: 'Permission callbacks'
+      sequence:
+        type: string
+        label: 'Permission callback'

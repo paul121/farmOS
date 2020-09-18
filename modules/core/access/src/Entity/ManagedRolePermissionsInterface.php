@@ -27,4 +27,13 @@ interface ManagedRolePermissionsInterface extends ConfigEntityInterface {
    */
   public function getConfigPermissions();
 
+  /**
+   * Returns permission callback strings.
+   *
+   * @return array
+   *   Array of function callbacks in controller syntax, see
+   *   \Drupal\Core\Controller\ControllerResolver
+   */
+  public function getPermissionCallbacks();
+
 }

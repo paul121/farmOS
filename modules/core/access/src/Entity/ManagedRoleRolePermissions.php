@@ -22,6 +22,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "id",
  *     "default_permissions",
  *     "config_permissions",
+ *     "permission_callbacks",
  *   },
  * )
  *
@@ -53,6 +54,17 @@ class ManagedRoleRolePermissions extends ConfigEntityBase implements ManagedRole
   protected $config_permissions = [];
 
   /**
+   * Permission callbacks that return custom permissions.
+   *
+   * A list of methods in controller syntax, see
+   * \Drupal\Core\Controller\ControllerResolver. These should return an array
+   * of permission strings.
+   *
+   * @var array
+   */
+  protected $permission_callbacks = [];
+
+  /**
    * {@inheritdoc}
    */
   public function getDefaultPermissions() {
@@ -64,6 +76,13 @@ class ManagedRoleRolePermissions extends ConfigEntityBase implements ManagedRole
    */
   public function getConfigPermissions() {
     return $this->config_permissions;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPermissionCallbacks() {
+    return $this->permission_callbacks;
   }
 
 }
