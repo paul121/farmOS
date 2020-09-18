@@ -1,0 +1,3 @@
+id: taxonomy
+default_permissions:
+  - access taxonomy overview
