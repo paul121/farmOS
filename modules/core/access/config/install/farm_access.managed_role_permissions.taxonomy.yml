@@ -1,3 +1,5 @@
 id: taxonomy
 default_permissions:
   - access taxonomy overview
+config_permissions:
+  - administer taxonomy
