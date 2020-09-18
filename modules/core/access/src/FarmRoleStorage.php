@@ -2,8 +2,16 @@
 
 namespace Drupal\farm_access;
 
+use Drupal\Component\Uuid\UuidInterface;
+use Drupal\Core\Cache\MemoryCache\MemoryCacheInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\user\RoleInterface;
 use Drupal\user\RoleStorage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FarmRoleStorage.
@@ -14,6 +22,60 @@ use Drupal\user\RoleStorage;
  * @ingroup farm
  */
 class FarmRoleStorage extends RoleStorage {
+
+  /**
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The entity type bundle info service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeBundleInfoInterface
+   */
+  protected $entityTypeBundleInfo;
+
+  /**
+   * Constructs a ConfigEntityStorage object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type definition.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
+   * @param \Drupal\Component\Uuid\UuidInterface $uuid_service
+   *   The UUID service.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
+   * @param \Drupal\Core\Cache\MemoryCache\MemoryCacheInterface $memory_cache
+   *   The memory cache backend.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
+   * @param \Drupal\Core\Entity\EntityTypeBundleInfoInterface $entity_type_bundle_info
+   *   The entity type bundle info service.
+   */
+  public function __construct(EntityTypeInterface $entity_type, ConfigFactoryInterface $config_factory, UuidInterface $uuid_service, LanguageManagerInterface $language_manager, MemoryCacheInterface $memory_cache, EntityTypeManagerInterface $entity_type_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info) {
+    parent::__construct($entity_type, $config_factory, $uuid_service, $language_manager, $memory_cache);
+
+    $this->entityTypeManager = $entity_type_manager;
+    $this->entityTypeBundleInfo = $entity_type_bundle_info;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
+    return new static(
+      $entity_type,
+      $container->get('config.factory'),
+      $container->get('uuid'),
+      $container->get('language_manager'),
+      $container->get('entity.memory_cache'),
+      $container->get('entity_type.manager'),
+      $container->get('entity_type.bundle.info')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -57,8 +119,8 @@ class FarmRoleStorage extends RoleStorage {
     // Load the Role's third party farm_access access settings.
     $access_settings = $role->getThirdPartySetting('farm_access', 'access');
 
-    /** @var $managed_role_permissions \Drupal\farm_access\Entity\ManagedRolePermissionsInterface[] */
-    $managed_role_permissions = \Drupal::entityTypeManager()->getStorage('managed_role_permissions')->loadMultiple();
+    // Load all managed_role_permissions config entities.
+    $managed_role_permissions = $this->entityTypeManager->getStorage('managed_role_permissions')->loadMultiple();
 
     // Include permissions defined by managed_role_permissions config entities.
     foreach ($managed_role_permissions as $role_permissions) {
@@ -162,7 +224,7 @@ class FarmRoleStorage extends RoleStorage {
     foreach ($permission_rules as $entity_type => $operations) {
 
       // Load all bundles of this entity type.
-      $entity_bundle_info = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type);
+      $entity_bundle_info = $this->entityTypeBundleInfo->getBundleInfo($entity_type);
       $entity_bundles = array_keys($entity_bundle_info);
 
       // Build permissions for each operation associated with the entity.
