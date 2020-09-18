@@ -25,3 +25,24 @@ user.role.*.third_party.farm_access:
             delete all:
               type: boolean
               label: 'Grant delete permissions for all entities.'
+
+# Schema for managed_role_permissions config entity.
+farm_access.managed_role_permissions.*:
+  type: config_entity
+  label: 'Managed role permissions entity'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    default_permissions:
+      type: sequence
+      label: 'Default permissions'
+      sequence:
+        type: string
+        label: 'Permission'
+    config_permissions:
+      type: sequence
+      label: 'Config permissions'
+      sequence:
+        type: string
+        label: 'Permission'
