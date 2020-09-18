@@ -57,6 +57,23 @@ class FarmRoleStorage extends RoleStorage {
     // Load the Role's third party farm_access access settings.
     $access_settings = $role->getThirdPartySetting('farm_access', 'access');
 
+    /** @var $managed_role_permissions \Drupal\farm_access\Entity\ManagedRolePermissionsInterface[] */
+    $managed_role_permissions = \Drupal::entityTypeManager()->getStorage('managed_role_permissions')->loadMultiple();
+
+    // Include permissions defined by managed_role_permissions config entities.
+    foreach ($managed_role_permissions as $role_permissions) {
+
+      // Always include default permissions.
+      $default_perms = $role_permissions->getDefaultPermissions();
+      $perms = array_merge($perms, $default_perms);
+
+      // Include config permissions if the role has config access.
+      if (!empty($access_settings['config'])) {
+        $config_perms = $role_permissions->getConfigPermissions();
+        $perms = array_merge($perms, $config_perms);
+      }
+    }
+
     // Load the access.entity settings. Use an empty array if not provided.
     $entity_settings = $access_settings['entity'] ? $access_settings['entity'] : [];
 
