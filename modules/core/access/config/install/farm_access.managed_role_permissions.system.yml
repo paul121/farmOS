@@ -1,0 +1,3 @@
+id: system
+default_permissions:
+  - access administration pages
