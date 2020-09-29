@@ -44,6 +44,9 @@
             },
             "drupal/simple_oauth": {
                 "Issue #3167287: Always load clients through the Client Repository service": "https://www.drupal.org/files/issues/2020-09-29/3167287-9.patch"
+            },
+            "drupal/simple_oauth": {
+                "Issue #3173947: Cannot authorize non-confidential clients": "https://www.drupal.org/files/issues/2020-09-29/3173947-2.patch"
             }
         }
     },
