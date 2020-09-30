@@ -1,0 +1,17 @@
+# Schema for the farm_client config entity.
+farm_api.farm_client.*:
+  type: config_entity
+  label: 'Farm client entity'
+  mapping:
+    id:
+      type: string
+      label: 'Client ID'
+    label:
+      type: string
+      label: 'Label'
+    roles:
+      type: sequence
+      label: 'Roles'
+      sequence:
+        type: string
+        label: 'Role'

@@ -1,0 +1,4 @@
+id: farm
+label: A test client
+roles:
+  - farm_worker
