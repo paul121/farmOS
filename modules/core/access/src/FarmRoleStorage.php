@@ -223,7 +223,7 @@ class FarmRoleStorage extends RoleStorage {
 
           // Update.
           if (!empty($entity_settings['update all'])) {
-            $permission_rules[$entity_type]['update'] = ['all'];
+            $permission_rules[$entity_type]['edit'] = ['all'];
           }
 
           // Delete.
