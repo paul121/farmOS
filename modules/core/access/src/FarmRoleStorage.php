@@ -165,7 +165,7 @@ class FarmRoleStorage extends RoleStorage {
     $entity_settings = $access_settings['entity'] ? $access_settings['entity'] : [];
 
     // Managed entity types.
-    $managed_entity_types = ['log', 'taxonomy_term'];
+    $managed_entity_types = ['asset', 'log', 'taxonomy_term'];
 
     // Start an array of permissions rules. This will be a multi-dimensional
     // array that ultimately defines which permission strings will be given to
@@ -186,7 +186,8 @@ class FarmRoleStorage extends RoleStorage {
       // 'delete_all' operations to their specific operations.
       switch ($entity_type) {
 
-        // Log entities.
+        // Asset and Log entities.
+        case 'asset':
         case 'log':
 
           // Create.
@@ -265,10 +266,11 @@ class FarmRoleStorage extends RoleStorage {
           // specifies 'all' bundles.
           switch ($entity_type) {
 
-            // Log entities.
+            // Asset and Log entities.
+            case 'asset':
             case 'log':
               if (array_intersect(['all', $bundle], $allowed_bundles)) {
-                $perms[] = $operation . ' ' . $bundle . ' log';
+                $perms[] = $operation . ' ' . $bundle . ' ' . $entity_type;
               }
               break;
 
