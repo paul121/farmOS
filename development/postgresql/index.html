@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Notes - farmOS 2.x</title>
+  <title>PostgreSQL - farmOS 2.x</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Notes";
-    var mkdocs_page_input_path = "development/notes.md";
+    var mkdocs_page_name = "PostgreSQL";
+    var mkdocs_page_input_path = "development/postgresql.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -51,9 +51,24 @@
                     <li class="toctree-l1"><a class="reference internal" href="../..">farmOS</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/changes/">Changes</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Development</span></p>
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../">Getting started</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">PostgreSQL</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#open-postgresql-prompt">Open PostgreSQL prompt</a>
+    </li>
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../drush/">Drush</a>
                     </li>
@@ -63,11 +78,12 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../tests/">Automated tests</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Notes</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#docker-build-arguments">Docker build arguments</a>
-    </li>
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../code/">Coding standards</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Migration</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../migration/">Overview</a>
                     </li>
                 </ul>
       </div>
@@ -95,7 +111,7 @@
         
       
     
-    <li>Notes</li>
+    <li>PostgreSQL</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -106,39 +122,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="development-notes">Development notes</h1>
-<h2 id="docker-build-arguments">Docker build arguments</h2>
-<p>The farmOS <code>dev</code> Docker image allows certain variables to be overridden at
-image build time using the <code>--build-arg</code> parameter of <code>docker build</code>.</p>
-<p>Available arguments and their default values are described below:</p>
-<ul>
-<li><code>FARMOS_REPO</code> - The farmOS Git repository URL.<ul>
-<li>Default: <code>https://github.com/farmOS/farmOS.git</code></li>
-</ul>
-</li>
-<li><code>FARMOS_VERSION</code> - The farmOS Git branch/tag/commit to check out.<ul>
-<li>Default: <code>2.x</code></li>
-</ul>
-</li>
-<li><code>PROJECT_REPO</code> - The farmOS Composer project Git repository URL.<ul>
-<li>Default: <code>https://github.com/farmOS/composer-project.git</code></li>
-</ul>
-</li>
-<li><code>PROJECT_VERSION</code> - The farmOS Composer project Git branch/tag/commit to
-  check out.<ul>
-<li>Default: <code>2.x</code></li>
-</ul>
-</li>
-<li><code>WWW_DATA_ID</code> - The ID to use for the <code>www-data</code> user and group inside the
-   image. Setting this to the ID of the developer's user on the host machine
-   allows Composer to create files owned by www-data inside the container,
-   while keeping those files editable by the developer outside of the
-   container. If your user ID is not <code>1000</code>, build the image with:
-   <code>--build-arg WWW_DATA_ID=$(id -u)</code><ul>
-<li>Default: <code>1000</code></li>
-</ul>
-</li>
-</ul>
+                <h1 id="postgresql">PostgreSQL</h1>
+<p>The farmOS Docker image comes pre-installed with the PostgreSQL client <code>psql</code>
+command, which can be used to connect to the database and run queries from
+the command line.</p>
+<h2 id="open-postgresql-prompt">Open PostgreSQL prompt</h2>
+<pre><code>sudo docker exec -it farmos_www_1 psql -h db -d farm -U farm
+</code></pre>
+<p>Enter <code>farm</code> as the password.</p>
               
             </div>
           </div>
@@ -146,8 +137,10 @@ image build time using the <code>--build-arg</code> parameter of <code>docker bu
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../drush/" class="btn btn-neutral float-right" title="Drush">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href="../tests/" class="btn btn-neutral" title="Automated tests"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../docker/" class="btn btn-neutral" title="Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -173,8 +166,10 @@ image build time using the <code>--build-arg</code> parameter of <code>docker bu
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../tests/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../docker/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../drush/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

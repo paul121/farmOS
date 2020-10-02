@@ -51,9 +51,20 @@
                     <li class="toctree-l1"><a class="reference internal" href="../..">farmOS</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/changes/">Changes</a>
+                    </li>
+                </ul>
                 <p class="caption"><span class="caption-text">Development</span></p>
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../">Getting started</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../docker/">Docker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../postgresql/">PostgreSQL</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../drush/">Drush</a>
                     </li>
@@ -61,11 +72,22 @@
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Debugging</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#phpstorm">PHPStorm</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#drush-phpstorm">Drush + PHPStorm</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../tests/">Automated tests</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../notes/">Notes</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../code/">Coding standards</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Migration</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../migration/">Overview</a>
                     </li>
                 </ul>
       </div>
@@ -122,6 +144,24 @@ environment variable. For example:</p>
 </code></pre>
 <p><strong>Note</strong>: If the Docker containers are removed and recreated, the IP address
 may change, and you will need to repeat these steps to reconfigure it.</p>
+<h2 id="phpstorm">PHPStorm</h2>
+<p>If you are using the PHPStorm IDE, with the configuration above in place,
+enable the "Start listening for PHP Debug Connections" option. Add a
+breakpoint in your code, load the page in your browser, and you should see
+a prompt appear in PHPStorm that will begin the debugging session and pause
+execution at your breakpoint.</p>
+<h3 id="drush-phpstorm">Drush + PHPStorm</h3>
+<p>Debugging code that is run via <a href="/development/drush">Drush</a> commands requires
+additional configuration. Add <code>idekey=PHPSTORM</code> to the <code>XDEBUG_CONFIG</code>
+environment variable, and add a <code>PHP_IDE_CONFIG</code> environment variable with
+<code>serverName=localhost</code>, as follows:</p>
+<pre><code>environment:
+  XDEBUG_CONFIG: remote_host=192.168.128.1 idekey=PHPSTORM
+  PHP_IDE_CONFIG: serverName=localhost
+</code></pre>
+<p>Run a <code>drush</code> command and a prompt should appear in PHPStorm. You will need to
+map the path to Drush (<code>vendor/drush</code>) in the PHPStorm debugger config. Then
+you can set breakpoints in the Drush code you want to test.</p>
               
             </div>
           </div>
