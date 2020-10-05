@@ -1,0 +1,6 @@
+#jsonapi.resource_list:
+#  path: '/api'
+#  defaults:
+#    _controller: '\Drupal\farm_api\Controller\FarmEntryPoint::index'
+#  requirements:
+#    _access: 'TRUE'
