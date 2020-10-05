@@ -7,7 +7,7 @@ to provide an [OAuth2 standard](https://oauth.net/2/) authorization server with
 farmOS.
 
 For documentation on using and authenticating with the farmOS API see
-[API](/api).
+[API](../api/index.md).
 
 ### Providing OAuth Clients
 

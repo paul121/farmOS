@@ -48,7 +48,8 @@ farmOS server via the API, you should use this client to authorize access and
 generate an `access_token` for authentication.
 
 If you are creating a third party integration with farmOS, see the [`farm_api
-` module documentation](/module/farm_api) for steps to create an OAuth Client.
+` module documentation](../module_development/farm_api.md) for steps to
+ create an OAuth Client.
 
 ### Authorization Flows
 
