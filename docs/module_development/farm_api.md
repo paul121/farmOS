@@ -2,21 +2,21 @@
 
 ## OAuth
 
-The farm_api module integrates the [`simple_oauth` module] to provide an
-[OAuth2 standard] authorization server with farmOS.
+The farm_api module integrates the [`simple_oauth` module](https://www.drupal.org/project/simple_oauth)
+to provide an [OAuth2 standard](https://oauth.net/2/) authorization server with
+farmOS.
 
 For documentation on using and authenticating with the farmOS API see
 [API](/api).
 
 ### Providing OAuth Clients
 
-The simple_oauth module uses the [`consumers` module] to model OAuth Clients in
- the
-Authorization server. The `farm_api` module provides a default client with
-`client_id = farm`. This can be used for general usage of the API, but comes
-with limitations. To create a third party integration with farmOS a
-`consumer` entity must be created that identifies the integration and
-configures the OAuth Client authorization behavior.
+The simple_oauth module uses the [`consumers` module](https://www.drupal.org/project/consumers)
+to model OAuth Clients in the Authorization server. The `farm_api` module
+provides a default client with `client_id = farm`. This can be used for
+general usage of the API, but comes with limitations. To create a third party
+integration with farmOS a `consumer` entity must be created that identifies
+the integration and configures the OAuth Client authorization behavior.
 
 ### Scopes
 
@@ -74,7 +74,3 @@ Authorization options (all are disabled by default):
      than the user that authorizes access to a third party. There are times
      that this may be intentional, but this setting ensures that consumers
      will not be granted more access than the authorizing user.
-
-[`simple_oauth` module]: https://www.drupal.org/project/simple_oauth
-[OAuth 2.0 standard]: https://oauth.net/2/
-['consumers` module]: https://www.drupal.org/project/consumers

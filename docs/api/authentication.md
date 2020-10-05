@@ -9,12 +9,13 @@ to be used for authentication. Access tokens are provided to both 1st and
 store the `access token` instead of the user's credentials, which makes it a
 more secure authentication method.
 
-Read more about the [OAuth 2.0 standards].
+Read more about the [OAuth 2.0 standards](https://oauth.net/2/).
 
 ## Client Libraries
 
-The [farmOS.py] and [farmOS.js] client libraries use the OAuth2 protocol to
-interact with the farmOS API.
+The [farmOS.py](https://github.com/farmOS/farmOS.py) and
+[farmOS.js](https://github.com/farmOS/farmOS.js) client libraries use the
+OAuth2 protocol to interact with the farmOS API.
 
 ## OAuth2 Bearer Tokens
 
@@ -51,7 +52,8 @@ If you are creating a third party integration with farmOS, see the [`farm_api
 
 ### Authorization Flows
 
-The [OAuth 2.0 standards] outline 5 [Oauth2 Grant Types] to be used in an OAuth2
+The [OAuth 2.0 standards](https://oauth.net/2/) outline 5
+[Oauth2 Grant Types](https://oauth.net/2/grant-types/) to be used in an OAuth2
 Authorization Flow - They are the *Authorization Code, Implicit, Password
 Credentials, Client Credentials* and *Refresh Token* Grants. The
 [Authorization Code](#authorization-code-grant) and
@@ -147,8 +149,3 @@ The client sends an authenticated request to the `/oauth/token`endpoint with
 The server responds with an `access_token` and `refresh_token` that can be used
 in future requests. The previous `access_token` and `refresh_token` will no
 longer work.
-
-[OAuth 2.0 standards]: https://oauth.net/2/
-[OAuth2 Grant Types]: https://oauth.net/2/grant-types/
-[farmOS.py]: https://github.com/farmOS/farmOS.py
-[farmOS.js]: https://github.com/farmOS/farmOS.js
