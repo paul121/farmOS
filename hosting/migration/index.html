@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>1.x Migration - farmOS 2.x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "1.x Migration";
+    var mkdocs_page_input_path = "hosting/migration.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> farmOS 2.x</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">farmOS</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Hosting</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">1.x Migration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#uploaded-files">Uploaded files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#limitations">Limitations</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../api/changes/">Changes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Environment</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/">Getting started</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/docker/">Docker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/postgresql/">PostgreSQL</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/drush/">Drush</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/composer/">Composer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/debug/">Debugging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/tests/">Automated tests</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/environment/code/">Coding standards</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Module</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../development/module/oauth/">OAuth</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">farmOS 2.x</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Hosting &raquo;</li>
+        
+      
+    
+    <li>1.x Migration</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="migrating-from-farmos-1x-to-2x">Migrating from farmOS 1.x to 2.x</h1>
+<ol>
+<li>Install farmOS 2.x.</li>
+<li>Install the farmOS modules you intend to use (this will determine what
+   data is migrated).</li>
+<li>
+<p>Add farmOS 1.x database connection info to <code>settings.php</code>:</p>
+<pre><code>$databases['migrate']['default'] = [
+  'database' =&gt; 'my_farmos_1x_db',
+  'username' =&gt; 'my-db-username',
+  'password' =&gt; 'my-db-password',
+  'prefix' =&gt; '',
+  'host' =&gt; 'localhost',
+  'port' =&gt; '3306',
+  'namespace' =&gt; 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' =&gt; 'mysql',
+];
+</code></pre>
+</li>
+<li>
+<p>Copy user-uploaded files to the new directory (see "Uploaded files" below).</p>
+</li>
+<li>Install the farmOS Migrate (<code>farm_migrate</code>) module.</li>
+<li>Run the farmOS 1.x Migrations via Drush (in this order):<pre><code>drush migrate:import --group=farm_migrate
+drush migrate:import --group=farm_migrate_taxonomy
+drush migrate:import --group=farm_migrate_asset
+drush migrate:import --group=farm_migrate_log
+drush migrate:import --group=farm_migrate_reference
+</code></pre>
+</li>
+</ol>
+<p>To view the status of all farmOS 1.x migrations:</p>
+<pre><code>drush migrate:status --tag="farmOS 1.x"
+</code></pre>
+<h2 id="uploaded-files">Uploaded files</h2>
+<p>farmOS allows files to be uploaded/attached to records. In order to migrate
+these files, they need to be copied into new site's files/private directories.</p>
+<p>The farmOS migration code will look for files in the following locations:</p>
+<ul>
+<li>Public files: <code>public://migrate</code></li>
+<li>Private files: <code>private://migrate</code></li>
+</ul>
+<p>The <code>public://</code> and <code>private://</code> prefixes map to the "Public file system path"
+and "Private file system path" configured in farmOS 1.x and 2.x at:
+<code>/admin/config/media/file-system</code>. This may vary for each installation.</p>
+<p>For example, if you have farmOS 1.x installed in <code>/var/www/farmOS_1.x</code> and
+farmOS 2.x in <code>/var/www/farmOS_2.x</code>, and both are configured to use
+<code>sites/default/files</code> for public files, and <code>sites/default/private</code> for private
+files, then copy the files as follows:</p>
+<pre><code>cp -rp /var/www/farmOS_1.x/sites/default/files /var/www/farmOS_2.x/sites/default/files/migrate
+
+cp -rp /var/www/farmOS_1.x/sites/default/private/files /var/www/farmOS_2.x/sites/default/private/files/migrate
+</code></pre>
+<p>The farmOS migration code will automatically move files from <code>files/migrate/*</code>
+to <code>files/*</code>. Only the files that it finds in the <code>{file_managed}</code> table will
+be moved, leaving behind various temporary files in the <code>migrate</code> directory
+that are no longer needed after the migration. This <code>migrate</code> directory can be
+deleted after the migration, once it has been confirmed that everything was
+migrated successfully.</p>
+<h2 id="limitations">Limitations</h2>
+<p>The farmOS migration code is designed to migrate a <em>default</em> farmOS 1.x
+database to 2.x. If any customizations have been made on top of the defaults,
+they will not be migrated.</p>
+<p>This includes (but is not limited to):</p>
+<ul>
+<li>Custom asset, entity, taxonomies, and log types</li>
+<li>Custom fields</li>
+<li>Custom roles</li>
+</ul>
+<p>If you maintain a contrib/custom module for farmOS 1.x, it is your
+responsibility to update the modules for 2.x and provide migration logic.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../api/" class="btn btn-neutral float-right" title="Introduction">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="farmOS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../api/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

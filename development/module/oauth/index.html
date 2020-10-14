@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../../img/favicon.ico">
+  <title>OAuth - farmOS 2.x</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../../css/theme.css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "OAuth";
+    var mkdocs_page_input_path = "development/module/oauth.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> farmOS 2.x</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../..">farmOS</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Hosting</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../hosting/migration/">1.x Migration</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">API</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/">Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/authentication/">Authentication</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../../api/changes/">Changes</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Development</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="#">Environment</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/">Getting started</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/docker/">Docker</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/postgresql/">PostgreSQL</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/drush/">Drush</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/composer/">Composer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/debug/">Debugging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/tests/">Automated tests</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../environment/code/">Coding standards</a>
+                </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Module</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">OAuth</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#providing-oauth-clients">Providing OAuth Clients</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#scopes">Scopes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#client-configuration">Client Configuration</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../..">farmOS 2.x</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Module &raquo;</li>
+        
+      
+        
+          <li>Development &raquo;</li>
+        
+      
+    
+    <li>OAuth</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="oauth">OAuth</h1>
+<p>The <a href="https://www.drupal.org/project/simple_oauth">Simple OAuth</a> module is used
+to provide an <a href="https://oauth.net/2/">OAuth2 standard</a> authorization server.</p>
+<p>For documentation on using and authenticating with the farmOS API see <a href="/api">API</a>.</p>
+<h2 id="providing-oauth-clients">Providing OAuth Clients</h2>
+<p>OAuth clients are modeled as "Consumer" entities (provided by the
+<a href="https://www.drupal.org/project/consumers">Consumers</a> module. The <code>farm_api</code>
+module provides a default client with <code>client_id = farm</code>. This can be used for
+general usage of the API, but comes with limitations. To create a third party
+integration with farmOS a <code>consumer</code> entity must be created that identifies
+the integration and configures the OAuth Client authorization behavior.</p>
+<h2 id="scopes">Scopes</h2>
+<p>OAuth scopes define different levels of permission. OAuth clients are
+configured with the scopes needed for the purposes of a specific integration.
+With consumers, these scopes are implemented as Drupal Roles. This means that
+OAuth clients interacting with farmOS over the API use the same permission
+system as Users normally using the site.</p>
+<h2 id="client-configuration">Client Configuration</h2>
+<p>Standard Consumer configuration:</p>
+<ul>
+<li><code>consumer.label</code> - A label used to identify the third party integration.</li>
+<li><code>consumer.client_id</code> - An optional <code>client_id</code> machine name to identify the
+ consumer. The <code>simple_oauth</code> module uses a UUID by default, but a machine
+ name makes it easier to identify clients across multiple farmOS servers.</li>
+<li><code>consumer.secret</code> - A <code>client_secret</code> used to secure the OAuth client.</li>
+<li><code>consumer.confidential</code> - A boolean indicating whether the client secret
+  needs to be validated.<ul>
+<li>Most farmOS third party integrations will disable this. Otherwise the
+  same <code>client_secret</code> must be configured on all farmOS servers, or the
+  third party must keep track of a different secret for each server. This
+  challenge is due to the nature of farmOS being a self-hosted application.</li>
+</ul>
+</li>
+<li><code>consumer.user_id</code> - When no specific user is authenticated Drupal will use
+ this user as the author of all the actions made by this consumer.<ul>
+<li>This is only the case during the <code>Client Credentials</code> authorization flow.</li>
+</ul>
+</li>
+<li><code>consumer.redirect_uri</code> - The URI this client will redirect to when needed.<ul>
+<li>This is used with the Authorization Code authorization flow.</li>
+</ul>
+</li>
+<li><code>consumer.third_party</code> - Enable if the Consumer represents a third party.<ul>
+<li>Users will skip the "grant" step of the authorization flow for first
+  party consumers only.</li>
+</ul>
+</li>
+</ul>
+<p>farmOS extends the <code>consumers</code> and <code>simple_oauth</code> modules to provide additional
+authorization options on consumer entities. These additional options make it
+possible to support different third party integration use cases via the same
+OAuth Authorization server. They can be configured via the UI or when creating
+a consumer entity programmatically.</p>
+<p>Authorization options (all are disabled by default):</p>
+<ul>
+<li><code>consumer.grant_user_access</code> - Always grant the authorizing user's access
+ to this consumer.<ul>
+<li>This is how the farmOS Field Kit consumer is configured. If this is the
+  only option enabled, then the consumer will only be granted the roles
+  the user has access to.</li>
+</ul>
+</li>
+<li><code>consumer.limit_requested_access</code> - Only grant this consumer the scopes
+ requested during authorization.<ul>
+<li>By default, all scopes configured with the consumer will be granted
+  during authorization. This allows users to select which scopes they want
+  to grant the third party during authorization.</li>
+</ul>
+</li>
+<li><code>consumer.limit_user_access</code> - Never grant the consumer more access than
+ the authorizing user.<ul>
+<li>It is possible that clients will be configured with different roles
+  than the user that authorizes access to a third party. There are times
+  that this may be intentional, but this setting ensures that consumers
+  will not be granted more access than the authorizing user.</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../environment/code/" class="btn btn-neutral" title="Coding standards"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../../environment/code/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../../..';</script>
+    <script src="../../../js/theme.js" defer></script>
+      <script src="../../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
