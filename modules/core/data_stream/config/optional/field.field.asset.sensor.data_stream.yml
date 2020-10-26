@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.asset.data_stream
+    - asset.type.sensor
+  enforced:
+    module:
+      - data_stream
+      - farm_sensor
+id: asset.sensor.data_stream
+field_name: data_stream
+entity_type: asset
+bundle: sensor
+label: Data stream
+description: 'Data streams provided by this sensor.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:data_stream'
+  handler_settings:
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
