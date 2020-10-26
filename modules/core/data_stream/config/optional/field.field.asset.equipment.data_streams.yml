@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.asset.data_streams
+    - asset.type.equipment
+  enforced:
+    module:
+      - data_stream
+      - farm_equipment
+id: asset.equipment.data_streams
+field_name: data_streams
+entity_type: asset
+bundle: equipment
+label: Data streams
+description: 'Data streams provided by this equipment.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:data_stream'
+  handler_settings:
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
