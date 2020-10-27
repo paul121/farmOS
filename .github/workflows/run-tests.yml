@@ -2,7 +2,7 @@ name: Run 2.x PHPUnit tests
 on:
   push:
     branches:
-      - '2.x'
+      - '*'
 
 jobs:
   build:
