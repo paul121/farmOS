@@ -1,0 +1,504 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - data_stream.type.listener
+  module:
+    - charts
+    - charts_chartjs
+    - data_stream
+    - fraction
+    - user
+id: listener_data_graph
+label: 'Listener data stream graph'
+module: views
+description: ''
+tag: ''
+base_table: data_stream_data
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: perm
+        options:
+          perm: 'view data_stream'
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: mini
+        options:
+          items_per_page: 0
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+          expose:
+            items_per_page: true
+            items_per_page_label: Limit
+            items_per_page_options: '1000, 500, 100, 10'
+            items_per_page_options_all: true
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      style:
+        type: chart
+        options:
+          grouping: {  }
+          chart_settings:
+            library: chartjs
+            type: line
+            fields:
+              label: timestamp
+              data_providers:
+                name:
+                  color: '#000000'
+                  weight: '3'
+                  enabled: 0
+                value_decimal:
+                  enabled: '1'
+                  color: '#348eb2'
+                  weight: '3'
+                timestamp:
+                  color: '#000000'
+                  weight: '3'
+                  enabled: 0
+              stacking: 0
+            display:
+              title: ''
+              title_position: ''
+              tooltips: '1'
+              data_markers: '1'
+              legend_position: ''
+              background: ''
+              dimensions:
+                width: ''
+                width_units: ''
+                height: ''
+                height_units: ''
+              gauge:
+                max: ''
+                min: ''
+                green_from: ''
+                green_to: ''
+                yellow_from: ''
+                yellow_to: ''
+                red_from: ''
+                red_to: ''
+              data_labels: 0
+              three_dimensional: 0
+              polar: 0
+            xaxis:
+              title: ''
+              labels_rotation: '0'
+            yaxis:
+              title: ''
+              min: ''
+              max: ''
+              prefix: ''
+              suffix: ''
+              decimal_count: ''
+              labels_rotation: '0'
+      row:
+        type: fields
+      fields:
+        name:
+          table: data_stream_data
+          field: name
+          id: name
+          entity_type: null
+          entity_field: name
+          plugin_id: field
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        value_decimal:
+          id: value_decimal
+          table: data_stream_data_storage
+          field: value_decimal
+          relationship: listener_data
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          precision: '0'
+          auto_precision: 1
+          plugin_id: fraction
+        timestamp:
+          id: timestamp
+          table: data_stream_data_storage
+          field: timestamp
+          relationship: listener_data
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          date_format: short
+          custom_date_format: ''
+          timezone: ''
+          plugin_id: date
+      filters:
+        type:
+          id: type
+          table: data_stream_data
+          field: type
+          value:
+            listener: listener
+          entity_type: data_stream
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        timestamp:
+          id: timestamp
+          table: data_stream_data_storage
+          field: timestamp
+          relationship: listener_data
+          group_type: group
+          admin_label: ''
+          operator: '>='
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: timestamp_op
+            label: 'Start timestamp'
+            description: ''
+            use_operator: false
+            operator: timestamp_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: start_timestamp
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              farm_manager: '0'
+              farm_viewer: '0'
+              farm_worker: '0'
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+          is_grouped: false
+          group_info:
+            label: Timestamp
+            description: null
+            identifier: timestamp
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
+          plugin_id: date
+        timestamp_1:
+          id: timestamp_1
+          table: data_stream_data_storage
+          field: timestamp
+          relationship: listener_data
+          group_type: group
+          admin_label: ''
+          operator: '<='
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: timestamp_1_op
+            label: 'End timestamp'
+            description: ''
+            use_operator: false
+            operator: timestamp_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: end_timestamp
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              farm_manager: '0'
+              farm_viewer: '0'
+              farm_worker: '0'
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: date
+      sorts:
+        timestamp:
+          id: timestamp
+          table: data_stream_data_storage
+          field: timestamp
+          relationship: listener_data
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: date
+      title: Graph
+      header: {  }
+      footer: {  }
+      empty: {  }
+      relationships:
+        listener_data:
+          id: listener_data
+          table: data_stream_data
+          field: listener_data
+          relationship: none
+          group_type: group
+          admin_label: 'Listener data'
+          required: true
+          entity_type: data_stream
+          plugin_id: standard
+      arguments:
+        id:
+          id: id
+          table: data_stream_data
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: 'not found'
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: true
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: data_stream
+          entity_field: id
+          plugin_id: numeric
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: data_stream/%/graph
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags: {  }
