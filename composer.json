@@ -15,9 +15,27 @@
             "email": "mike@farmier.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "chartjs/chartjs",
+                "version": "v2.7.2",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "chartjs"
+                },
+                "dist": {
+                    "url": "https://www.chartjs.org/dist/2.7.2/Chart.bundle.js",
+                    "type": "file"
+                }
+            }
+        }
+    ],
     "require": {
         "cweagans/composer-patches": "^1.6",
         "composer/installers": "^1.9",
+        "chartjs/chartjs": "2.7.2",
         "drupal/core": "^9.0.0",
         "drupal/charts": "5.0.0-alpha1",
         "drupal/config_rewrite": "^1.3",
