@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.log.quantity
+    - log.type.input
+id: log.input.quantity
+field_name: quantity
+entity_type: log
+bundle: input
+label: Quantities
+description: 'Does this log provide any quantities?'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: { }
+field_type: entity_reference
