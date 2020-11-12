@@ -5,6 +5,8 @@
  * Farm Quantity module.
  */
 
+use Drupal\log\Entity\LogInterface;
+
 /**
  * Define information about available quantity measures.
  *
@@ -76,4 +78,24 @@ function farm_quantity_measure_options() {
 
   // Return the array of options.
   return $options;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function farm_quantity_log_delete(LogInterface $log) {
+
+  // If the log doesn't have a quantity field, bail.
+  if (!$log->hasField('quantity')) {
+    return;
+  }
+
+  // Get any quantities the log references.
+  $quantities = $log->quantity->referencedEntities();
+
+  // Delete quantity entities.
+  if (!empty($quantities)) {
+    \Drupal::entityTypeManager()->getStorage('farm_quantity')->delete($quantities);
+  }
+
 }
