@@ -79,6 +79,62 @@ class FarmLog extends Log {
     // Add the quantity logs to the row for future processing.
     $row->setSourceProperty('log_quantities', $log_quantities);
 
+    // Get log inventory field value.
+    $inventory_values = $this->getFieldvalues('log', 'field_farm_inventory', $id);
+
+    // Iterate through inventory field values to collect field collection IDs.
+    $inventory_field_collection_item_ids = [];
+    foreach ($inventory_values as $inventory_value) {
+      if (!empty($inventory_value['value'])) {
+        $inventory_field_collection_item_ids[] = $inventory_value['value'];
+      }
+    }
+
+    // Iterate through the field collection IDs and load values.
+    $inventories = [];
+    foreach ($inventory_field_collection_item_ids as $item_id) {
+      $query = $this->select('field_collection_item', 'fci')
+        ->condition('fci.item_id', $item_id)
+        ->condition('fci.field_name', 'field_farm_inventory');
+
+      // Join the inventory asset field.
+      $query->leftJoin('field_data_field_farm_inventory_asset', 'fdffia', 'fdffia.entity_id = fci.item_id AND fdffia.deleted = 0');
+      $query->addField('fdffia', 'field_farm_inventory_asset_target_id', 'asset');
+
+      // Join the inventory value field.
+      $query->leftJoin('field_data_field_farm_inventory_value', 'fdffiv', 'fdffiv.entity_id = fci.item_id AND fdffiv.deleted = 0');
+      $query->addField('fdffiv', 'field_farm_inventory_value_numerator', 'value_numerator');
+      $query->addField('fdffiv', 'field_farm_inventory_value_denominator', 'value_denominator');
+
+      // Execute the query.
+      $inventory_data = $query->execute()->fetchAssoc();
+
+      // Default to an increment adjustment.
+      $adjustment = 'increment';
+
+      // If value_numerator is negative, then it is a decrement.
+      if ($inventory_data['value_numerator'] < 0) {
+        $adjustment = 'decrement';
+
+        // Use the absolute value of the numerator.
+        $inventory_data['value_numerator'] = abs($inventory_data['value_numerator']);
+      }
+
+      // Add adjustment to the data.
+      $inventory_data['adjustment'] = $adjustment;
+
+      // Add values to inherit from the log.
+      $inventory_data['uid'] = $log_uid;
+      $inventory_data['created'] = $log_created;
+      $inventory_data['changed'] = $log_changed;
+
+      // Save the inventory quantity to be created later.
+      $inventories[] = $inventory_data;
+    }
+
+    // Add the quantity logs to the row for future processing.
+    $row->setSourceProperty('log_inventories', $inventories);
+
     return parent::prepareRow($row);
   }
 
