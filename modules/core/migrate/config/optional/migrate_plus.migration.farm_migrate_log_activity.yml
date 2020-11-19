@@ -28,8 +28,36 @@ process:
   id:
     plugin: get
     source: id
+  # Create a quantity for each inventory field collection.
+  _inventory_quantities:
+    plugin: sub_process
+    source: log_inventories
+    process:
+      # Save the uid as a pseudo value.
+      _uid:
+        plugin: migration_lookup
+        migration: farm_migrate_user
+        source: uid
+        no_stub: true
+      # Save the asset id as a pseudo value.
+      _asset_id:
+        plugin: farm_migration_group_lookup
+        migration_group: farm_migrate_asset
+        source: asset
+        no_stub: true
+      # Create a quantity and save the ID.
+      target_id:
+        plugin: create_quantity
+        values:
+          uid: '@_uid'
+          created: created
+          changed: changed
+          value/numerator: value_numerator
+          value/denominator: value_denominator
+          asset: '@_asset_id'
+          adjustment: adjustment
   # Create a quantity for each quantity field collection.
-  quantity:
+  _quantities:
     plugin: sub_process
     source: log_quantities
     process:
@@ -57,6 +85,12 @@ process:
           measure: measure
           value/numerator: value_numerator
           value/denominator: value_denominator
+  # Merge quantities and inventory quantities to the destination quantity field.
+  quantity:
+    plugin: merge
+    source:
+      - '@_inventory_quantities'
+      - '@_quantities'
 migration_dependencies:
   required:
     - farm_migrate_taxonomy_unit
