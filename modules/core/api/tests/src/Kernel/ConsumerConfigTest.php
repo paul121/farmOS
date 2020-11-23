@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\farm_api\Functional;
+namespace Drupal\Tests\farm_api\Kernel;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Url;
@@ -10,6 +10,7 @@ use Drupal\user\Entity\Role;
  * Tests using the consumer.client_id field.
  *
  * @group farm
+ * @group testing
  */
 class ConsumerConfigTest extends OauthTestBase {
 

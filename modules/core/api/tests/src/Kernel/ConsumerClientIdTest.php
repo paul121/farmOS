@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\farm_api\Functional;
+namespace Drupal\Tests\farm_api\Kernel;
 
 use Drupal\Component\Serialization\Json;
 
