@@ -31,6 +31,7 @@
         "drupal/log": "2.x-dev",
         "drupal/migrate_plus": "^5.1",
         "drupal/migrate_tools": "^5.0",
+        "drupal/prepopulate": "^2.3",
         "drupal/simple_oauth": "^5.0",
         "drupal/token": "^1.7",
         "lcobucci/jwt": "3.3.3"
