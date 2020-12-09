@@ -7,3 +7,4 @@ dependencies:
   - admin_toolbar:admin_toolbar
   - admin_toolbar:admin_toolbar_links_access_filter
   - drupal:toolbar
+  - prepopulate:prepopulate
