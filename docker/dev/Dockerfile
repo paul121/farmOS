@@ -4,7 +4,7 @@ FROM farmos/farmos:2.x
 # Set the farmOS and composer project repository URLs and versions.
 ARG FARMOS_REPO=https://github.com/farmOS/farmOS.git
 ARG FARMOS_VERSION=2.x
-ARG PROJECT_REPO=https://github.com/farmOS/composer-project.git
+ARG PROJECT_REPO=https://github.com/paul121/composer-project.git
 ARG PROJECT_VERSION=2.x
 
 # Change the user/group IDs of www-data inside the image to match the ID of the
