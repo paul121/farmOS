@@ -35,3 +35,5 @@ jobs:
         run: docker-compose exec -u www-data -T www phpcs /opt/drupal/web/profiles/farm
       - name: Test Drush site install
         run: docker-compose exec -u www-data -T www drush site-install --db-url=pgsql://farm:farm@db/farm
+      - name: Test Config
+        run: docker-compose exec -u www-data -T www sh -c "drush en config_inspector && drush config:inspect --only-error"
