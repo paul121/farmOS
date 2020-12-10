@@ -39,7 +39,8 @@
         "lcobucci/jwt": "Required to fix deprecations in farm_api tests until simple_oauth bumps thephpleague/oauth2_server version. See https://github.com/thephpleague/oauth2-server/issues/1156"
     },
     "require-dev": {
-        "drupal/config_update": "^1.7"
+        "drupal/config_update": "^1.7",
+        "drupal/config_inspector": "^1.1"
     },
     "extra": {
         "patchLevel": {
