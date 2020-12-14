@@ -14,7 +14,7 @@
     
     
       
-        <title>Debugging - farmOS 2.x Docs</title>
+        <title>Documentation - farmOS 2.x Docs</title>
       
     
     
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#debugging" class="md-skip">
+        <a href="#documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Debugging
+              Documentation
             
           </span>
         </div>
@@ -437,62 +437,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Debugging
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../debug/" class="md-nav__link">
       Debugging
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#phpstorm" class="md-nav__link">
-    PHPStorm
-  </a>
-  
-    <nav class="md-nav" aria-label="PHPStorm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drush-phpstorm" class="md-nav__link">
-    Drush + PHPStorm
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -524,11 +473,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../documentation/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Documentation
     </a>
+    
   </li>
 
         
@@ -596,34 +554,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#phpstorm" class="md-nav__link">
-    PHPStorm
-  </a>
-  
-    <nav class="md-nav" aria-label="PHPStorm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drush-phpstorm" class="md-nav__link">
-    Drush + PHPStorm
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -635,46 +565,39 @@
               
                 
                 
-                <h1 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h1>
-<p>The farmOS development Docker image comes pre-installed with
-<a href="https://xdebug.org">XDebug</a> 3, which allows debugger connections on port 9003.</p>
-<p>In order to connect to it, the <code>XDEBUG_CONFIG</code> environment variable must be
-used to configure XDebug's <code>client_host</code> setting  with the Docker container's
-"Gateway" IP address.</p>
-<p>With the containers running, this command will print the gateway IP:</p>
-<pre><code>docker inspect farmos_www_1 | grep -o '"Gateway": ".*\..*\..*\..*"'
+                <h1 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h1>
+<p>In addition to the code for farmOS 2.x, this repository includes the source files of the
+documentation which is hosted at <a href="http://2x.farmos.org">http://2x.farmos.org</a>.</p>
+<p>It uses <a href="http://www.mkdocs.org">mkdocs</a> to convert simple markdown files into
+static HTML files.</p>
+<p>To get started contributing to the farmOS 2.x documentation, fork
+<a href="https://github.com/farmOS/farmOS/tree/2.x">farmOS</a> on Github. Then install mkdocs and
+clone this repo:</p>
+<pre><code>$ brew install python                # For OSX users
+$ sudo apt-get install python-pip    # For Debian/Ubuntu users
+$ sudo pip install mkdocs mkdocs-material
+$ git clone https://github.com/farmOS/farmOS.git farmOS
+$ cd farmOS
+$ git checkout 2.x
+$ git remote add sandbox git@github.com:&lt;username&gt;/farmOS.git
+$ mkdocs serve
 </code></pre>
-<p>Edit <code>docker-compose.yml</code> and enter the gateway IP in the <code>XDEBUG_CONFIG</code>
-environment variable. For example:</p>
-<pre><code>environment:
-  XDEBUG_MODE: debug
-  XDEBUG_CONFIG: client_host=192.168.128.1
+<p>Your local farmOS 2.x documentation site should now be available for browsing:
+http://127.0.0.1:8000/. When you find a typo, an error, unclear or missing
+explanations or instructions, hit ctrl-c, to stop the server, and start editing.
+Find the page you’d like to edit; everything is in the docs/ directory. Make
+your changes, commit and push them, and start a pull request:</p>
+<pre><code>$ git checkout -b fix_typo              # Create a new branch for your changes.
+...                                     # Make your changes.
+$ mkdocs build --clean; mkdocs serve    # Go check your changes.
+$ git diff                              # Make sure there aren’t any unintended changes.
+...
+$ git commit -am "Fixed typo."          # Useful commit message are a good habit.
+$ git push sandbox fix_typo             # Push your new branch up to your Github sandbox.
 </code></pre>
-<p>Restart the Docker containers for this change to take affect.</p>
-<pre><code>docker-compose restart
-</code></pre>
-<p><strong>Note</strong>: If the Docker containers are removed and recreated, the IP address
-may change, and you will need to repeat these steps to reconfigure it.</p>
-<h2 id="phpstorm">PHPStorm<a class="headerlink" href="#phpstorm" title="Permanent link">&para;</a></h2>
-<p>If you are using the PHPStorm IDE, with the configuration above in place,
-enable the "Start listening for PHP Debug Connections" option. Add a
-breakpoint in your code, load the page in your browser, and you should see
-a prompt appear in PHPStorm that will begin the debugging session and pause
-execution at your breakpoint.</p>
-<h3 id="drush-phpstorm">Drush + PHPStorm<a class="headerlink" href="#drush-phpstorm" title="Permanent link">&para;</a></h3>
-<p>Debugging code that is run via <a href="/development/environment/drush">Drush</a> commands
-requires additional configuration. Add an <code>XDEBUG_SESSION</code> environment variable
-with a value of <code>PHPSTORM</code>, and a <code>PHP_IDE_CONFIG</code> environment variable with a
-value of <code>serverName=localhost</code>, as follows:</p>
-<pre><code>environment:
-  XDEBUG_MODE: debug
-  XDEBUG_CONFIG: client_host=192.168.128.1
-  XDEBUG_SESSION: PHPSTORM
-  PHP_IDE_CONFIG: serverName=localhost
-</code></pre>
-<p>Run a <code>drush</code> command and a prompt should appear in PHPStorm. You will need to
-map the path to Drush (<code>vendor/drush</code>) in the PHPStorm debugger config. Then
-you can set breakpoints in the Drush code you want to test.</p>
+<p>Visit your fork on Github and start a Pull Request.</p>
+<p>For more information on writing and managing documentation with mkdocs, read the
+official mkdocs documentation: <a href="http://www.mkdocs.org">http://www.mkdocs.org</a></p>
                 
               
               
@@ -693,7 +616,7 @@ you can set breakpoints in the Drush code you want to test.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../composer/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../code/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -702,19 +625,19 @@ you can set breakpoints in the Drush code you want to test.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Composer
+                Coding standards
               </div>
             </div>
           </a>
         
         
-          <a href="../tests/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../../hosting/migration/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Automated tests
+                1.x Migration
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

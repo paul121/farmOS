@@ -14,7 +14,7 @@
     
     
       
-        <title>Debugging - farmOS 2.x Docs</title>
+        <title>Authentication - farmOS 2.x Docs</title>
       
     
     
@@ -61,7 +61,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#debugging" class="md-skip">
+        <a href="#authentication" class="md-skip">
           Skip to content
         </a>
       
@@ -91,7 +91,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Debugging
+              Authentication
             
           </span>
         </div>
@@ -185,10 +185,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1-1" type="checkbox" id="nav-1-1" >
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1-1" type="checkbox" id="nav-1-1" checked>
     <label class="md-nav__link" for="nav-1-1">
       API
       <span class="md-nav__icon md-icon"></span>
@@ -207,7 +209,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../api/" class="md-nav__link">
+    <a href="../" class="md-nav__link">
       Introduction
     </a>
   </li>
@@ -217,11 +219,117 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../api/authentication/" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Authentication
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
       Authentication
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#client-libraries" class="md-nav__link">
+    Client Libraries
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth2-bearer-tokens" class="md-nav__link">
+    OAuth2 Bearer Tokens
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth2-details" class="md-nav__link">
+    OAuth2 Details
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth2 Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scopes" class="md-nav__link">
+    Scopes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clients" class="md-nav__link">
+    Clients
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization-flows" class="md-nav__link">
+    Authorization Flows
+  </a>
+  
+    <nav class="md-nav" aria-label="Authorization Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authorization-code-grant" class="md-nav__link">
+    Authorization Code Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-credentials-grant" class="md-nav__link">
+    Password Credentials Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refreshing-tokens" class="md-nav__link">
+    Refreshing Tokens
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -231,7 +339,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../api/changes/" class="md-nav__link">
+    <a href="../changes/" class="md-nav__link">
       Changes
     </a>
   </li>
@@ -343,12 +451,10 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1-3" type="checkbox" id="nav-1-3" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1-3" type="checkbox" id="nav-1-3" >
     <label class="md-nav__link" for="nav-1-3">
       Environment
       <span class="md-nav__icon md-icon"></span>
@@ -367,7 +473,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../" class="md-nav__link">
+    <a href="../../environment/" class="md-nav__link">
       Getting started
     </a>
   </li>
@@ -379,7 +485,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../update/" class="md-nav__link">
+    <a href="../../environment/update/" class="md-nav__link">
       Updating
     </a>
   </li>
@@ -391,7 +497,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../docker/" class="md-nav__link">
+    <a href="../../environment/docker/" class="md-nav__link">
       Docker
     </a>
   </li>
@@ -403,7 +509,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../postgresql/" class="md-nav__link">
+    <a href="../../environment/postgresql/" class="md-nav__link">
       PostgreSQL
     </a>
   </li>
@@ -415,7 +521,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../drush/" class="md-nav__link">
+    <a href="../../environment/drush/" class="md-nav__link">
       Drush
     </a>
   </li>
@@ -427,7 +533,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../composer/" class="md-nav__link">
+    <a href="../../environment/composer/" class="md-nav__link">
       Composer
     </a>
   </li>
@@ -437,62 +543,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Debugging
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../environment/debug/" class="md-nav__link">
       Debugging
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#phpstorm" class="md-nav__link">
-    PHPStorm
-  </a>
-  
-    <nav class="md-nav" aria-label="PHPStorm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drush-phpstorm" class="md-nav__link">
-    Drush + PHPStorm
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -502,7 +557,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tests/" class="md-nav__link">
+    <a href="../../environment/tests/" class="md-nav__link">
       Automated tests
     </a>
   </li>
@@ -514,7 +569,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../code/" class="md-nav__link">
+    <a href="../../environment/code/" class="md-nav__link">
       Coding standards
     </a>
   </li>
@@ -526,7 +581,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../documentation/" class="md-nav__link">
+    <a href="../../environment/documentation/" class="md-nav__link">
       Documentation
     </a>
   </li>
@@ -603,17 +658,72 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#phpstorm" class="md-nav__link">
-    PHPStorm
+  <a href="#client-libraries" class="md-nav__link">
+    Client Libraries
   </a>
   
-    <nav class="md-nav" aria-label="PHPStorm">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth2-bearer-tokens" class="md-nav__link">
+    OAuth2 Bearer Tokens
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth2-details" class="md-nav__link">
+    OAuth2 Details
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth2 Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#drush-phpstorm" class="md-nav__link">
-    Drush + PHPStorm
+  <a href="#scopes" class="md-nav__link">
+    Scopes
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clients" class="md-nav__link">
+    Clients
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization-flows" class="md-nav__link">
+    Authorization Flows
+  </a>
+  
+    <nav class="md-nav" aria-label="Authorization Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authorization-code-grant" class="md-nav__link">
+    Authorization Code Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-credentials-grant" class="md-nav__link">
+    Password Credentials Grant
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refreshing-tokens" class="md-nav__link">
+    Refreshing Tokens
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -635,46 +745,124 @@
               
                 
                 
-                <h1 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h1>
-<p>The farmOS development Docker image comes pre-installed with
-<a href="https://xdebug.org">XDebug</a> 3, which allows debugger connections on port 9003.</p>
-<p>In order to connect to it, the <code>XDEBUG_CONFIG</code> environment variable must be
-used to configure XDebug's <code>client_host</code> setting  with the Docker container's
-"Gateway" IP address.</p>
-<p>With the containers running, this command will print the gateway IP:</p>
-<pre><code>docker inspect farmos_www_1 | grep -o '"Gateway": ".*\..*\..*\..*"'
+                <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
+<p>farmOS includes an OAuth2 Authorization server for providing 1st and 3rd party
+clients access to the farmOS API. Rather than using a user's username and
+password to both <em>authorize and authenticate</em> a request, OAuth2 requires
+users to complete an <em>authorization flow</em> that generates an <code>access_token</code>
+to be used for authentication. Access tokens are provided to both 1st and
+3rd party clients who wish to access the server's protected resources. Clients
+store the <code>access token</code> instead of the user's credentials, which makes it a
+more secure authentication method.</p>
+<p>Read more about the <a href="https://oauth.net/2/">OAuth 2.0 standards</a>.</p>
+<h2 id="client-libraries">Client Libraries<a class="headerlink" href="#client-libraries" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/farmOS/farmOS.py">farmOS.py</a> and
+<a href="https://github.com/farmOS/farmOS.js">farmOS.js</a> client libraries use the
+OAuth2 protocol to interact with the farmOS API.</p>
+<h2 id="oauth2-bearer-tokens">OAuth2 Bearer Tokens<a class="headerlink" href="#oauth2-bearer-tokens" title="Permanent link">&para;</a></h2>
+<p>Once you have an OAuth2 token, you can authenticate requests to the farmOS
+server by including an <code>Authentication: Bearer {access_token}</code> header.</p>
+<h2 id="oauth2-details">OAuth2 Details<a class="headerlink" href="#oauth2-details" title="Permanent link">&para;</a></h2>
+<p>The OAuth protocol defines a process where users <em>authorize</em> 1st and 3rd
+party <em>clients</em> with <em>scoped</em> access to data on the server. The following
+describes the details necessary for using OAuth2 authorization with a farmOS
+server.</p>
+<h3 id="scopes">Scopes<a class="headerlink" href="#scopes" title="Permanent link">&para;</a></h3>
+<p>OAuth Scopes define different levels of permission. The farmOS server
+implements scopes as roles associated with OAuth clients. This means that users
+will authorize clients with roles that determine how much access they have
+to data on the server.</p>
+<h3 id="clients">Clients<a class="headerlink" href="#clients" title="Permanent link">&para;</a></h3>
+<p>An OAuth Client represents a 1st or 3rd party integration with the farmOS
+server. Clients are uniquely identified by a <code>client_id</code> and are
+configured to use different <code>scopes</code>.</p>
+<p>The core <code>farm_api</code> module provides a default client with
+<code>client_id = farm</code>. If you are writing a script that communicates with <em>your</em>
+farmOS server via the API, you should use this client to authorize access and
+generate an <code>access_token</code> for authentication.</p>
+<p>If you are creating a third party integration with farmOS, see the
+<a href="/development/module/oauth">OAuth</a> page of the farmOS module development docs
+for steps to create an OAuth Client.</p>
+<h3 id="authorization-flows">Authorization Flows<a class="headerlink" href="#authorization-flows" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://oauth.net/2/">OAuth 2.0 standards</a> outline 5
+<a href="https://oauth.net/2/grant-types/">Oauth2 Grant Types</a> to be used in an OAuth2
+Authorization Flow - They are the <em>Authorization Code, Implicit, Password
+Credentials, Client Credentials</em> and <em>Refresh Token</em> Grants. The
+<a href="#authorization-code-grant">Authorization Code</a> and
+<a href="#refreshing-tokens">Refresh Token</a> grants are the only Authorization Flows
+recommended by farmOS for use with 3rd party clients.</p>
+<p><strong>NOTE:</strong> Only use the <strong>Password Grant</strong> if the client can be trusted with a
+farmOS username and password (this is considered <em>1st party</em>). The
+<strong>Client Credentials Grant</strong> is often used for machine authentication not
+associated with a user account. The client credentials grant should only be
+used if a <code>client_secret</code> can be kept secret. If connecting to multiple
+farmOS servers, each server should use a different secret. This is
+challenging due to the nature of farmOS being a self-hosted application.</p>
+<h4 id="authorization-code-grant">Authorization Code Grant<a class="headerlink" href="#authorization-code-grant" title="Permanent link">&para;</a></h4>
+<p>The Authorization Code Grant is most popular for 3rd party client
+authorization.</p>
+<p>Requesting resources is a four step process:</p>
+<p><strong>First</strong>: the client sends a request to the farmOS server <code>/oauth/authorize</code>
+endpoint requesting an <code>Authorization Code</code>. The user logs in and authorizes
+the client to have the OAuth Scopes it is requesting.</p>
+<pre><code>Copy this link to browser -
+http://localhost/oauth/authorize?response_type=code&amp;client_id=farmos_development&amp;scope=user_access&amp;redirect_uri=http://localhost/api/authorized&amp;state=p4W8P5f7gJCIDbC1Mv78zHhlpJOidy
 </code></pre>
-<p>Edit <code>docker-compose.yml</code> and enter the gateway IP in the <code>XDEBUG_CONFIG</code>
-environment variable. For example:</p>
-<pre><code>environment:
-  XDEBUG_MODE: debug
-  XDEBUG_CONFIG: client_host=192.168.128.1
+<p><strong>Second</strong>: after the user accepts, the server redirects
+to the <code>redirect_uri</code> with an authorization <code>code</code> and <code>state</code> in the query
+parameters.</p>
+<pre><code>Example redirect url from server:
+http://localhost/api/authorized?code=9eb9442c7a2b011fd59617635cca5421cd089943&amp;state=p4W8P5f7gJCIDbC1Mv78zHhlpJOidy
 </code></pre>
-<p>Restart the Docker containers for this change to take affect.</p>
-<pre><code>docker-compose restart
+<p><strong>Third</strong>: copy the <code>code</code> and <code>state</code> from the URL into the body of a POST
+request. The <code>grant_type</code>, <code>client_id</code>, <code>client_secret</code> and <code>redirect_uri</code> must
+also be included in the POST body. The client makes a POST request to the
+<code>/oauth/token</code> endpoint to retrieve an <code>access_token</code> and <code>refresh_token</code>.</p>
+<pre><code>foo@bar:~$ curl -X POST -d "grant_type=authorization_code&amp;code=ae4d1381cc67def1c10dc88a19af6ac30d7b5959&amp;client_id=farmos_development&amp;redirect_uri=http://localhost/api/authorized" http://localhost/oauth/token
+{"access_token":"3f9212c4a6656f1cd1304e47307927a7c224abb0","expires_in":"10","token_type":"Bearer","scope":"user_access","refresh_token":"292810b04d688bfb5c3cee28e45637ec8ef1dd9e"}
 </code></pre>
-<p><strong>Note</strong>: If the Docker containers are removed and recreated, the IP address
-may change, and you will need to repeat these steps to reconfigure it.</p>
-<h2 id="phpstorm">PHPStorm<a class="headerlink" href="#phpstorm" title="Permanent link">&para;</a></h2>
-<p>If you are using the PHPStorm IDE, with the configuration above in place,
-enable the "Start listening for PHP Debug Connections" option. Add a
-breakpoint in your code, load the page in your browser, and you should see
-a prompt appear in PHPStorm that will begin the debugging session and pause
-execution at your breakpoint.</p>
-<h3 id="drush-phpstorm">Drush + PHPStorm<a class="headerlink" href="#drush-phpstorm" title="Permanent link">&para;</a></h3>
-<p>Debugging code that is run via <a href="/development/environment/drush">Drush</a> commands
-requires additional configuration. Add an <code>XDEBUG_SESSION</code> environment variable
-with a value of <code>PHPSTORM</code>, and a <code>PHP_IDE_CONFIG</code> environment variable with a
-value of <code>serverName=localhost</code>, as follows:</p>
-<pre><code>environment:
-  XDEBUG_MODE: debug
-  XDEBUG_CONFIG: client_host=192.168.128.1
-  XDEBUG_SESSION: PHPSTORM
-  PHP_IDE_CONFIG: serverName=localhost
+<p><strong>Fourth</strong>: the client sends the access token in the request header to access protected
+resources. The header is an Authorization header with a Bearer token:
+ <code>Authorization: Bearer access_token</code></p>
+<pre><code>foo@bar:~$ curl --header "Authorization: Bearer b872daf5827a75495c8194c6bfa4f90cf46c143e" http://localhost/farm.json
+{"name":"farmos-server","url":"http:\/\/localhost","api_version":"1.1","user":{"uid":"1","name":"admin", ....
 </code></pre>
-<p>Run a <code>drush</code> command and a prompt should appear in PHPStorm. You will need to
-map the path to Drush (<code>vendor/drush</code>) in the PHPStorm debugger config. Then
-you can set breakpoints in the Drush code you want to test.</p>
+<h4 id="password-credentials-grant">Password Credentials Grant<a class="headerlink" href="#password-credentials-grant" title="Permanent link">&para;</a></h4>
+<p><strong>NOTE:</strong> Only use the <strong>Password Grant</strong> if the client can be trusted with a
+farmOS username and password (this is considered <em>1st party</em>).</p>
+<p>The Password Credentials Grant uses a farmOS <code>username</code> and <code>password</code> to
+retrieve an <code>access_token</code> and <code>refresh_token</code> in one step. For the user, this
+is the simplest type of <em>authorization.</em> Because the client can be trusted with
+their farmOS Credentials, a users <code>username</code> and <code>password</code> can be collected
+directly into a login form within the client application. These credentials are
+then used (not stored) to request tokens which are used for <em>authentication</em>
+with the farmOS server and retrieving data.</p>
+<p>Requesting protected resources is a two step process:</p>
+<p><strong>First</strong>, the client sends a POST request to the farmOS server <code>/oauth/token</code>
+endpoint with <code>grant_type</code> set to <code>password</code> and a <code>username</code> and <code>password</code>
+included in the request body.</p>
+<pre><code>$ curl -X POST -d "grant_type=password&amp;username=username&amp;password=test&amp;client_id=farm&amp;scope=user_access" http://localhost/oauth/token
+{"access_token":"e69c60dea3f5c59c95863928fa6fb860d3506fe9","expires_in":"300","token_type":"Bearer","scope":"user_access","refresh_token":"cead7d46d18d74daea83f114bc0b512ec4cc31c3"}
+</code></pre>
+<p><strong>second</strong>, the client sends the <code>access_token</code> in the request header to access protected
+resources. The header is an Authorization header with a Bearer token:
+ <code>Authorization: Bearer access_token</code></p>
+<pre><code>foo@bar:~$ curl --header "Authorization: Bearer e69c60dea3f5c59c95863928fa6fb860d3506fe9" http://localhost/farm.json
+{"name":"farmos-server","url":"http:\/\/localhost","api_version":"1.1","user":{"uid":"1","name":"admin", ....
+</code></pre>
+<h4 id="refreshing-tokens">Refreshing Tokens<a class="headerlink" href="#refreshing-tokens" title="Permanent link">&para;</a></h4>
+<p>The <code>refresh_token</code> can be used to retrieve a new <code>access_token</code> if the token
+has expired.</p>
+<p>It is a one step process:</p>
+<p>The client sends an authenticated request to the <code>/oauth/token</code>endpoint with
+<code>grant_type</code> set to <code>refresh_token</code> and includes the <code>refresh_token</code>,
+<code>client_id</code> and <code>client_secret</code> in the request body.</p>
+<pre><code>foo@bar:~$ curl -X POST -H 'Authorization: Bearer ad52c04d26c1002084501d28b59196996f0bd93f' -d 'refresh_token=52e7a0e12e8ddd08b155b3b3ee385687fef01664&amp;grant_type=refresh_token&amp;client_id=farmos_api_client&amp;client_secret=client_secret' http://localhost/oauth/token
+{"access_token":"acdbfabb736e42aa301b50fdda95d6b7fd3e7e14","expires_in":"300","token_type":"Bearer","scope":"user_access","refresh_token":"b73f4744840498a26f43447d8cf755238bfd391a"}
+</code></pre>
+<p>The server responds with an <code>access_token</code> and <code>refresh_token</code> that can be used
+in future requests. The previous <code>access_token</code> and <code>refresh_token</code> will no
+longer work.</p>
                 
               
               
@@ -693,7 +881,7 @@ you can set breakpoints in the Drush code you want to test.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../composer/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -702,19 +890,19 @@ you can set breakpoints in the Drush code you want to test.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Composer
+                Introduction
               </div>
             </div>
           </a>
         
         
-          <a href="../tests/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../changes/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Automated tests
+                Changes
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
