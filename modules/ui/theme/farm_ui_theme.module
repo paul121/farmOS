@@ -11,3 +11,17 @@
 function farm_ui_theme_preprocess_toolbar(&$variables) {
   $variables['#attached']['library'][] = 'farm_ui_theme/toolbar';
 }
+
+/**
+ * Implements hook_theme().
+ */
+function farm_ui_theme_theme($existing, $type, $theme, $path) {
+  return [
+    'page__asset' => [
+      'variables' => [
+        'page',
+      ],
+    ],
+  ];
+}
+
