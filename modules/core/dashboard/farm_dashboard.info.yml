@@ -4,5 +4,6 @@ type: module
 package: farmOS UI
 core_version_requirement: ^9
 dependencies:
+  - drupal:layout_discovery
   - drupal:views
   - drupal:block
