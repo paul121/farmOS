@@ -21,7 +21,7 @@ class AssetAddLogBlock extends BlockBase {
 
     $button = [
       '#type' => 'dropbutton',
-      '#dropbutton_type' => 'small',
+      '#dropbutton_type' => 'standard',
       '#links' => [],
     ];
 

@@ -15,13 +15,103 @@ function farm_ui_theme_preprocess_toolbar(&$variables) {
 /**
  * Implements hook_theme().
  */
-function farm_ui_theme_theme($existing, $type, $theme, $path) {
-  return [
-    'page__asset' => [
-      'variables' => [
-        'page',
-      ],
-    ],
-  ];
-}
-
+//function farm_ui_theme_theme($existing, $type, $theme, $path) {
+//  return [
+//    'page__asset' => [
+//      'variables' => [
+//        'page',
+//      ],
+//    ],
+//    'form__asset_animal_edit_form' => [
+//      'variables' => [
+//        'form',
+//      ],
+//    ],
+//  ];
+//}
+//
+///**
+// * Implements hook_form_alter().
+// */
+//function farm_ui_theme_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+//
+//  $route_name = \Drupal::routematch()->getRoutename();
+//
+//  $route_names = [
+//    'entity.asset.edit_form',
+//  ];
+//
+//  if (in_array($route_name, $route_names)) {
+//    $form['#theme'][] = 'node_edit_form';
+//    $form['#theme'][] = 'node_form';
+//    $form['#attributes']['class'][] = 'node-form';
+//    $form['#attached']['library'][] = 'node/form';
+//    $form['#attached']['library'][] = 'claro/node-form';
+//
+//    $form['advanced']['#type'] = 'container';
+//    $form['advanced']['#accordion'] = TRUE;
+//
+//    $form['meta']['#type'] = 'container';
+//    $form['meta']['#access'] = TRUE;
+////  }
+//
+//    // Submit change weight.
+//    if (isset($form['actions']['submit'])) {
+//      $form['actions']['submit']['#weight'] = '99';
+//    }
+//
+//    if (isset($form['actions'])) {
+//      // Create gin_sticky group.
+//      $form['gin_sticky'] = [
+//        '#type' => 'container',
+//        '#attributes' => [
+//          'class' => [
+//            'gin-sticky',
+//          ],
+//        ],
+//      ];
+//      // Assign status to gin_sticky.
+//      $form['status']['#group'] = 'gin_sticky';
+//
+//      // Create actions group.
+//      $form['gin_sticky']['actions'] = [
+//        '#type' => 'actions',
+//        '#weight' => 130,
+//      ];
+//      // Add Submit to gin_sticky actions.
+//      $form['gin_sticky']['actions']['submit'] = ($form['actions']['submit']) ?? [];
+//      // Add Preview to gin_sticky actions.
+//      $form['gin_sticky']['actions']['preview'] = ($form['actions']['preview']) ?? [];
+//
+//      // Create gin_sidebar group.
+//      $form['gin_sidebar'] = [
+//        '#group' => 'meta',
+//        '#type' => 'container',
+//        '#weight' => 99,
+//        '#multilingual' => TRUE,
+//        '#attributes' => [
+//          'class' => [
+//            'gin-sidebar',
+//          ],
+//        ],
+//      ];
+//      // Copy footer over.
+//      $form['gin_sidebar']['footer'] = ($form['footer']) ?? [];
+//      // Copy actions over.
+//      $form['gin_sidebar']['actions'] = ($form['actions']) ?? [];
+//
+//      $sidebar_fields = [
+//        'flag',
+//      ];
+//
+//      foreach ($sidebar_fields as $field_name => $field_value) {
+//        $form['gin_sidebar'][$field_name] = $field_value;
+//      }
+//
+//      //$form['gin_sidebar']['A']
+//      // Unset previous added preview & submit.
+//      unset($form['gin_sidebar']['actions']['preview']);
+//      unset($form['gin_sidebar']['actions']['submit']);
+//    }
+//  }
+//}
