@@ -5,6 +5,7 @@
  * The farmOS UI Views module.
  */
 
+use Drupal\asset\Entity\AssetType;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -55,6 +56,17 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
   if ($display_id == 'page_type' && !empty($args[0])) {
     $view->removeHandler($display_id, 'field', 'type');
     $view->removeHandler($display_id, 'filter', 'type');
+
+    /** @var \Drupal\asset\Entity\AssetTypeInterface $asset_type */
+    $asset_type = AssetType::load($args[0]);
+
+    // Get the asset type third party settings.
+    $fields = $asset_type->getThirdPartySetting('farm_ui_views', 'fields');
+
+    // Add handlers for each field.
+    foreach ($fields as $id => $item) {
+      $view->setHandler($display_id, 'field', $id, $item);
+    }
   }
 
   // If this is the "Upcoming" or "Late" Logs block display, add a "more" link
