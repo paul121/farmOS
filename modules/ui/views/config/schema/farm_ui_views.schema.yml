@@ -1,0 +1,9 @@
+asset.type.*.third_party.farm_ui_views:
+  type: mapping
+  label: 'Farm UI Views settings'
+  mapping:
+    fields:
+      type: sequence
+      label: 'Fields'
+      sequence:
+        type: views.field.[plugin_id]
