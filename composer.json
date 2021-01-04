@@ -38,6 +38,7 @@
         "drupal/log": "2.x-dev",
         "drupal/migrate_plus": "^5.1",
         "drupal/migrate_tools": "^5.0",
+        "drupal/route_condition": "^2.0",
         "drupal/simple_oauth": "^5.0",
         "drupal/state_machine": "^1.0",
         "drupal/token": "^1.7",
