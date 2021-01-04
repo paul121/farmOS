@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - farm_ui_action
-    - system
+    - route_condition
   theme:
     - gin
 id: asset_add_log
@@ -18,7 +18,7 @@ settings:
   provider: farm_ui_action
   label_display: '0'
 visibility:
-  request_path:
-    id: request_path
-    pages: '/asset/*'
+  route:
+    id: route
+    routes: entity.asset.canonical
     negate: false
