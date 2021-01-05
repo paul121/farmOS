@@ -108,6 +108,14 @@ class AssetAddLogBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
+  public function getCacheTags() {
+    // Rebuild the block when new log types are installed.
+    return Cache::mergeTags(parent::getCacheTags(), ['entity_bundles']);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCacheContexts() {
     // Rebuild the block for each route. This is necessary so that links
     // prepopulate the correct asset.
