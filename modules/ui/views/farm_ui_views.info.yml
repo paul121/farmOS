@@ -10,6 +10,7 @@ dependencies:
   - farm:asset
   - farm:farm_location
   - farm:farm_ui_menu
+  - farm:farm_map
   - geofield:geofield
   - log:log
   - views_geojson:views_geojson
