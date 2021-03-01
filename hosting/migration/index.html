@@ -10,7 +10,7 @@
       
       
       <link rel="shortcut icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.3">
     
     
       
@@ -193,7 +193,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-          
             
   
   
@@ -214,7 +213,6 @@
           API
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
           
             
   
@@ -278,7 +276,6 @@
           Module
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
           
             
   
@@ -379,7 +376,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-          
             
   
   
@@ -387,6 +383,18 @@
     <li class="md-nav__item">
       <a href="../../development/environment/" class="md-nav__link">
         Getting started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/environment/https/" class="md-nav__link">
+        HTTPS
       </a>
     </li>
   
@@ -538,6 +546,53 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        Installing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/" class="md-nav__link">
+        Updating
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../email/" class="md-nav__link">
+        Email
+      </a>
+    </li>
+  
+
           
             
   
@@ -575,8 +630,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#uploaded-files" class="md-nav__link">
-    Uploaded files
+  <a href="#important-considerations" class="md-nav__link">
+    Important considerations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-migration" class="md-nav__link">
+    Running the migration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-files" class="md-nav__link">
+    Migrating files
   </a>
   
 </li>
@@ -599,6 +668,13 @@
           <li class="md-nav__item">
   <a href="#movement-logs" class="md-nav__link">
     Movement logs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantities" class="md-nav__link">
+    Quantities
   </a>
   
 </li>
@@ -647,8 +723,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#uploaded-files" class="md-nav__link">
-    Uploaded files
+  <a href="#important-considerations" class="md-nav__link">
+    Important considerations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-migration" class="md-nav__link">
+    Running the migration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-files" class="md-nav__link">
+    Migrating files
   </a>
   
 </li>
@@ -675,6 +765,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quantities" class="md-nav__link">
+    Quantities
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -694,10 +791,20 @@
                 
                 
                 <h1 id="migrating-from-farmos-1x-to-2x">Migrating from farmOS 1.x to 2.x<a class="headerlink" href="#migrating-from-farmos-1x-to-2x" title="Permanent link">&para;</a></h1>
-<p><strong>Attention</strong>: Migrations are designed to pull data from a farmOS 1.x database
-into an empty farmOS 2.x database. This is to ensure that the IDs of records
-are maintained. Do not run these migrations if records have already been
-created in the 2.x database.</p>
+<p>The upgrade path from farmOS 1.x to 2.x is performed via a database migration.
+farmOS 2.x includes a <strong>farmOS Migrate</strong> module that leverage's Drupal core's
+<a href="https://drupal.org/docs/drupal-apis/migrate-api">Migrate API</a> to provide
+migrations for each asset type, log type, etc. These migrations are defined in
+YML configuration files included with the farmOS Migrate module.</p>
+<h2 id="important-considerations">Important considerations<a class="headerlink" href="#important-considerations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Do not migrate into a farmOS 2.x instance that already has records. This is
+  to ensure that the internal auto-incrementing IDs of records are maintained.</li>
+<li>Uploaded photos/files must be copied to the destination filesystem before
+  migrating. See <a href="#migrating-files">Migrating files</a> below.</li>
+<li>See <a href="#limitations">Limitations</a> below.</li>
+</ul>
+<h2 id="running-the-migration">Running the migration<a class="headerlink" href="#running-the-migration" title="Permanent link">&para;</a></h2>
 <p>Follow the steps below to migrate your farmOS 1.x data to farmOS 2.x:</p>
 <ol>
 <li>Install farmOS 2.x.</li>
@@ -718,12 +825,16 @@ created in the 2.x database.</p>
 </code></pre>
 </li>
 <li>
-<p>Copy user-uploaded files to the new directory (see "Uploaded files" below).</p>
+<p>Copy user-uploaded files to the new directory (see
+   <a href="#migrating-files">Migrating files</a> below).</p>
 </li>
 <li>Install the farmOS Migrate (<code>farm_migrate</code>) module.</li>
 <li>
 <p>Run the farmOS 1.x Migrations via Drush (in this order):</p>
-<pre><code>drush migrate:import --group=farm_migrate
+<pre><code>drush migrate:import --group=farm_migrate_config
+drush migrate:import --group=farm_migrate_role
+drush migrate:import --group=farm_migrate_user
+drush migrate:import --group=farm_migrate_file
 drush migrate:import --group=farm_migrate_taxonomy
 drush migrate:import --group=farm_migrate_asset
 drush migrate:import --group=farm_migrate_area
@@ -748,9 +859,10 @@ drush migrate:import --group=farm_migrate_plan
 confirm that nothing is missing or incorrect. The original 1.x database will
 not be touched during the migration, so if issues are discovered it can
 continue to be used as the canonical farmOS database until further testing and
-debugging can be performed. See "Troubleshooting" below for known issues.</p>
+debugging can be performed. See <a href="#troubleshooting">Troubleshooting</a> below for
+known issues.</p>
 <p>Please open bug reports in the farmOS issue queue if new issues are discovered.</p>
-<h2 id="uploaded-files">Uploaded files<a class="headerlink" href="#uploaded-files" title="Permanent link">&para;</a></h2>
+<h2 id="migrating-files">Migrating files<a class="headerlink" href="#migrating-files" title="Permanent link">&para;</a></h2>
 <p>farmOS allows files to be uploaded/attached to records. In order to migrate
 these files, they need to be copied into new site's files/private directories.</p>
 <p>The farmOS migration code will look for files in the following locations:</p>
@@ -833,6 +945,12 @@ understand whether or not the data is needed.</strong></p>
 stored, and can be viewed with:</p>
 <pre><code>drush migrate:messages [migration_id]
 </code></pre>
+<h3 id="quantities">Quantities<a class="headerlink" href="#quantities" title="Permanent link">&para;</a></h3>
+<p>The farmOS 2.x migration creates all Quantity entities before it creates the
+Log entities that reference them. This means that it is possible to end up with
+orphaned quantities, if for instance you do not migrate all of your log types
+from farmOS 1.x. There is no built-in way to clean these up currently, so it is
+recommended that all log types be migrated.</p>
                 
               
               
@@ -850,7 +968,7 @@ stored, and can be viewed with:</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../../development/environment/documentation/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../email/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -859,7 +977,7 @@ stored, and can be viewed with:</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Documentation
+              Email
             </div>
           </div>
         </a>
@@ -889,10 +1007,10 @@ stored, and can be viewed with:</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.f5903571.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fb4a9340.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4e3fea51.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ca5457b8.min.js"></script>
       
     
   </body>
