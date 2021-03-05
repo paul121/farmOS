@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.farm_asset
+  module:
+    - system
+    - views
+  theme:
+    - gin
+id: views_block__farm_asset_block_children
+theme: gin
+region: content
+weight: -2
+provider: null
+plugin: 'views_block:farm_asset-block_children'
+settings:
+  id: 'views_block:farm_asset-block_children'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/asset/*'
+    negate: false
