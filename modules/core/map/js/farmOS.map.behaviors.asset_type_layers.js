@@ -65,6 +65,7 @@
             })
             .then((html) => {
               description.innerHTML = html;
+              instance.popup.panIntoView();
             });
         }
       });
