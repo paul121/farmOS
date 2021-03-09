@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - farm
+    - system
   theme:
     - gin
 id: farm_powered
@@ -16,4 +17,8 @@ settings:
   label: 'Powered by farmOS'
   provider: farm
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/asset/*/map_popup'
+    negate: true
