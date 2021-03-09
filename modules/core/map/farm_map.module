@@ -15,6 +15,9 @@ function farm_map_theme($existing, $type, $theme, $path) {
         'attributes' => [],
       ],
     ],
+    'html__asset__map_popup' => [
+      'base hook' => 'html',
+    ],
   ];
 }
 

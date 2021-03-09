@@ -5,3 +5,10 @@ farm_map.settings:
     _title: 'Map settings'
   requirements:
     _permission: 'administer farm map module'
+farm_map.asset.map_popup:
+  path: '/asset/{asset}/map_popup'
+  defaults:
+    view_mode: 'default'
+    _entity_view: 'asset.map_popup'
+  requirements:
+    _entity_access: asset.view
