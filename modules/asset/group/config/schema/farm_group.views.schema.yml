@@ -1,0 +1,18 @@
+views.argument_validator.asset_and_group:
+  type: mapping
+  mapping:
+    bundles:
+      type: sequence
+      label: 'Bundles'
+      sequence:
+        type: string
+        label: 'Bundle'
+    access:
+      type: boolean
+      label: 'Access'
+    operation:
+      type: string
+      label: 'Access operation to check'
+    multiple:
+      type: integer
+      label: 'Multiple arguments'
