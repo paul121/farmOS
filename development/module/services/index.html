@@ -14,7 +14,7 @@
     
     
       
-        <title>Updates - farmOS 2.x Docs</title>
+        <title>Services - farmOS 2.x Docs</title>
       
     
     
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#automated-updates" class="md-skip">
+        <a href="#services" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +92,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Updates
+              Services
             
           </span>
         </div>
@@ -544,6 +544,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../updates/" class="md-nav__link">
+        Updates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -554,22 +566,53 @@
         
       
       
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Updates
-      </a>
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Services
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../services/" class="md-nav__link">
+      <a href="./" class="md-nav__link md-nav__link--active">
         Services
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#asset-location-service" class="md-nav__link">
+    Asset location service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-membership-service" class="md-nav__link">
+    Group membership service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-query-service" class="md-nav__link">
+    Log query service
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -853,6 +896,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#asset-location-service" class="md-nav__link">
+    Asset location service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-membership-service" class="md-nav__link">
+    Group membership service
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-query-service" class="md-nav__link">
+    Log query service
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -864,14 +936,78 @@
               
                 
                 
-                <h1 id="automated-updates">Automated updates<a class="headerlink" href="#automated-updates" title="Permanent link">&para;</a></h1>
-<p>farmOS modules may change and evolve over time. If these changes require
-updates to a farmOS database or configuration, then update logic should be
-provided so that users of the module can perform the necessary changes
-automatically when they update to the new version.</p>
-<p>This logic can be supplied via implementations of <code>hook_update_N()</code>.</p>
-<p>For more information, see the documentation for Drupal's
-<a href="https://www.drupal.org/docs/drupal-apis/update-api/">Update API</a>.</p>
+                <h1 id="services">Services<a class="headerlink" href="#services" title="Permanent link">&para;</a></h1>
+<p>farmOS provides some <a href="https://symfony.com/doc/current/service_container.html">services</a>
+that encapsulate common logic like querying logs and getting an asset's current
+location. Some of these services are documented here.</p>
+<h2 id="asset-location-service">Asset location service<a class="headerlink" href="#asset-location-service" title="Permanent link">&para;</a></h2>
+<p><strong>Service name</strong>: <code>asset.location</code></p>
+<p>The asset location service provides methods that encapsulate the logic for
+determining an asset's location and geometry.</p>
+<p><strong>Methods</strong>:</p>
+<p><code>isFixed($asset)</code> - Check if an asset is fixed. Returns a boolean.</p>
+<p><code>hasLocation($asset)</code> - Check if an asset is located within other location
+assets. Returns a boolean.</p>
+<p><code>hasGeometry($asset)</code> - Check if an asset has geometry. Returns a boolean.</p>
+<p><code>getLocation($asset)</code> - Get location assets that an asset is located within.
+Returns an array of asset entities.</p>
+<p><code>getGeometry($asset)</code> - Get an asset's geometry. Returns a Well-Known Text
+string.</p>
+<p><code>getMovementLog($asset)</code> - Find the latest movement log that references an
+asset. Returns a log entity, or <code>NULL</code> if no logs were found.</p>
+<p><code>setIntrinsicGeometry($asset, $wkt)</code> - Set an asset's intrinsic geometry, given
+a string in Well-Known Text format.</p>
+<p><strong>Example usage</strong>:</p>
+<pre><code class="language-php">// Get an asset's current geometry.
+$geometry = \Drupal::service('asset.location')-&gt;getGeometry($asset);
+</code></pre>
+<h2 id="group-membership-service">Group membership service<a class="headerlink" href="#group-membership-service" title="Permanent link">&para;</a></h2>
+<p><strong>Service name</strong>: <code>group.membership</code></p>
+<p>The group membership service provides methods that encapsulate the logic for
+determining an asset's group membership. This is provided by the optional Group
+Asset module, and will only be available if that module is installed.</p>
+<p><strong>Methods</strong>:</p>
+<p><code>hasGroup()</code> - Check if an asset is a member of a group. Returns a boolean.</p>
+<p><code>getGroup()</code> - Get group assets that an asset is a member of. Returns an array
+of asset entities.</p>
+<p><code>getGroupAssignmentLog()</code> - Find the latest group assignment log that
+references an asset. Returns a log entity, or <code>NULL</code> if no logs were found.</p>
+<p><strong>Example usage:</strong></p>
+<pre><code class="language-php">// Get the groups that an asset is a member of.
+$geometry = \Drupal::service('group.membership')-&gt;getGroup($asset);
+</code></pre>
+<h2 id="log-query-service">Log query service<a class="headerlink" href="#log-query-service" title="Permanent link">&para;</a></h2>
+<p><strong>Service name</strong>: <code>log.query</code></p>
+<p>The log query service is a helper service for building a standard log database
+query. This is primarily used to query for the "latest" log of an asset.
+The asset location and group membership services use this.</p>
+<p><strong>Methods</strong>:</p>
+<p><code>getQuery()</code> - Builds a log database query.</p>
+<p>The query will be sorted by log <code>timestamp</code> and <code>id</code>, descending.</p>
+<p>It accepts a keyed array of options:</p>
+<ul>
+<li><code>type</code> (string) - Filter by log type.</li>
+<li><code>timestamp</code> (Unix timestamp) - Filter to logs by timestamp. Only logs with
+  a timestamp less than or equal to this will be included.</li>
+<li><code>status</code> (string) - Filter by log status.</li>
+<li><code>asset</code> (asset entity) - Filter to logs that reference a particular asset.</li>
+<li><code>limit</code> (int) - Only include this many results.</li>
+</ul>
+<p><strong>Example usage</strong>:</p>
+<pre><code class="language-php">// Find the latest &quot;movement&quot; log for an asset.
+$options = [
+  'asset' =&gt; $asset,
+  'timestamp' =&gt; \Drupal::time()-&gt;getCurrentTime(),
+  'status' =&gt; 'done',
+  'limit' =&gt; 1,
+];
+$query = \Drupal::service('log.query')-&gt;getQuery($options);
+$query-&gt;condition('is_movement', TRUE);
+$log_ids = $query-&gt;execute();
+
+// Load the first log.
+$log = \Drupal::service('entity_type.manager')-&gt;getStorage('log')-&gt;load(reset($log_ids));
+</code></pre>
                 
               
               
@@ -889,7 +1025,7 @@ automatically when they update to the new version.</p>
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../roles/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../updates/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -898,19 +1034,19 @@ automatically when they update to the new version.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Roles
+              Updates
             </div>
           </div>
         </a>
       
       
-        <a href="../services/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../../environment/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Services
+              Getting started
             </div>
           </div>
           <div class="md-footer__button md-icon">
