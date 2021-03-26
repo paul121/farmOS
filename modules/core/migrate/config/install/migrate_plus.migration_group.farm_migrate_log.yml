@@ -152,8 +152,8 @@ shared_configuration:
         height: height
     quantity:
       -
-        plugin: migration_lookup
-        migration: farm_migrate_quantity_standard
+        plugin: farm_migration_group_lookup
+        migration_group: farm_migrate_quantity
         source: log_quantities
         no_stub: true
       -
@@ -171,3 +171,4 @@ shared_configuration:
     optional:
       - farm_migrate_asset_equipment
       - farm_migrate_asset_group
+      - farm_migrate_inventory
