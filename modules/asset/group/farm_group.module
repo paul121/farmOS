@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_entity_base_field_info().
@@ -26,3 +27,30 @@ function farm_group_entity_base_field_info(EntityTypeInterface $entity_type) {
       return [];
   }
 }
+
+/**
+ * Implements hook_views_pre_build().
+ */
+function farm_group_views_pre_build(ViewExecutable $view) {
+
+  // Only alter the farm_log page_related view.
+  if ($view->id() != 'farm_log' || $view->current_display != 'page_related') {
+    return;
+  }
+
+  // Bail if there is no asset_target_id argument.
+  $arguments = $view->argument;
+  if (empty($arguments['asset_target_id'])) {
+    return;
+  }
+
+  // Use the asset_and_group validator.
+  $asset_argument = $arguments['asset_target_id'];
+  $asset_argument->options['validate']['type'] = 'asset_and_group';
+
+  // Allows multiple asset IDs to be used in the SQL Query.
+  // This is required, it is the "Allow multiple" option under the "More"
+  // section of the contextual filter settings.
+  $asset_argument->options['break_phrase'] = TRUE;
+}
+
