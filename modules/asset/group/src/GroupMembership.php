@@ -96,38 +96,48 @@ class GroupMembership implements GroupMembershipInterface {
    */
   public function getGroupAssignmentLog(AssetInterface $asset): ?LogInterface {
 
+    // Get the latest group assignment log.
+    $logs = $this->getGroupAssignmentLogs($asset, ['limit' => 1]);
+
+    // Return the log, if available.
+    if (!empty($logs)) {
+      return reset($logs);
+    }
+
+    // Otherwise, return NULL.
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGroupAssignmentLogs(AssetInterface $asset, array $options = []): array {
+
     // If the asset is new, no group assignment logs will reference it.
     if ($asset->isNew()) {
-      return NULL;
+      return [];
     }
 
     // Query for group assignment logs that reference the asset.
-    $options = [
+    $group_assignment_options = [
       'asset' => $asset,
       'timestamp' => $this->time->getRequestTime(),
       'status' => 'done',
-      'limit' => 1,
     ];
-    $query = $this->logQueryFactory->getQuery($options);
+    $group_assignment_options += $options;
+    $query = $this->logQueryFactory->getQuery($group_assignment_options);
     $query->condition('is_group_assignment', TRUE);
     $log_ids = $query->execute();
 
     // Bail if no logs are found.
     if (empty($log_ids)) {
-      return NULL;
+      return [];
     }
 
-    // Load the first log.
-    /** @var \Drupal\log\Entity\LogInterface $log */
-    $log = $this->entityTypeManager->getStorage('log')->load(reset($log_ids));
-
-    // Return the log, if available.
-    if (!empty($log)) {
-      return $log;
-    }
-
-    // Otherwise, return NULL.
-    return NULL;
+    // Load the logs.
+    /** @var \Drupal\log\Entity\LogInterface[] $logs */
+    $logs = $this->entityTypeManager->getStorage('log')->loadMultiple($log_ids);
+    return $logs;
   }
 
 }

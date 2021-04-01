@@ -43,4 +43,17 @@ interface GroupMembershipInterface {
    */
   public function getGroupAssignmentLog(AssetInterface $asset): ?LogInterface;
 
+  /**
+   * Get group assignment logs that reference an asset.
+   *
+   * @param \Drupal\asset\Entity\AssetInterface $asset
+   *   The asset entity.
+   * @param array $options
+   *   An array of options for building the query.
+   *
+   * @return \Drupal\log\Entity\LogInterface[]
+   *   An array of log entities.
+   */
+  public function getGroupAssignmentLogs(AssetInterface $asset, array $options = []): array;
+
 }
