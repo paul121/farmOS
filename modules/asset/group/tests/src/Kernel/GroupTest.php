@@ -3,8 +3,10 @@
 namespace Drupal\Tests\farm_group\Kernel;
 
 use Drupal\asset\Entity\Asset;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\log\Entity\Log;
+use Drupal\log\Entity\LogInterface;
 
 /**
  * Tests for farmOS group membership logic.
@@ -84,6 +86,7 @@ class GroupTest extends KernelTestBase {
     // When an asset has no group assignment logs, it has no group membership.
     $this->assertFalse($this->groupMembership->hasGroup($animal), 'New assets do not have group membership.');
     $this->assertEmpty($this->groupMembership->getGroup($animal), 'New assets do not reference any groups.');
+    $this->assertAssetGroupHistory($animal);
 
     // Create a group asset.
     /** @var \Drupal\asset\Entity\AssetInterface $first_group */
@@ -108,6 +111,7 @@ class GroupTest extends KernelTestBase {
     // When an asset has a done group assignment logs, it has group membership.
     $this->assertTrue($this->groupMembership->hasGroup($animal), 'Asset with group assignment has group membership.');
     $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Asset with group assignment is in the assigned group.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log);
 
     // Create a second group asset.
     /** @var \Drupal\asset\Entity\AssetInterface $second_group */
@@ -132,11 +136,15 @@ class GroupTest extends KernelTestBase {
     // When an asset has a pending group assignment logs, it still has the same
     // group membership as before.
     $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Pending group assignment logs do not affect membership.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log);
+    $this->assertAssetGroupHistory($animal, $second_group);
 
     // When the log is marked as "done", the asset's membership is updated.
     $second_log->status = 'done';
     $second_log->save();
     $this->assertEquals($second_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'A second group assignment log updates group membership.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log);
 
     // Create a third "done" log in the future.
     /** @var \Drupal\log\Entity\LogInterface $third_log */
@@ -153,6 +161,8 @@ class GroupTest extends KernelTestBase {
     // When an asset has a "done" group assignment log in the future, the asset
     // group membership remains the same as the previous "done" movement log.
     $this->assertEquals($second_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'A third group assignment log in the future does not update group membership.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log);
 
     // Create a fourth log with no group reference.
     /** @var \Drupal\log\Entity\LogInterface $fourth_log */
@@ -169,6 +179,67 @@ class GroupTest extends KernelTestBase {
     // effectively "unsets" the asset's group membership.
     $this->assertFalse($this->groupMembership->hasGroup($animal), 'Asset group membership can be unset.');
     $this->assertEmpty($this->groupMembership->getGroup($animal), 'Unset group membership does not reference any groups.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log, $fourth_log);
+
+    // Assign the animal to the first group and second group.
+    /** @var \Drupal\log\Entity\LogInterface $fifth_log */
+    $fifth_log = Log::create([
+      'type' => 'test',
+      'status' => 'done',
+      'is_group_assignment' => TRUE,
+      'group' => [$first_group, $second_group],
+      'asset' => ['target_id' => $animal->id()],
+    ]);
+    $fifth_log->save();
+
+    // When a log assigns multiple groups, the asset's group membership
+    // is updated to include both.
+    $this->assertEquals(2, count($this->groupMembership->getGroup($animal)), 'Fifth group membership log adds multiple groups.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $first_group, 1, $fifth_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log, $fourth_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 1, $fifth_log);
+
+    // Create a sixth log that only includes the first group.
+    /** @var \Drupal\log\Entity\LogInterface $sixth_log */
+    $sixth_log = Log::create([
+      'type' => 'test',
+      'status' => 'done',
+      'is_group_assignment' => TRUE,
+      'group' => [$first_group],
+      'asset' => ['target_id' => $animal->id()],
+    ]);
+    $sixth_log->save();
+
+    // A log can remove membership of one group, but maintain membership of
+    // another group.
+    $this->assertEquals(1, count($this->groupMembership->getGroup($animal)), 'Sixth group membership logs maintains first_group, removes second.');
+    $this->assertEquals($first_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'Sixth group membership logs maintains first_group, removes second.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $first_group, 1, $fifth_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log, $fourth_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 1, $fifth_log, $sixth_log);
+
+    // Create a seventh log with no group reference.
+    /** @var \Drupal\log\Entity\LogInterface $seventh_log */
+    $seventh_log = Log::create([
+      'type' => 'test',
+      'status' => 'done',
+      'is_group_assignment' => TRUE,
+      'group' => [],
+      'asset' => ['target_id' => $animal->id()],
+    ]);
+    $seventh_log->save();
+
+    // When a group assignment log is created with no group references, it
+    // effectively "unsets" the asset's group membership.
+    $this->assertFalse($this->groupMembership->hasGroup($animal), 'Asset group membership can be unset.');
+    $this->assertEmpty($this->groupMembership->getGroup($animal), 'Unset group membership does not reference any groups.');
+    $this->assertAssetGroupHistory($animal, $first_group, 0, $first_log, $second_log);
+    $this->assertAssetGroupHistory($animal, $first_group, 1, $fifth_log, $seventh_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 0, $second_log, $fourth_log);
+    $this->assertAssetGroupHistory($animal, $second_group, 1, $fifth_log, $sixth_log);
   }
 
   /**
@@ -281,6 +352,64 @@ class GroupTest extends KernelTestBase {
     // logs now.
     $this->assertEquals($this->logLocation->getLocation($second_log), $this->assetLocation->getLocation($animal), 'Asset location is determined by asset membership log.');
     $this->assertEquals($this->logLocation->getGeometry($second_log), $this->assetLocation->getGeometry($animal), 'Asset geometry is determined by asset membership log.');
+  }
+
+  /**
+   * Helper function to asset correct asset group history.
+   *
+   * @param \Drupal\asset\Entity\AssetInterface $asset
+   *   The asset group history.
+   * @param \Drupal\asset\Entity\AssetInterface|null $group
+   *   Optional group to check. If no group is provided, asserts that the
+   *   asset has no group history.
+   * @param int|null $interval
+   *   Optional interval to check. A group must be provided. If NULL,
+   *   asserts that the group has no interval.
+   * @param \Drupal\log\Entity\LogInterface|null $arrive
+   *   Optional arrive value to check. An interval must be provided.
+   * @param \Drupal\log\Entity\LogInterface|null $depart
+   *   Optional depart value to check. An arrive value must be provided.
+   *   If NULL, asserts that there is no depart for the interval.
+   */
+  protected function assertAssetGroupHistory(AssetInterface $asset, AssetInterface $group = NULL, int $interval = NULL, LogInterface $arrive = NULL, LogInterface $depart = NULL) {
+    $group_history = $this->groupMembership->getGroupHistory($asset);
+
+    // Assert the history is empty.
+    if (empty($group)) {
+      $this->assertEmpty($group_history, 'Asset has empty group history.');
+      return;
+    }
+
+    // Assert the history is not empty.
+    $this->assertNotEmpty($group_history, 'Asset has non-empty group history.');
+
+    // If no interval is provided, assert the group is not included.
+    if (!isset($interval)) {
+      $this->assertArrayNotHasKey($group->id(), $group_history, 'Group is not included in asset group history.');
+      return;
+    }
+
+    // Otherwise assert the group is included.
+    $this->assertArrayHasKey($group->id(), $group_history, 'Group included in asset group history.');
+
+    // Assert the correct interval exists.
+    $group_intervals = $group_history[$group->id()];
+    $this->assertArrayhasKey($interval, $group_intervals, 'Interval exists in asset group history.');
+    $interval = $group_intervals[$interval];
+
+    // Assert correct arrive and depart values.
+    if (!empty($arrive)) {
+      $this->assertNotEmpty($interval['arrive'], 'Interval has arrive value.');
+      $this->assertEquals($arrive->id(), $interval['arrive']->id(), 'Interval has correct arrive value.');
+
+      if (empty($depart)) {
+        $this->assertEmpty($interval['depart'], 'Interval has no depart value.');
+      }
+      else {
+        $this->assertNotEmpty($interval['depart'], 'Interval has depart value.');
+        $this->assertEquals($depart->id(), $interval['depart']->id(), 'Interval has correct depart value.');
+      }
+    }
   }
 
 }
