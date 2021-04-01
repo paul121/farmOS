@@ -174,14 +174,14 @@ class GroupMembership implements GroupMembershipInterface {
         if (!empty($history[$group->id()])) {
 
           // Get the group intervals and point to the last one.
-          $group_intervals = $history[$group->id()];
+          $group_intervals = &$history[$group->id()];
           $last_interval = &$group_intervals[count($group_intervals) - 1];
           $depart_log = $last_interval['depart'];
 
           // If the current log was set as the departing log above, set the
           // departing log to NULL and continue to the next group.
           if (!empty($depart_log) && $depart_log->id() == $log->id()) {
-            $group_intervals['depart'] = NULL;
+            $last_interval['depart'] = NULL;
             continue;
           }
         }
@@ -195,6 +195,49 @@ class GroupMembership implements GroupMembershipInterface {
     }
 
     return $history;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getGroupHistoryLogs(AssetInterface $asset, array $options = []): array {
+
+    // Get the group history for the asset.
+    $history = $this->getGroupHistory($asset);
+
+    // Bail if there is no group history.
+    if (empty($history)) {
+      return [];
+    }
+
+    // The conjunction must be OR so that we can have multiple condition groups.
+    $group_history_options = ['conjunction' => 'OR'];
+    $options += $group_history_options;
+    $query = $this->logQueryFactory->getQuery($options);
+
+    // Add condition groups to the query for each group membership interval.
+    foreach ($history as $group_id => $intervals) {
+      foreach ($intervals as $interval) {
+        $and = $query->andConditionGroup();
+        $and->condition('asset.entity.id', $group_id);
+        $and->condition('timestamp', $interval['arrive']->timestamp->value, '>=');
+        if (!empty($interval['depart'])) {
+          $and->condition('timestamp', $interval['depart']->timestamp->value, '<=');
+        }
+        $query->condition($and);
+      }
+    }
+
+    // Bail if no logs are found.
+    $log_ids = $query->execute();
+    if (empty($log_ids)) {
+      return [];
+    }
+
+    // Load the logs.
+    /** @var \Drupal\log\Entity\LogInterface[] $logs */
+    $logs = $this->entityTypeManager->getStorage('log')->loadMultiple($log_ids);
+    return $logs;
   }
 
 }
