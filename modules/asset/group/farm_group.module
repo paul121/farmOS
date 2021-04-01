@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -47,10 +48,45 @@ function farm_group_views_pre_build(ViewExecutable $view) {
   // Use the asset_and_group validator.
   $asset_argument = $arguments['asset_target_id'];
   $asset_argument->options['validate']['type'] = 'asset_and_group';
-
-  // Allows multiple asset IDs to be used in the SQL Query.
-  // This is required, it is the "Allow multiple" option under the "More"
-  // section of the contextual filter settings.
-  $asset_argument->options['break_phrase'] = TRUE;
 }
 
+/**
+ * Implements hook_views_query_alter().
+ */
+function farm_group_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+
+  // Bail if there is no asset_target_id argument.
+  $arguments = $view->argument;
+  if (empty($arguments['asset_target_id'])) {
+    return;
+  }
+
+  // Check if the asset_and_group validator is used.
+  $asset_argument = $arguments['asset_target_id'];
+  $validator = $asset_argument->getPlugin('argument_validator');
+  if (empty($validator) || $validator->getPluginId() != 'asset_and_group') {
+    return;
+  }
+
+  // Get the asset id from the argument.
+  $asset_id = $asset_argument->getValue();
+
+  // Bail if empty.
+  if (empty($asset_id)) {
+    return;
+  }
+
+  /** @var \Drupal\asset\Entity\AssetInterface $asset */
+  $asset = \Drupal::entityTypeManager()->getStorage('asset')->load($asset_id);
+  /** @var \Drupal\farm_group\GroupMembershipInterface $group_service */
+  $group_service = \Drupal::service('group.membership');
+
+  // Include the group history logs in the query.
+  $group_log_ids = array_map(function ($log) {
+    return $log->id();
+  }, array_values($group_service->getGroupHistoryLogs($asset)));
+
+  /** @var \Drupal\views\Plugin\views\query\Sql $query */
+  $query->setWhereGroup('OR', 0);
+  $query->addWhere(0, 'log_field_data.id', $group_log_ids, 'IN');
+}
