@@ -42,8 +42,13 @@ class LogQueryFactory implements LogQueryFactoryInterface {
    */
   public function getQuery(array $options = []): QueryInterface {
 
+    $conjunction = 'AND';
+    if (isset($options['conjunction'])) {
+      $conjunction = $options['conjunction'];
+    }
+
     // Start with a standard log entity query.
-    $query = $this->entityTypeManager->getStorage('log')->getQuery();
+    $query = $this->entityTypeManager->getStorage('log')->getQuery($conjunction);
 
     // Add a tag.
     $query->addTag('farm.log_query');
