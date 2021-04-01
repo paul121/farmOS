@@ -140,4 +140,61 @@ class GroupMembership implements GroupMembershipInterface {
     return $logs;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getGroupHistory(AssetInterface $asset): array {
+
+    // Get all group assignment logs. Sort ascending for convenience.
+    $logs = $this->getGroupAssignmentLogs($asset, ['sort' => 'ASC']);
+
+    // Build history by looping through the logs.
+    $history = [];
+    foreach ($logs as $log) {
+
+      // Set this log as the departing log for active intervals.
+      // If this log is not a departing log it will be overwritten below.
+      // This is an optimistic optimization, it prevents us needing a loop
+      // later on.
+      foreach ($history as &$group_intervals) {
+        if (!empty($group_intervals)) {
+          $last_interval = &$group_intervals[count($group_intervals) - 1];
+          $last_interval['depart'] = $last_interval['depart'] ?? $log;
+        }
+      }
+      // Unset the array pointer.
+      unset($group_intervals);
+
+      // Loop through each group the log references.
+      // Either create a new interval, or unset the depart log that was set
+      // above.
+      foreach ($log->get('group')->referencedEntities() as $group) {
+
+        // If the group has existing intervals.
+        if (!empty($history[$group->id()])) {
+
+          // Get the group intervals and point to the last one.
+          $group_intervals = $history[$group->id()];
+          $last_interval = &$group_intervals[count($group_intervals) - 1];
+          $depart_log = $last_interval['depart'];
+
+          // If the current log was set as the departing log above, set the
+          // departing log to NULL and continue to the next group.
+          if (!empty($depart_log) && $depart_log->id() == $log->id()) {
+            $group_intervals['depart'] = NULL;
+            continue;
+          }
+        }
+
+        // Otherwise we add a new interval starting with the current log.
+        $history[$group->id()][] = [
+          'arrive' => $log,
+          'depart' => NULL,
+        ];
+      }
+    }
+
+    return $history;
+  }
+
 }
