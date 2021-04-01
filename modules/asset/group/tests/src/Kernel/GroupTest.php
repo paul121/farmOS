@@ -103,8 +103,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'done',
       'is_group_assignment' => TRUE,
-      'group' => ['target_id' => $first_group->id()],
-      'asset' => ['target_id' => $animal->id()],
+      'group' => $first_group,
+      'asset' => $animal,
     ]);
     $first_log->save();
 
@@ -128,8 +128,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'pending',
       'is_group_assignment' => TRUE,
-      'group' => ['target_id' => $second_group->id()],
-      'asset' => ['target_id' => $animal->id()],
+      'group' => $second_group,
+      'asset' => $animal,
     ]);
     $second_log->save();
 
@@ -153,8 +153,8 @@ class GroupTest extends KernelTestBase {
       'timestamp' => \Drupal::time()->getRequestTime() + 86400,
       'status' => 'done',
       'is_group_assignment' => TRUE,
-      'group' => ['target_id' => $first_group->id()],
-      'asset' => ['target_id' => $animal->id()],
+      'group' => $first_group,
+      'asset' => $animal,
     ]);
     $third_log->save();
 
@@ -171,7 +171,7 @@ class GroupTest extends KernelTestBase {
       'status' => 'done',
       'is_group_assignment' => TRUE,
       'group' => [],
-      'asset' => ['target_id' => $animal->id()],
+      'asset' => $animal,
     ]);
     $fourth_log->save();
 
@@ -189,7 +189,7 @@ class GroupTest extends KernelTestBase {
       'status' => 'done',
       'is_group_assignment' => TRUE,
       'group' => [$first_group, $second_group],
-      'asset' => ['target_id' => $animal->id()],
+      'asset' => $animal,
     ]);
     $fifth_log->save();
 
@@ -207,8 +207,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'done',
       'is_group_assignment' => TRUE,
-      'group' => [$first_group],
-      'asset' => ['target_id' => $animal->id()],
+      'group' => $first_group,
+      'asset' => $animal,
     ]);
     $sixth_log->save();
 
@@ -228,7 +228,7 @@ class GroupTest extends KernelTestBase {
       'status' => 'done',
       'is_group_assignment' => TRUE,
       'group' => [],
-      'asset' => ['target_id' => $animal->id()],
+      'asset' => $animal,
     ]);
     $seventh_log->save();
 
@@ -271,8 +271,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'done',
       'is_group_assignment' => TRUE,
-      'group' => ['target_id' => $group->id()],
-      'asset' => ['target_id' => $animal->id()],
+      'group' => $group,
+      'asset' => $animal,
     ]);
     $first_log->save();
 
@@ -298,8 +298,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'done',
       'is_movement' => TRUE,
-      'location' => ['target_id' => $first_pasture->id()],
-      'asset' => ['target_id' => $animal->id()],
+      'location' => $first_pasture,
+      'asset' => $animal,
     ]);
     $second_log->save();
 
@@ -313,8 +313,8 @@ class GroupTest extends KernelTestBase {
       'type' => 'test',
       'status' => 'done',
       'is_movement' => TRUE,
-      'location' => ['target_id' => $second_pasture->id()],
-      'asset' => ['target_id' => $group->id()],
+      'location' => $second_pasture,
+      'asset' => $group,
     ]);
     $third_log->save();
 
@@ -329,7 +329,7 @@ class GroupTest extends KernelTestBase {
       'status' => 'done',
       'is_movement' => TRUE,
       'location' => [],
-      'asset' => ['target_id' => $group->id()],
+      'asset' => $group,
     ]);
     $fourth_log->save();
 
@@ -344,7 +344,7 @@ class GroupTest extends KernelTestBase {
       'status' => 'done',
       'is_group_assignment' => TRUE,
       'group' => [],
-      'asset' => ['target_id' => $animal->id()],
+      'asset' => $animal,
     ]);
     $fifth_log->save();
 
