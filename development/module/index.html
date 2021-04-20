@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="../../favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.2">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.33e2939f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f955dcd.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
@@ -515,6 +515,7 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+      
         
       
       
@@ -529,6 +530,7 @@
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
   
   
     
@@ -937,6 +939,7 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
     
   
   
@@ -1006,14 +1009,12 @@
 detailed documentation of Drupal development more generally, refer to the
 <a href="https://www.drupal.org/docs/creating-custom-modules">guide on drupal.org</a>.</p>
 <h2 id="modules-directory">Modules directory<a class="headerlink" href="#modules-directory" title="Permanent link">&para;</a></h2>
-<p>Modules should be placed in the <code>modules</code> directory of the server's document
-root, at the same level as the <code>profiles</code> directory, which contains the <code>farm</code>
-profile (farmOS). If you are using the farmOS Docker image, this will be:
-<code>/var/opt/drupal/web/modules</code></p>
-<p>farmOS automatically puts Drupal module dependencies in <code>modules/contrib</code>. A
-good practice is to download farmOS-specific modules into <code>modules/farm</code> to keep
-them separate. You may also consider creating a <code>modules/custom</code> directory for
-custom modules that are specific to your farmOS instance.</p>
+<p>Modules should be placed in the <code>sites/all/modules</code> directory of the server's
+document root. If you are using the farmOS Docker image, this will be:
+<code>/var/opt/drupal/web/sites/all/modules</code></p>
+<p>A good practice is to download farmOS-specific modules into <code>modules/farm</code> to
+keep them separate. You may also consider creating a <code>modules/custom</code> directory
+for custom modules that are specific to your farmOS instance.</p>
 <h2 id="namespacing">Namespacing<a class="headerlink" href="#namespacing" title="Permanent link">&para;</a></h2>
 <p>A farmOS (Drupal) module must have a unique name consisting only of
 lowercase alphanumeric characters and underscores. This is used as a namespace
@@ -1143,7 +1144,7 @@ refer to <a href="https://www.drupal.org/about/licensing">Drupal.org Licensing</
     <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d892486b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
       
     
   </body>
