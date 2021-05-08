@@ -26,6 +26,9 @@ RUN apt-get update && apt-get install -y libgeos-dev \
   && rm -r php-geos \
   && docker-php-ext-enable geos
 
+# Install the exif PHP extension.
+RUN docker-php-ext-install exif
+
 # Set recommended PHP settings for farmOS.
 # See https://farmos.org/hosting/installing/#requirements
 RUN { \
