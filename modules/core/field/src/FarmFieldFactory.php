@@ -662,6 +662,9 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
     $field->setDisplayOptions('form', [
       'type' => 'farm_map_geofield',
       'weight' => $options['weight']['form'] ?? 0,
+      'settings' => [
+        'geocode_file_field' => $options['geocode_file_field'] ?? FALSE,
+      ],
     ]);
     $field->setDisplayOptions('view', [
       'label' => 'inline',

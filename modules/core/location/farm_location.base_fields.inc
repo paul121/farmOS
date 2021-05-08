@@ -54,6 +54,7 @@ function farm_location_asset_base_fields() {
       'form' => 96,
     ],
     'hidden' => 'view',
+    'geocode_file_field' => 'file',
   ];
   $fields['intrinsic_geometry'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
 
@@ -146,6 +147,7 @@ function farm_location_log_base_fields() {
       'form' => 95,
       'view' => 95,
     ],
+    'geocode_file_field' => 'file',
   ];
   $fields['geometry'] = \Drupal::service('farm_field.factory')->bundleFieldDefinition($options);
 
