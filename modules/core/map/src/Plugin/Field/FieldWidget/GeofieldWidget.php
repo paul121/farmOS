@@ -83,7 +83,8 @@ class GeofieldWidget extends GeofieldBaseWidget {
     $element['value'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Geometry'),
-      '#value' => $current_value,
+      // @todo this is causing a bug.
+      #'#value' => $current_value,
     ];
 
     // Add an option to geocode geometry using files field.
