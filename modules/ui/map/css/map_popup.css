@@ -1,0 +1,11 @@
+body {
+  background: unset !important;
+}
+
+.toolbar-tray-open:not(.toolbar-vertical) .layout-container {
+  margin: 0 !important;
+}
+
+.layout-container .page-content {
+  margin-bottom: 0;
+}

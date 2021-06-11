@@ -10,6 +10,20 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Link;
 
 /**
+ * Implements hook_theme().
+ */
+function farm_ui_map_theme($existing, $type, $theme, $path) {
+  return [
+    'html__asset__map_popup' => [
+      'base hook' => 'html',
+    ],
+    'page__asset__map_popup' => [
+      'base hook' => 'page',
+    ],
+  ];
+}
+
+/**
  * Implements hook_farm_dashboard_panes().
  */
 function farm_ui_map_farm_dashboard_panes() {
@@ -74,5 +88,6 @@ function farm_ui_map_asset_view(array &$build, EntityInterface $entity, EntityVi
     '#weight' => -100,
   ];
 
+  $build['#attached']['library'][] = 'farm_ui_map/map_popup';
   return $build;
 }
