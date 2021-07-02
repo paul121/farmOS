@@ -661,6 +661,9 @@ class FarmFieldFactory implements FarmFieldFactoryInterface {
     // Build form and view display settings.
     $field->setDisplayOptions('form', [
       'type' => 'farm_map_geofield',
+      'settings' => [
+        'geometry_validation' => TRUE,
+      ],
       'weight' => $options['weight']['form'] ?? 0,
     ]);
     $field->setDisplayOptions('view', [
