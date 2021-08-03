@@ -4,8 +4,10 @@ namespace Drupal\farm_migrate\EventSubscriber;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Database;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
+use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -49,6 +51,7 @@ class PostMigrationSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     $events[MigrateEvents::POST_IMPORT][] = ['onMigratePostImport'];
+    $events[MigrateEvents::POST_ROW_SAVE][] = ['onMigratePostRowSave'];
     return $events;
   }
 
@@ -94,6 +97,64 @@ class PostMigrationSubscriber implements EventSubscriberInterface {
         ':revision_log_message' => 'Migrated from farmOS 1.x on ' . date('Y-m-d', $this->time->getRequestTime()),
       ];
       $this->database->query($query, $args);
+    }
+  }
+
+  /**
+   * Run logic after rows are migrated.
+   *
+   * @param \Drupal\migrate\Event\MigratePostRowSaveEvent $event
+   *   The post row save migrate event.
+   */
+  public function onMigratePostRowSave(MigratePostRowSaveEvent $event) {
+
+    $migration = $event->getMigration();
+    $migration_id = $migration->id();
+
+    // Migrate listener sensor data for each data stream.
+    if ($migration_id === "farm_migrate_sensor_listener_data_streams") {
+
+      // Get values to identify the source data.
+      $migration_row = $event->getRow();
+      $source_id = $migration_row->getSourceProperty('id');
+      $source_name = $migration_row->getSourceProperty('name');
+
+      // Get the destination data stream ID.
+      $destination_id = $event->getDestinationIdValues()[0];
+
+      // Query the source for data. Override the ID field that is returned with
+      // each row to be the ID of the migrated data stream.
+      $query = "SELECT :id as id, timestamp, value_numerator, value_denominator
+          FROM {farm_sensor_data} fsd
+          WHERE fsd.id = :sensor_id and fsd.name = :name
+         ";
+      $args = [
+        'id' => $destination_id,
+        'sensor_id' => $source_id,
+        'name' => $source_name,
+      ];
+      $source_db = Database::getConnection('default', 'migrate');
+      $source_data = $source_db->query($query, $args);
+      $source_data->setFetchMode(\PDO::FETCH_ASSOC);
+
+      // Start an insert statement.
+      $insert = $this->database->insert('data_stream_basic')
+        ->fields(['id', 'timestamp', 'value_numerator', 'value_denominator']);
+
+      // Loop through the source data and insert in batches.
+      $batch_size = 10000;
+      $count = 0;
+      foreach ($source_data as $data) {
+        $insert->values($data);
+        $count++;
+        if ($count >= $batch_size) {
+          $insert->execute();
+          $count = 0;
+          $insert = $this->database->insert('data_stream_basic')
+            ->fields(['id', 'timestamp', 'value_numerator', 'value_denominator']);
+        }
+      }
+      $insert->execute();
     }
   }
 
