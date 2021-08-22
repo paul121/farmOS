@@ -1,0 +1,18 @@
+workspaceLocation: "."
+tasks:
+  - name: Prepare docker development.
+    init: |
+      # Build the development docker image with the gitpod user id.
+      docker build --build-arg WWW_DATA_ID="$(id -u)" /workspace/farmOS/docker/dev -t farmos/farmos:2.x-dev
+
+      # Create docker-compose.yml.
+      cp /workspace/farmOS/docker/docker-compose.development.yml /workspace/docker-compose.yml && docker-compose up -d
+
+      # Replace farmOS repo.
+      rm -r /workspace/web/profiles/farm && mv /workspace/farmOS /workspace/web/profiles/farm
+
+      # Reinstall composer.
+      rm /workspace/web/composer.lock && docker-compose exec -u www-data www composer install
+
+ports:
+  - port: 8080
