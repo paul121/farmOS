@@ -6,7 +6,9 @@ tasks:
       docker build --build-arg WWW_DATA_ID="$(id -u)" /workspace/farmOS/docker/dev -t farmos/farmos:2.x-dev
 
       # Create docker-compose.yml.
-      cp /workspace/farmOS/docker/docker-compose.development.yml /workspace/docker-compose.yml && docker-compose up -d
+      cp /workspace/farmOS/docker/docker-compose.development.yml /workspace/docker-compose.yml
+      cp /workspace/farmOS/.gitpod/docker-compose.override.yml /workspace
+      docker-compose up -d
 
       # Replace farmOS repo.
       rm -r /workspace/web/profiles/farm && mv /workspace/farmOS /workspace/web/profiles/farm
