@@ -9,3 +9,5 @@ data_stream_notification.delivery.email:
       sequence:
         label: 'Email'
         type: email
+    mail:
+      type: mail

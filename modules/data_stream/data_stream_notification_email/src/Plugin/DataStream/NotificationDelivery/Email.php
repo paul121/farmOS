@@ -89,6 +89,21 @@ class Email extends NotificationDeliveryBase implements ContainerFactoryPluginIn
       '#lines' => 5,
     ];
 
+    $form['mail']['subject'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Email subject'),
+      '#default_value' => $this->configuration['mail']['subject'] ?? $this->t('Data stream notification'),
+      '#required' => TRUE,
+    ];
+
+    $form['mail']['body'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Email body'),
+      '#default_value' => $this->configuration['mail']['body'] ?? $this->t('Email body'),
+      '#required' => TRUE,
+      '#lines' => 5,
+    ];
+
     return $form;
   }
 
