@@ -1,0 +1,20 @@
+farm_api.asset.api_individual:
+  title: API
+  group: asset
+  route_name: jsonapi.asset--land.individual
+  options:
+    query:
+      include: 'asset_type'
+
+
+entity.asset.edit_form:
+  title: Edit
+  group: asset
+  route_name: entity.asset.edit_form
+  weight: 10
+
+entity.asset.delete_form:
+  title: Delete
+  group: asset
+  route_name: entity.asset.delete_form
+  weight: 20

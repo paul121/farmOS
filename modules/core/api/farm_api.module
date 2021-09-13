@@ -90,3 +90,42 @@ function farm_api_entity_base_field_info(EntityTypeInterface $entity_type) {
 
   return $fields;
 }
+
+/**
+ * Implements hook_contextual_links_alter().
+ */
+function farm_api_contextual_links_alter(array &$links, $group, array $route_parameters) {
+
+  $types = ['log', 'asset', 'plan'];
+  if (!in_array($group, $types) || !isset($route_parameters[$group])) {
+    return;
+  }
+
+  $link_name = "farm_api.$group.api_individual";
+  if (!isset($links[$link_name])) {
+    return;
+  }
+
+  // Remove the link in case we can't validate it.
+  // We will add it back later.
+
+  $entity = \Drupal::entityTypeManager()->getStorage($group)->load($route_parameters[$group]);
+  if (empty($entity)) {
+    unset($links[$link_name]);
+    return;
+  }
+
+  $links[$link_name]['route_parameters'] = [
+    'entity' => $entity->uuid(),
+  ];
+
+  $x = 1;
+
+}
+
+/**
+ * Implements hook_contextual_links_view_alter().
+ */
+function farm_api_contextual_links_view_alter(&$element, $items) {
+  $x = 1;
+}
