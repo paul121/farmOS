@@ -5,7 +5,6 @@ namespace Drupal\farm_quick;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\farm_quick\Form\QuickForm;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -46,15 +45,15 @@ class QuickFormManager extends DefaultPluginManager {
   public function getRoutes(): RouteCollection {
     $route_collection = new RouteCollection();
     foreach ($this->getDefinitions() as $id => $definition) {
+      $class = $definition['class'];
       $route = new Route(
         "/quick/$id",
         [
-          '_form' => QuickForm::class,
-          '_title_callback' => QuickForm::class . '::getTitle',
-          'id' => $id,
+          '_form' => $class,
+          '_title_callback' => $class . '::getLabel',
         ],
         [
-          '_custom_access' => QuickForm::class . '::access',
+          '_custom_access' => $class . '::access',
         ],
       );
       $route_collection->add("farm.quick.$id", $route);

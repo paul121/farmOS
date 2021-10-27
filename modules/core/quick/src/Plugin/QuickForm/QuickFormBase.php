@@ -103,7 +103,16 @@ class QuickFormBase extends PluginBase implements QuickFormInterface, ContainerF
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    return [];
+    // Add a submit button.
+    $form['actions'] = [
+      '#type' => 'actions',
+      '#weight' => 1000,
+    ];
+    $form['actions']['submit'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Submit'),
+    ];
+    return $form;
   }
 
   /**
