@@ -275,7 +275,7 @@ class AssetLocation implements AssetLocationInterface {
       -- Exclude records with future log entries.
       AND lfd2.id IS NULL";
     $args = [
-      ':timestamp' => $this->time->getRequestTime(),
+      ':timestamp' => $this->time->getCurrentTime(),
       ':location_ids[]' => $location_ids,
     ];
     $result = $this->database->query($query, $args)->fetchAll();
