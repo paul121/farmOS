@@ -1226,7 +1226,13 @@ organization.</p>
 </ul>
 <h2 id="geometry">Geometry<a class="headerlink" href="#geometry" title="Permanent link">&para;</a></h2>
 <p>When a Log is saved without a geometry, and it references locations that have
-geometries, the locations geometries will be copied to the Log.</p>
+geometries, the combined geometries of the referenced locations will be copied
+to the Log. Assets referenced in the Location relationship are given first
+priority. If none are found, then Assets referenced in the Log's Asset
+relationship will be used. In the latter case, only Assets that are explicitly
+designated as locations will be included, and geometry will not be copied if
+the Log is a movement (otherwise it would be impossible to clear the geometry
+of a non-fixed location Asset via movement Logs).</p>
 
               
             </article>
