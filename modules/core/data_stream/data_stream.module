@@ -88,14 +88,19 @@ function data_stream_data_stream_view_alter(array &$build, DataStreamInterface $
  */
 function data_stream_data_stream_delete(DataStreamInterface $data_stream) {
 
+  // Save the database schema. Only execute queries if the table exists.
+  $schema = \Drupal::database()->schema();
+
   // @todo Considerations for improved entity reference integrity?
   // Remove any references to this data stream from the asset.data_stream field.
-  \Drupal::database()->delete('asset__data_stream')
-    ->condition('data_stream_target_id', $data_stream->id())
-    ->execute();
+  if ($schema->tableExists('asset__data_stream')) {
+    \Drupal::database()->delete('asset__data_stream')
+      ->condition('data_stream_target_id', $data_stream->id())
+      ->execute();
+  }
 
   // If this is a "basic" data stream, delete data associated with it.
-  if ($data_stream->bundle() == 'basic' && !empty($data_stream->id())) {
+  if ($schema->tableExists('data_stream_basic') && $data_stream->bundle() == 'basic' && !empty($data_stream->id())) {
     \Drupal::database()->delete('data_stream_basic')
       ->condition('id', $data_stream->id())
       ->execute();
