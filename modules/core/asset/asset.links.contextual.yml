@@ -1,0 +1,23 @@
+entity.asset.edit_form:
+  title: Edit
+  group: asset
+  route_name: entity.asset.edit_form
+  weight: 10
+
+entity.asset.delete_form:
+  title: Delete
+  group: asset
+  route_name: entity.asset.delete_form
+  weight: 20
+
+entity.log.edit_form:
+  title: Edit
+  group: log
+  route_name: entity.log.edit_form
+  weight: 10
+
+entity.log.delete_form:
+  title: Delete
+  group: log
+  route_name: entity.log.delete_form
+  weight: 20
