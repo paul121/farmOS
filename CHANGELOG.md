@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - [Issue #3311264: Coordinate upgrade of Consumers module to get client_id base field](https://www.drupal.org/project/farm/issues/3311264)
+- [Issue #3282186: Update simple_oauth to ^5.2](https://www.drupal.org/project/farm/issues/3282186)
 
 ### Fixed
 
