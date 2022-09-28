@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- [Issue #3311264: Coordinate upgrade of Consumers module to get client_id base field](https://www.drupal.org/project/farm/issues/3311264)
+
 ### Fixed
 
 - [Adapt csv export logic to support a type filter allowing single or multiple values. #584](https://github.com/farmOS/farmOS/pull/584)
