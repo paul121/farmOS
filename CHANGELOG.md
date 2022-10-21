@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add action for assigning asset parent.
+
 ## [2.0.0-beta7] 2022-09-29
 
 ### Added
