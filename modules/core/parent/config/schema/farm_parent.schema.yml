@@ -1,0 +1,4 @@
+# Schema for actions.
+action.configuration.asset_parent_action:
+  type: asset_parent_action
+  label: 'Configuration for the asset parent action'
