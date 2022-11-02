@@ -4,3 +4,9 @@ farm_log.asset_add_log_action_form:
     _form: 'Drupal\farm_log\Form\AssetAddLogActionForm'
   requirements:
     _user_is_logged_in: 'TRUE'
+farm_log.log_categorize_action_form:
+  path: '/log/categorize'
+  defaults:
+    _form: 'Drupal\farm_log\Form\LogCategorizeActionForm'
+  requirements:
+    _user_is_logged_in: 'TRUE'
