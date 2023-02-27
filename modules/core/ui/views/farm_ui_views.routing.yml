@@ -1,0 +1,12 @@
+farm_ui_views.table_column_preference_form:
+  path: '/farm/settings/table_column_preference/{view}'
+  defaults:
+    #_title_callback: '\Drupal\farm_ui_location\Form\LocationHierarchyForm::getTitle'
+    _title: 'Table settings'
+    _form: \Drupal\farm_ui_views\Form\TableColumnPreferenceForm
+  requirements:
+    _permission: 'access locations overview'
+  options:
+    parameters:
+      view:
+        type: entity:view

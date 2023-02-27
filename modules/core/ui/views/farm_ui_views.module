@@ -5,6 +5,7 @@
  * The farmOS UI Views module.
  */
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -163,6 +164,49 @@ function farm_ui_views_form_views_exposed_form_alter(&$form, FormStateInterface 
   $bundles = !empty($bundle) ? [$bundle] : [];
   $allowed_options = farm_flag_options($entity_type, $bundles, TRUE);
   $form['flag_value']['#options'] = $allowed_options;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function farm_ui_views_preprocess_views_view_table(&$variables) {
+
+  // Bail if no view.
+  if (empty($variables['view'])) {
+    return;
+  }
+
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $variables['view'];
+
+  // Check if the view display has the collapsible_filter extender enabled.
+  $extenders = $view->getDisplay()->getExtenders();
+  if (array_key_exists('table_column_preference', $extenders) && $extenders['table_column_preference']->options['table_column_preference']) {
+    $test = [
+      '#type' => 'link',
+      '#url' => Url::fromRoute('farm_ui_views.table_column_preference_form', ['view' => $view->id()]),
+      '#attributes' => [
+        'class' => ['table-column-preference-link use-ajax'],
+        'data-dialog-type' => 'dialog',
+        'data-dialog-renderer' => 'off_canvas',
+        'data-dialog-options' => Json::encode(['width' => 400]),
+      ],
+      '#attached' => [
+        'library' => [
+          'core/drupal.dialog.ajax',
+        ],
+      ],
+    ];
+//
+//    $variables['caption'] = render($test);
+//    $variables['caption'] = $test;
+    // Always render a caption.
+    $variables['caption_needed'] = TRUE;
+
+    $variables['attributes']['data-farm-table-column-preference'] = TRUE;
+    $variables['attributes']['data-farm-table-column-preference-default-hidden'] = 'id';
+    $variables['#attached']['library'][] = 'farm_ui_views/table_column_preference';
+  }
 }
 
 /**

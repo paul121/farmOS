@@ -2,3 +2,9 @@ views_collapsible_filter:
   css:
     theme:
       css/views_collapsible_filters.css: { }
+table_column_preference:
+  css:
+    theme:
+      css/table_column_preference.css: { }
+  js:
+    js/table_column_preference.js: { }
