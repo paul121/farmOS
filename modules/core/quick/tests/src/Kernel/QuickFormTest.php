@@ -92,7 +92,7 @@ class QuickFormTest extends KernelTestBase {
     $this->assertEquals('Overridden help text', $quick_forms['configurable_test2']->getHelpText());
 
     // Confirm configuration of configurable_test2 quick form.
-    $this->assertEquals(['test_default' => 500], $quick_forms['configurable_test2']->getPlugin()->defaultConfiguration());
+    $this->assertEquals(['test_default' => 500], $quick_forms['configurable_test2']->getPlugin()->getConfiguration());
   }
 
   /**
