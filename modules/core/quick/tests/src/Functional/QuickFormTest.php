@@ -34,8 +34,8 @@ class QuickFormTest extends FarmBrowserTestBase {
     $this->drupalGet('quick');
     $this->assertSession()->statusCodeEquals(403);
 
-    // Create and login a test user with access to the quick form index.
-    $user = $this->createUser(['view quick forms index']);
+    // Create and login a test user with access to view quick forms.
+    $user = $this->createUser(['view quick_form']);
     $this->drupalLogin($user);
 
     // Go to the quick form index and confirm that access is granted, but no
@@ -50,7 +50,7 @@ class QuickFormTest extends FarmBrowserTestBase {
 
     // Create and login a test user with access to the quick form index, and
     // permission to create test logs.
-    $user = $this->createUser(['view quick forms index', 'create test log']);
+    $user = $this->createUser(['view quick_form', 'create test log']);
     $this->drupalLogin($user);
 
     // Go to the quick form index and confirm that:
@@ -82,8 +82,8 @@ class QuickFormTest extends FarmBrowserTestBase {
     $this->assertSession()->statusCodeEquals(403);
 
     // Create and login a test user with permission to create test logs and
-    // permission to configure quick forms.
-    $user = $this->createUser(['create test log', 'configure quick forms']);
+    // permission to update quick forms.
+    $user = $this->createUser(['create test log', 'update quick_form']);
     $this->drupalLogin($user);
 
     // Go to the default configurable_test quick form and confirm that the
