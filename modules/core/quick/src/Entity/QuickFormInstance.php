@@ -108,7 +108,13 @@ class QuickFormInstance extends ConfigEntityBase implements QuickFormInstanceInt
    */
   protected function getPluginCollection() {
     if (!$this->pluginCollection) {
-      $this->pluginCollection = new QuickFormPluginCollection(\Drupal::service('plugin.manager.quick_form'), $this->plugin, $this->get('settings'), $this->id());
+      $this->pluginCollection = new QuickFormPluginCollection(
+        \Drupal::service('plugin.manager.quick_form'),
+        $this->plugin,
+        $this->get('settings'),
+        $this->id(),
+        \Drupal::service('module_handler'),
+      );
     }
     return $this->pluginCollection;
   }

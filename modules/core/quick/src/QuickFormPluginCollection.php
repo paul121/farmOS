@@ -4,12 +4,20 @@ namespace Drupal\farm_quick;
 
 use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultSingleLazyPluginCollection;
 
 /**
  * Provides a collection of quick form plugins.
  */
 class QuickFormPluginCollection extends DefaultSingleLazyPluginCollection {
+
+  /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
 
   /**
    * The quick form ID this plugin collection belongs to.
@@ -29,9 +37,12 @@ class QuickFormPluginCollection extends DefaultSingleLazyPluginCollection {
    *   An array of configuration.
    * @param string $quick_form_id
    *   The unique ID of the quick form entity using this plugin.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
+   *   The module handler service.
    */
-  public function __construct(PluginManagerInterface $manager, $instance_id, array $configuration, $quick_form_id) {
+  public function __construct(PluginManagerInterface $manager, string $instance_id, array $configuration, string $quick_form_id, ModuleHandlerInterface $module_handler,) {
     parent::__construct($manager, $instance_id, $configuration);
+    $this->moduleHandler = $module_handler;
     $this->quickFormId = $quick_form_id;
   }
 
@@ -51,7 +62,7 @@ class QuickFormPluginCollection extends DefaultSingleLazyPluginCollection {
       // Ignore quick forms belonging to uninstalled modules, but re-throw valid
       // exceptions when the module is installed and the plugin is
       // misconfigured.
-      if (!$module || \Drupal::moduleHandler()->moduleExists($module)) {
+      if (!$module || $this->moduleHandler->moduleExists($module)) {
         throw $e;
       }
     }
