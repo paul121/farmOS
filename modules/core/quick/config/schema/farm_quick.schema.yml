@@ -23,3 +23,6 @@ farm_quick.quick_form.*:
       label: 'Help text'
     settings:
       type: farm_quick.settings.[%parent.plugin]
+
+farm_quick.settings.*:
+  type: quick_form_settings
