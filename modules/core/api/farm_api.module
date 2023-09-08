@@ -128,4 +128,6 @@ function farm_api_contextual_links_alter(array &$links, $group, array $route_par
  */
 function farm_api_contextual_links_view_alter(&$element, $items) {
   $x = 1;
+  // @todo We need to remove the ?destination parameter that contextual link JS always adds.
+  // @see https://www.drupal.org/project/webform/issues/2908938
 }
