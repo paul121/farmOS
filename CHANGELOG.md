@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - farmOS 4.x requires PHP 8.3+.
+- [Issue #3413263: Use Entity API query access handler to filter entity queries based on user permissions](https://www.drupal.org/project/farm/issues/3413263)
 
 ### Removed
 
