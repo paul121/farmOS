@@ -2,6 +2,7 @@
 
 namespace Drupal\farm_quick\Plugin\Action;
 
+use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Action\Plugin\Action\EntityActionBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -91,7 +92,17 @@ abstract class QuickFormActionBase extends EntityActionBase {
    * {@inheritdoc}
    */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
-    $result = $object->access('view', $account, TRUE);
+
+    /** @var \Drupal\farm_quick\QuickFormInstanceManagerInterface $manager */
+    $manager = \Drupal::service('quick_form.instance_manager');
+
+    $quick_form = $manager->getInstance($this->getQuickFormId());
+    if (!$quick_form || !$quick_form->status()) {
+      $result =  AccessResultForbidden::forbidden();
+    }
+    else {
+      $result = $object->access('view', $account, TRUE);
+    }
 
     return $return_as_object ? $result : $result->isAllowed();
   }
