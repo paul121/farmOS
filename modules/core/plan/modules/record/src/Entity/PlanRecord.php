@@ -21,6 +21,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     plural = "@count plan record relationships",
  *   ),
  *   base_table = "plan_record",
+ *   data_table = "plan_record_data",
  *   entity_keys = {
  *     "id" = "id",
  *     "uuid" = "uuid",
