@@ -82,4 +82,11 @@ class PlanRecord extends ContentEntityBase implements PlanRecordInterface {
     return $fields;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getPlan(): PlanInterface|null {
+    return $this->get('plan')->first()?->entity;
+  }
+
 }
