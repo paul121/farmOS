@@ -36,3 +36,14 @@ function farm_entity_post_update_uninstall_exif_orientation() {
     }
   }
 }
+
+/**
+ * Enforce entity reference integrity on organization reference fields.
+ */
+function farm_entity_post_update_enforce_organization_eri(&$sandbox) {
+  $config = \Drupal::configFactory()->getEditable('entity_reference_integrity_enforce.settings');
+  $entity_types = $config->get('enabled_entity_type_ids');
+  $entity_types['organization'] = 'organization';
+  $config->set('enabled_entity_type_ids', $entity_types);
+  $config->save();
+}
