@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Add an asset.logs service for retrieving logs that reference an asset #850](https://github.com/farmOS/farmOS/pull/850)
+
 ### Changed
 
 - [Single Dockerfile using multi-stages for production and dev image #855](https://github.com/farmOS/farmOS/pull/855)
