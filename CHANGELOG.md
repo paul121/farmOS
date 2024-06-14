@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Add an asset.logs service for retrieving logs that reference an asset #850](https://github.com/farmOS/farmOS/pull/850)
+
 ### Fixed
 
 - [Issue #3454144: Fix untranslated plant_type descriptions in plant and seed asset types](https://www.drupal.org/project/farm/issues/3454144)
