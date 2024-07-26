@@ -29,7 +29,12 @@
           },
         };
 
+        // Create the timeline instance.
         const timeline = farmOS.timeline.create(element, opts);
+
+        // Process timeline rows.
+        const timelineRows = JSON.parse(element.dataset?.timelineRows) ?? [];
+        timelineRows.forEach((row) => this.processRow);
 
         function createPopup(task, node) {
           const rect = node.getBoundingClientRect();
@@ -82,70 +87,73 @@
             }
           }
         });
-
-        // Helper function to map row properties.
-        const mapRow = function(row) {
-          return {
-            id: row.id,
-            label: row.label,
-            headerHtml: row.link,
-            expanded: row.expanded,
-          };
-        }
-
-        // Helper function to map task properties.
-        const mapTask = function(task) {
-          return {
-            id: task.id,
-            resourceId: task.resource_id,
-            from: task.start,
-            to: task.end,
-            label: task.label,
-            editUrl: task.edit_url,
-            enableDragging: task.enable_dragging,
-            meta: task?.meta,
-            classes: task.classes,
-          };
-        }
-
-        // Helper function to process a row.
-        // Collect tasks and child rows and child tasks.
-        const processRow = function(row) {
-
-          // Map to a row object.
-          let mappedRow = mapRow(row);
-
-          // Collect all tasks for the row.
-          let tasks = row?.tasks?.map(mapTask) ?? [];
-
-          // Process children rows.
-          // Only create the children array if there are child rows.
-          let processedChildren = row?.children?.map(processRow) ?? [];
-          if (processedChildren.length) {
-            mappedRow.children = [];
-            processedChildren.forEach((child) => {
-              mappedRow.children.push(child.row);
-              tasks.push(...child.tasks)
-            });
-          }
-
-          return {row: mappedRow, tasks};
-        }
-
-        // Build a URL to the plan timeline API.
-        const url = new URL(element.dataset.timelineUrl, window.location.origin + drupalSettings.path.baseUrl);
-        const response = fetch(url)
+      });
+    },
+    // Helper function to process a row provided to the timeline element.
+    // Rows may be objects or URL strings to request dynamic row data.
+    processRow: function(row) {
+      if (typeof row === "object") {
+        this.processRowData(row);
+      }
+      else if (typeof row === "string") {
+        const response = fetch(row)
           .then(res => res.json())
           .then(data => {
-
-            // Process each row.
             for (let i in data.rows) {
-              const {row, tasks} = processRow(data.rows[i]);
-              timeline.addRows([row]);
-              timeline.addTasks(tasks);
+              const {row, tasks} = this.processRowData(data.rows[i]);
+              if (row) {
+                timeline.addRows([row]);
+              }
+              if (tasks) {
+                timeline.addTasks(tasks);
+              }
             }
           });
-      });
+      }
+    },
+    // Helper function to process a row data object.
+    // Collect tasks and child rows and child tasks.
+    processRowData: function(row) {
+      // Map to a row object.
+      let mappedRow = this.mapRow(row);
+
+      // Collect all tasks for the row.
+      let tasks = row?.tasks?.map(this.mapTask) ?? [];
+
+      // Process children rows.
+      // Only create the children array if there are child rows.
+      let processedChildren = row?.children?.map(this.processRow) ?? [];
+      if (processedChildren.length) {
+        mappedRow.children = [];
+        processedChildren.forEach((child) => {
+          mappedRow.children.push(child.row);
+          tasks.push(...child.tasks)
+        });
+      }
+      return {row: mappedRow, tasks};
+    },
+    // Helper function to map row properties.
+    mapRow: function(row) {
+      return {
+        id: row.id,
+        label: row.label,
+        headerHtml: row.link,
+        expanded: row.expanded,
+      };
+    },
+    // Helper function to map task properties.
+    mapTask: function(task) {
+      return {
+        id: task.id,
+        resourceId: task.resource_id,
+        from: task.start,
+        to: task.end,
+        label: task.label,
+        editUrl: task.edit_url,
+        enableDragging: task.enable_dragging,
+        meta: task?.meta,
+        classes: task.classes,
+      };
     },
   };
 }(Drupal, drupalSettings, once, farmOS));
