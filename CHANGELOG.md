@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - [Add an asset.logs service for retrieving logs that reference an asset #850](https://github.com/farmOS/farmOS/pull/850)
+- [Add farmOS-timeline library #862](https://github.com/farmOS/farmOS/pull/862)
 
 ### Changed
 
