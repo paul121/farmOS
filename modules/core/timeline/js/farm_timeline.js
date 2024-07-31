@@ -32,9 +32,38 @@
         // Create the timeline instance.
         const timeline = farmOS.timeline.create(element, opts);
 
+        // Helper function to process a row data object and
+        // add the row and its tasks to the timeline.
+        const processRowData = function(row) {
+          // Map to a row object.
+          let mappedRow = Drupal.behaviors.farm_timeline_gantt.mapRow(row);
+          timeline.addRows([mappedRow]);
+
+          // Collect all tasks for the row.
+          let tasks = row?.tasks?.map(Drupal.behaviors.farm_timeline_gantt.mapTask) ?? [];
+          timeline.addTasks(tasks);
+
+          // Process children rows.
+          row?.children?.forEach(processRow) ?? [];
+        };
+
+        // Helper function to process a row provided to the timeline element.
+        // Rows may be objects or URL strings to request dynamic row data.
+        const processRow = function(row) {
+          if (typeof row === "object") {
+            processRowData(row);
+          }
+          else if (typeof row === "string") {
+            const response = fetch(row)
+              .then(res => res.json())
+              .then(data => data.rows ?? [])
+              .then(rows => rows.forEach(processRowData));
+          }
+        };
+
         // Process timeline rows.
         const timelineRows = JSON.parse(element.dataset?.timelineRows) ?? [];
-        timelineRows.forEach((row) => this.processRow);
+        timelineRows.forEach(processRow);
 
         function createPopup(task, node) {
           const rect = node.getBoundingClientRect();
@@ -88,49 +117,6 @@
           }
         });
       });
-    },
-    // Helper function to process a row provided to the timeline element.
-    // Rows may be objects or URL strings to request dynamic row data.
-    processRow: function(row) {
-      if (typeof row === "object") {
-        this.processRowData(row);
-      }
-      else if (typeof row === "string") {
-        const response = fetch(row)
-          .then(res => res.json())
-          .then(data => {
-            for (let i in data.rows) {
-              const {row, tasks} = this.processRowData(data.rows[i]);
-              if (row) {
-                timeline.addRows([row]);
-              }
-              if (tasks) {
-                timeline.addTasks(tasks);
-              }
-            }
-          });
-      }
-    },
-    // Helper function to process a row data object.
-    // Collect tasks and child rows and child tasks.
-    processRowData: function(row) {
-      // Map to a row object.
-      let mappedRow = this.mapRow(row);
-
-      // Collect all tasks for the row.
-      let tasks = row?.tasks?.map(this.mapTask) ?? [];
-
-      // Process children rows.
-      // Only create the children array if there are child rows.
-      let processedChildren = row?.children?.map(this.processRow) ?? [];
-      if (processedChildren.length) {
-        mappedRow.children = [];
-        processedChildren.forEach((child) => {
-          mappedRow.children.push(child.row);
-          tasks.push(...child.tasks)
-        });
-      }
-      return {row: mappedRow, tasks};
     },
     // Helper function to map row properties.
     mapRow: function(row) {
