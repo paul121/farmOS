@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 ###
 # This script will build the farmOS codebase in ${BUILD_PATH}.
