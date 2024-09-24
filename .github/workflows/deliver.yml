@@ -131,8 +131,8 @@ jobs:
             DB_URL: mysql://farm:farm@db/farm
             processes: auto
           - dbms: sqlite
-            DB_URL: sqlite://localhost/sites/default/files/db.sqlite
-            processes: 1
+            DB_URL: sqlite://localhost/sites/default/files/db-$TEST_TOKEN.sqlite
+            processes: auto
     steps:
       - name: Print test matrix variables
         run: echo "matrix.platform=${{ matrix.platform }}, matrix.dbms=${{ matrix.dbms }}, matrix.DB_URL=${{ matrix.DB_URL }}"
