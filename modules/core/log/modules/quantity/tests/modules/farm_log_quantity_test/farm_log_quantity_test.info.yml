@@ -2,6 +2,6 @@ name: farmOS Log Quantity Tests
 description: 'Support module for log quantity testing.'
 type: module
 package: Testing
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - farm:farm_log_quantity

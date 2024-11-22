@@ -2,7 +2,7 @@ name: farmOS Export CSV
 description: Provides a CSV export action for farmOS.
 type: module
 package: farmOS
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - farm:farm_export
   - farm:farm_csv

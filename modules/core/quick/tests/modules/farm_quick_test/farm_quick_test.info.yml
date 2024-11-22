@@ -2,7 +2,7 @@ name: farmOS quick form tests
 type: module
 description: Support module for farmOS quick form testing.
 package: Testing
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - farm:farm_quick
   - farm:asset

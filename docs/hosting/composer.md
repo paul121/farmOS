@@ -160,7 +160,7 @@ name: My module
 description: A custom module for my farmOS project.
 type: module
 package: farmOS Custom
-core_version_requirement: ^10
+core_version_requirement: ^11
 ```
 
 This can be committed to your project's Git repository, and installed in your

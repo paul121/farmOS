@@ -2,7 +2,7 @@ name: Sensor listener
 description: Provides a Listener (Legacy) API endpoint to support sensors created in farmOS 1.x.
 type: module
 package: farmOS (Legacy)
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - farm:data_stream
   - farm:farm_entity
