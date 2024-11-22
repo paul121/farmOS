@@ -4,21 +4,20 @@
         "drupal/core-composer-scaffold": "11.0.9"
     },
     "require-dev": {
-        "behat/mink": "^1.10",
-        "behat/mink-browserkit-driver": "^2.1",
-        "behat/mink-selenium2-driver": "^1.6",
+        "behat/mink": "^1.11",
+        "behat/mink-browserkit-driver": "^2.2",
+        "behat/mink-selenium2-driver": "^1.7",
         "brianium/paratest": "^6",
-        "drupal/coder": "^8.3",
-        "mglaman/phpstan-drupal": "^1.1",
-        "mikey179/vfsstream": "^1.6",
+        "drupal/coder": "^8.3.10",
+        "mglaman/phpstan-drupal": "^1.2.10",
+        "mikey179/vfsstream": "^1.6.11",
         "palantirnet/drupal-rector": "^0.20.3",
         "phpstan/extension-installer": "^1.1",
         "phpcompatibility/php-compatibility": "^9",
-        "phpstan/phpstan": "^1.8",
+        "phpstan/phpstan": "^1.11.0",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpunit/phpunit": "^9",
-        "phpspec/prophecy-phpunit": "^2",
-        "symfony/phpunit-bridge": "^6.2"
+        "phpunit/phpunit": "^10.5.19",
+        "phpspec/prophecy-phpunit": "^2"
     },
     "conflict": {
         "drupal/drupal": "*"
