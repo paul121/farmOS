@@ -45,7 +45,7 @@ name: My log type
 description: Adds my new custom log type.
 type: module
 package: farmOS Contrib
-core_version_requirement: ^10
+core_version_requirement: ^11
 dependencies:
   - farm:farm_entity
   - log:log
