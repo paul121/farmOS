@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\asset\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\user\EntityOwnerTrait;
 
@@ -15,78 +17,76 @@ use Drupal\user\EntityOwnerTrait;
  * Defines the asset entity.
  *
  * @ingroup asset
- *
- * @ContentEntityType(
- *   id = "asset",
- *   label = @Translation("Asset"),
- *   bundle_label = @Translation("Asset type"),
- *   label_collection = @Translation("Assets"),
- *   label_singular = @Translation("asset"),
- *   label_plural = @Translation("assets"),
- *   label_count = @PluralTranslation(
- *     singular = "@count asset",
- *     plural = "@count assets",
- *   ),
- *   handlers = {
- *     "storage" = "Drupal\asset\AssetStorage",
- *     "access" = "\Drupal\entity\UncacheableEntityAccessControlHandler",
- *     "list_builder" = "\Drupal\asset\AssetListBuilder",
- *     "permission_provider" = "\Drupal\entity\UncacheableEntityPermissionProvider",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
- *     "form" = {
- *       "add" = "Drupal\asset\Form\AssetForm",
- *       "edit" = "Drupal\asset\Form\AssetForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\AdminHtmlRouteProvider",
- *       "revision" = "\Drupal\entity\Routing\RevisionRouteProvider",
- *     },
- *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
- *     },
- *   },
- *   base_table = "asset",
- *   data_table = "asset_field_data",
- *   revision_table = "asset_revision",
- *   translatable = TRUE,
- *   revisionable = TRUE,
- *   show_revision_ui = TRUE,
- *   admin_permission = "administer assets",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "bundle" = "type",
- *     "label" = "name",
- *     "owner" = "uid",
- *     "uuid" = "uuid",
- *     "langcode" = "langcode",
- *   },
- *   bundle_entity_type = "asset_type",
- *   field_ui_base_route = "entity.asset_type.edit_form",
- *   common_reference_target = TRUE,
- *   permission_granularity = "bundle",
- *   links = {
- *     "canonical" = "/asset/{asset}",
- *     "add-page" = "/asset/add",
- *     "add-form" = "/asset/add/{asset_type}",
- *     "collection" = "/admin/content/asset",
- *     "delete-form" = "/asset/{asset}/delete",
- *     "delete-multiple-form" = "/asset/delete",
- *     "edit-form" = "/asset/{asset}/edit",
- *     "revision" = "/asset/{asset}/revisions/{asset_revision}/view",
- *     "revision-revert-form" = "/asset/{asset}/revisions/{asset_revision}/revert",
- *     "version-history" = "/asset/{asset}/revisions",
- *   },
- *   revision_metadata_keys = {
- *     "revision_user" = "revision_user",
- *     "revision_created" = "revision_created",
- *     "revision_log_message" = "revision_log_message"
- *   },
- * )
  */
+#[ContentEntityType(
+  id: 'asset',
+  label: new TranslatableMarkup('Asset'),
+  label_collection: new TranslatableMarkup('Assets'),
+  label_singular: new TranslatableMarkup('asset'),
+  label_plural: new TranslatableMarkup('assets'),
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'bundle' => 'type',
+    'label' => 'name',
+    'owner' => 'uid',
+    'uuid' => 'uuid',
+    'langcode' => 'langcode',
+  ],
+  handlers: [
+    'storage' => 'Drupal\asset\AssetStorage',
+    'access' => '\Drupal\entity\UncacheableEntityAccessControlHandler',
+    'list_builder' => '\Drupal\asset\AssetListBuilder',
+    'permission_provider' => '\Drupal\entity\UncacheableEntityPermissionProvider',
+    'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+    'views_data' => 'Drupal\views\EntityViewsData',
+    'form' => [
+      'add' => 'Drupal\asset\Form\AssetForm',
+      'edit' => 'Drupal\asset\Form\AssetForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+      'delete-multiple-confirm' => 'Drupal\Core\Entity\Form\DeleteMultipleForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\AdminHtmlRouteProvider',
+      'revision' => '\Drupal\entity\Routing\RevisionRouteProvider',
+    ],
+    'local_task_provider' => [
+      'default' => '\Drupal\entity\Menu\DefaultEntityLocalTaskProvider',
+    ],
+  ],
+  links: [
+    'canonical' => '/asset/{asset}',
+    'add-page' => '/asset/add',
+    'add-form' => '/asset/add/{asset_type}',
+    'collection' => '/admin/content/asset',
+    'delete-form' => '/asset/{asset}/delete',
+    'delete-multiple-form' => '/asset/delete',
+    'edit-form' => '/asset/{asset}/edit',
+    'revision' => '/asset/{asset}/revisions/{asset_revision}/view',
+    'revision-revert-form' => '/asset/{asset}/revisions/{asset_revision}/revert',
+    'version-history' => '/asset/{asset}/revisions',
+  ],
+  admin_permission: 'administer assets',
+  permission_granularity: 'bundle',
+  bundle_entity_type: 'asset_type',
+  bundle_label: new TranslatableMarkup('Asset type'),
+  base_table: 'asset',
+  data_table: 'asset_field_data',
+  revision_table: 'asset_revision',
+  translatable: TRUE,
+  show_revision_ui: TRUE,
+  label_count: [
+    'singular' => '@count asset',
+    'plural' => '@count assets',
+  ],
+  field_ui_base_route: 'entity.asset_type.edit_form',
+  common_reference_target: TRUE,
+  revision_metadata_keys: [
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ],
+)]
 class Asset extends RevisionableContentEntityBase implements AssetInterface {
 
   use EntityChangedTrait;

@@ -52,6 +52,7 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Block', 'Drupal\Core\Block\Attribute\Block'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ConfigEntityType', 'Drupal\Core\Entity\Attribute\ConfigEntityType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Constraint', 'Drupal\Core\Validation\Attribute\Constraint'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ContentEntityType', 'Drupal\Core\Entity\Attribute\ContentEntityType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'DataType', 'Drupal\Core\TypedData\Attribute\DataType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'FieldFormatter', 'Drupal\Core\Field\Attribute\FieldFormatter'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'FieldType', 'Drupal\Core\Field\Attribute\FieldType'),

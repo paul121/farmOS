@@ -4,69 +4,70 @@ declare(strict_types=1);
 
 namespace Drupal\data_stream\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the Data Stream entity.
- *
- * @ContentEntityType(
- *   id = "data_stream",
- *   label = @Translation("Data stream"),
- *   bundle_label = @Translation("Data stream type"),
- *   label_collection = @Translation("Data streams"),
- *   label_singular = @Translation("Data stream"),
- *   label_plural = @Translation("Data streams"),
- *   label_count = @PluralTranslation(
- *     singular = "@count data stream",
- *     plural = "@count data streams",
- *   ),
- *   handlers = {
- *     "access" = "\Drupal\entity\UncacheableEntityAccessControlHandler",
- *     "permission_provider" = "\Drupal\entity\UncacheableEntityPermissionProvider",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "views_data" = "Drupal\entity\EntityViewsData",
- *     "form" = {
- *       "add" = "Drupal\data_stream\Form\DataStreamForm",
- *       "edit" = "Drupal\data_stream\Form\DataStreamForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\AdminHtmlRouteProvider",
- *     },
- *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
- *     },
- *   },
- *   base_table = "data_stream",
- *   data_table = "data_stream_data",
- *   translatable = TRUE,
- *   admin_permission = "administer data streams",
- *   entity_keys = {
- *     "id" = "id",
- *     "bundle" = "type",
- *     "label" = "name",
- *     "uuid" = "uuid",
- *     "langcode" = "langcode",
- *   },
- *   bundle_entity_type = "data_stream_type",
- *   field_ui_base_route = "entity.data_stream_type.edit_form",
- *   common_reference_target = TRUE,
- *   permission_granularity = "bundle",
- *   links = {
- *     "canonical" = "/data_stream/{data_stream}",
- *     "add-page" = "/data_stream/add",
- *     "add-form" = "/data_stream/add/{data_stream_type}",
- *     "delete-form" = "/data_stream/{data_stream}/delete",
- *     "delete-multiple-form" = "/data_stream/delete",
- *     "edit-form" = "/data_stream/{data_stream}/edit",
- *   },
- * )
  */
+#[ContentEntityType(
+  id: 'data_stream',
+  label: new TranslatableMarkup('Data stream'),
+  label_collection: new TranslatableMarkup('Data streams'),
+  label_singular: new TranslatableMarkup('Data stream'),
+  label_plural: new TranslatableMarkup('Data streams'),
+  entity_keys: [
+    'id' => 'id',
+    'bundle' => 'type',
+    'label' => 'name',
+    'uuid' => 'uuid',
+    'langcode' => 'langcode',
+  ],
+  handlers: [
+    'access' => '\Drupal\entity\UncacheableEntityAccessControlHandler',
+    'permission_provider' => '\Drupal\entity\UncacheableEntityPermissionProvider',
+    'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+    'views_data' => 'Drupal\entity\EntityViewsData',
+    'form' => [
+      'add' => 'Drupal\data_stream\Form\DataStreamForm',
+      'edit' => 'Drupal\data_stream\Form\DataStreamForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+      'delete-multiple-confirm' => 'Drupal\Core\Entity\Form\DeleteMultipleForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\AdminHtmlRouteProvider',
+    ],
+    'local_task_provider' => [
+      'default' => '\Drupal\entity\Menu\DefaultEntityLocalTaskProvider',
+    ],
+  ],
+  links: [
+    'canonical' => '/data_stream/{data_stream}',
+    'add-page' => '/data_stream/add',
+    'add-form' => '/data_stream/add/{data_stream_type}',
+    'delete-form' => '/data_stream/{data_stream}/delete',
+    'delete-multiple-form' => '/data_stream/delete',
+    'edit-form' => '/data_stream/{data_stream}/edit',
+  ],
+  admin_permission: 'administer data streams',
+  permission_granularity: 'bundle',
+  bundle_entity_type: 'data_stream_type',
+  bundle_label: new TranslatableMarkup('Data stream type'),
+  base_table: 'data_stream',
+  data_table: 'data_stream_data',
+  translatable: TRUE,
+  label_count: [
+    'singular' => '@count data stream',
+    'plural' => '@count data streams',
+  ],
+  field_ui_base_route: 'entity.data_stream_type.edit_form',
+  common_reference_target: TRUE,
+)]
 class DataStream extends ContentEntityBase implements DataStreamInterface {
 
   use EntityChangedTrait;

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\plan\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\user\EntityOwnerTrait;
 
@@ -15,78 +17,76 @@ use Drupal\user\EntityOwnerTrait;
  * Defines the plan entity.
  *
  * @ingroup plan
- *
- * @ContentEntityType(
- *   id = "plan",
- *   label = @Translation("Plan"),
- *   bundle_label = @Translation("Plan type"),
- *   label_collection = @Translation("Plans"),
- *   label_singular = @Translation("plan"),
- *   label_plural = @Translation("plans"),
- *   label_count = @PluralTranslation(
- *     singular = "@count plan",
- *     plural = "@count plans",
- *   ),
- *   handlers = {
- *     "storage" = "Drupal\plan\PlanStorage",
- *     "access" = "\Drupal\entity\UncacheableEntityAccessControlHandler",
- *     "list_builder" = "\Drupal\plan\PlanListBuilder",
- *     "permission_provider" = "\Drupal\entity\UncacheableEntityPermissionProvider",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
- *     "form" = {
- *       "add" = "Drupal\plan\Form\PlanForm",
- *       "edit" = "Drupal\plan\Form\PlanForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\AdminHtmlRouteProvider",
- *       "revision" = "\Drupal\entity\Routing\RevisionRouteProvider",
- *     },
- *     "local_task_provider" = {
- *       "default" = "\Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
- *     },
- *   },
- *   base_table = "plan",
- *   data_table = "plan_field_data",
- *   revision_table = "plan_revision",
- *   translatable = TRUE,
- *   revisionable = TRUE,
- *   show_revision_ui = TRUE,
- *   admin_permission = "administer plans",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "bundle" = "type",
- *     "label" = "name",
- *     "owner" = "uid",
- *     "uuid" = "uuid",
- *     "langcode" = "langcode",
- *   },
- *   bundle_entity_type = "plan_type",
- *   field_ui_base_route = "entity.plan_type.edit_form",
- *   common_reference_target = TRUE,
- *   permission_granularity = "bundle",
- *   links = {
- *     "canonical" = "/plan/{plan}",
- *     "add-page" = "/plan/add",
- *     "add-form" = "/plan/add/{plan_type}",
- *     "collection" = "/admin/content/plan",
- *     "delete-form" = "/plan/{plan}/delete",
- *     "delete-multiple-form" = "/plan/delete",
- *     "edit-form" = "/plan/{plan}/edit",
- *     "revision" = "/plan/{plan}/revisions/{plan_revision}/view",
- *     "revision-revert-form" = "/plan/{plan}/revisions/{plan_revision}/revert",
- *     "version-history" = "/plan/{plan}/revisions",
- *   },
- *   revision_metadata_keys = {
- *     "revision_user" = "revision_user",
- *     "revision_created" = "revision_created",
- *     "revision_log_message" = "revision_log_message"
- *   },
- * )
  */
+#[ContentEntityType(
+  id: 'plan',
+  label: new TranslatableMarkup('Plan'),
+  label_collection: new TranslatableMarkup('Plans'),
+  label_singular: new TranslatableMarkup('plan'),
+  label_plural: new TranslatableMarkup('plans'),
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'bundle' => 'type',
+    'label' => 'name',
+    'owner' => 'uid',
+    'uuid' => 'uuid',
+    'langcode' => 'langcode',
+  ],
+  handlers: [
+    'storage' => 'Drupal\plan\PlanStorage',
+    'access' => '\Drupal\entity\UncacheableEntityAccessControlHandler',
+    'list_builder' => '\Drupal\plan\PlanListBuilder',
+    'permission_provider' => '\Drupal\entity\UncacheableEntityPermissionProvider',
+    'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+    'views_data' => 'Drupal\views\EntityViewsData',
+    'form' => [
+      'add' => 'Drupal\plan\Form\PlanForm',
+      'edit' => 'Drupal\plan\Form\PlanForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+      'delete-multiple-confirm' => 'Drupal\Core\Entity\Form\DeleteMultipleForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\AdminHtmlRouteProvider',
+      'revision' => '\Drupal\entity\Routing\RevisionRouteProvider',
+    ],
+    'local_task_provider' => [
+      'default' => '\Drupal\entity\Menu\DefaultEntityLocalTaskProvider',
+    ],
+  ],
+  links: [
+    'canonical' => '/plan/{plan}',
+    'add-page' => '/plan/add',
+    'add-form' => '/plan/add/{plan_type}',
+    'collection' => '/admin/content/plan',
+    'delete-form' => '/plan/{plan}/delete',
+    'delete-multiple-form' => '/plan/delete',
+    'edit-form' => '/plan/{plan}/edit',
+    'revision' => '/plan/{plan}/revisions/{plan_revision}/view',
+    'revision-revert-form' => '/plan/{plan}/revisions/{plan_revision}/revert',
+    'version-history' => '/plan/{plan}/revisions',
+  ],
+  admin_permission: 'administer plans',
+  permission_granularity: 'bundle',
+  bundle_entity_type: 'plan_type',
+  bundle_label: new TranslatableMarkup('Plan type'),
+  base_table: 'plan',
+  data_table: 'plan_field_data',
+  revision_table: 'plan_revision',
+  translatable: TRUE,
+  show_revision_ui: TRUE,
+  label_count: [
+    'singular' => '@count plan',
+    'plural' => '@count plans',
+  ],
+  field_ui_base_route: 'entity.plan_type.edit_form',
+  common_reference_target: TRUE,
+  revision_metadata_keys: [
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ],
+)]
 class Plan extends RevisionableContentEntityBase implements PlanInterface {
 
   use EntityChangedTrait;

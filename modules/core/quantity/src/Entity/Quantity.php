@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\quantity\Entity;
 
+use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\RevisionLogEntityTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\Revision\RevisionableContentEntityBase;
 use Drupal\user\EntityOwnerTrait;
 
@@ -15,67 +17,65 @@ use Drupal\user\EntityOwnerTrait;
  * Defines the Quantity entity.
  *
  * @ingroup quantity
- *
- * @ContentEntityType(
- *   id = "quantity",
- *   label = @Translation("Quantity"),
- *   label_collection = @Translation("Quantities"),
- *   label_singular = @Translation("quantity"),
- *   label_plural = @Translation("quantities"),
- *   label_count = @PluralTranslation(
- *     singular = "@count quantity",
- *     plural = "@count quantities",
- *   ),
- *   handlers = {
- *     "storage" = "Drupal\Core\Entity\Sql\SqlContentEntityStorage",
- *     "access" = "\Drupal\entity\UncacheableEntityAccessControlHandler",
- *     "inline_form" = "\Drupal\quantity\Form\QuantityInlineForm",
- *     "list_builder" = "\Drupal\quantity\QuantityListBuilder",
- *     "permission_provider" = "\Drupal\entity\UncacheableEntityPermissionProvider",
- *     "view_builder" = "Drupal\quantity\QuantityViewBuilder",
- *     "views_data" = "Drupal\quantity\QuantityViewsData",
- *     "form" = {
- *       "default" = "Drupal\Core\Entity\ContentEntityForm",
- *       "add" = "Drupal\Core\Entity\ContentEntityForm",
- *       "edit" = "Drupal\Core\Entity\ContentEntityForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\AdminHtmlRouteProvider",
- *       "revision" = "\Drupal\entity\Routing\RevisionRouteProvider",
- *     },
- *     "local_task_provider" = {
- *       "default" = "Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
- *     },
- *   },
- *   base_table = "quantity",
- *   revision_table = "quantity_revision",
- *   translatable = FALSE,
- *   revisionable = TRUE,
- *   show_revision_ui = FALSE,
- *   admin_permission = "administer quantity",
- *   permission_granularity = "bundle",
- *   entity_keys = {
- *     "id" = "id",
- *     "revision" = "revision_id",
- *     "bundle" = "type",
- *     "label" = "label",
- *     "owner" = "uid",
- *     "uuid" = "uuid",
- *   },
- *   bundle_entity_type = "quantity_type",
- *   common_reference_target = TRUE,
- *   links = {
- *     "delete-multiple-form" = "/quantity/delete",
- *   },
- *   revision_metadata_keys = {
- *     "revision_user" = "revision_user",
- *     "revision_created" = "revision_created",
- *     "revision_log_message" = "revision_log_message"
- *   },
- * )
  */
+#[ContentEntityType(
+  id: 'quantity',
+  label: new TranslatableMarkup('Quantity'),
+  label_collection: new TranslatableMarkup('Quantities'),
+  label_singular: new TranslatableMarkup('quantity'),
+  label_plural: new TranslatableMarkup('quantities'),
+  entity_keys: [
+    'id' => 'id',
+    'revision' => 'revision_id',
+    'bundle' => 'type',
+    'label' => 'label',
+    'owner' => 'uid',
+    'uuid' => 'uuid',
+  ],
+  handlers: [
+    'storage' => 'Drupal\Core\Entity\Sql\SqlContentEntityStorage',
+    'access' => '\Drupal\entity\UncacheableEntityAccessControlHandler',
+    'inline_form' => '\Drupal\quantity\Form\QuantityInlineForm',
+    'list_builder' => '\Drupal\quantity\QuantityListBuilder',
+    'permission_provider' => '\Drupal\entity\UncacheableEntityPermissionProvider',
+    'view_builder' => 'Drupal\quantity\QuantityViewBuilder',
+    'views_data' => 'Drupal\quantity\QuantityViewsData',
+    'form' => [
+      'default' => 'Drupal\Core\Entity\ContentEntityForm',
+      'add' => 'Drupal\Core\Entity\ContentEntityForm',
+      'edit' => 'Drupal\Core\Entity\ContentEntityForm',
+      'delete' => 'Drupal\Core\Entity\ContentEntityDeleteForm',
+      'delete-multiple-confirm' => 'Drupal\Core\Entity\Form\DeleteMultipleForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\AdminHtmlRouteProvider',
+      'revision' => '\Drupal\entity\Routing\RevisionRouteProvider',
+    ],
+    'local_task_provider' => [
+      'default' => 'Drupal\entity\Menu\DefaultEntityLocalTaskProvider',
+    ],
+  ],
+  links: [
+    'delete-multiple-form' => '/quantity/delete',
+  ],
+  admin_permission: 'administer quantity',
+  permission_granularity: 'bundle',
+  bundle_entity_type: 'quantity_type',
+  base_table: 'quantity',
+  revision_table: 'quantity_revision',
+  translatable: FALSE,
+  show_revision_ui: FALSE,
+  label_count: [
+    'singular' => '@count quantity',
+    'plural' => '@count quantities',
+  ],
+  common_reference_target: TRUE,
+  revision_metadata_keys: [
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ],
+)]
 class Quantity extends RevisionableContentEntityBase implements QuantityInterface {
 
   use EntityChangedTrait;
