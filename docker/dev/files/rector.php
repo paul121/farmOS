@@ -50,6 +50,7 @@ return static function (RectorConfig $rectorConfig): void {
     // Drupal core attributes.
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Action', 'Drupal\Core\Action\Attribute\Action'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Block', 'Drupal\Core\Block\Attribute\Block'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ConfigEntityType', 'Drupal\Core\Entity\Attribute\ConfigEntityType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Constraint', 'Drupal\Core\Validation\Attribute\Constraint'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'DataType', 'Drupal\Core\TypedData\Attribute\DataType'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'FieldFormatter', 'Drupal\Core\Field\Attribute\FieldFormatter'),

@@ -5,64 +5,65 @@ declare(strict_types=1);
 namespace Drupal\data_stream_notification\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\data_stream_notification\DataStreamNotificationPluginCollection;
 
 /**
  * Defines the DataStreamNotification entity.
  *
- * @ConfigEntityType(
- *   id = "data_stream_notification",
- *   label = @Translation("Data stream notification"),
- *   label_collection = @Translation("Data stream notifications"),
- *   label_singular = @Translation("data stream notification"),
- *   label_plural = @Translation("data stream notifications"),
- *   label_count = @PluralTranslation(
- *     singular = "@count data stream notification",
- *     plural = "@count data stream notifications",
- *   ),
- *   handlers = {
- *     "access" = "\Drupal\entity\EntityAccessControlHandler",
- *     "form" = {
- *       "add" = "Drupal\data_stream_notification\Form\DataStreamNotificationForm",
- *       "edit" = "Drupal\data_stream_notification\Form\DataStreamNotificationForm",
- *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *     "list_builder" = "Drupal\data_stream_notification\DataStreamNotificationListBuilder",
- *     "permission_provider" = "\Drupal\entity\EntityPermissionProvider",
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\DefaultHtmlRouteProvider",
- *     },
- *   },
- *   admin_permission = "administer data stream notification",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "status" = "status",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "data_stream",
- *     "activation_threshold",
- *     "deactivation_threshold",
- *     "condition_operator",
- *     "condition",
- *     "delivery_interval",
- *     "delivery",
- *   },
- *   links = {
- *     "collection" = "/data-stream-notifications",
- *     "add-form" = "/data-stream-notifications/add",
- *     "edit-form" = "/data-stream-notifications/{data_stream_notification}/edit",
- *     "delete-form" = "/data-stream-notifications/{data_stream_notification}/delete",
- *     "enable" = "/data-stream-notifications/{data_stream_notification}/enable",
- *     "disable" = "/data-stream-notifications/{data_stream_notification}/disable",
- *   }
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'data_stream_notification',
+  label: new TranslatableMarkup('Data stream notification'),
+  label_collection: new TranslatableMarkup('Data stream notifications'),
+  label_singular: new TranslatableMarkup('data stream notification'),
+  label_plural: new TranslatableMarkup('data stream notifications'),
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'status' => 'status',
+  ],
+  handlers: [
+    'access' => '\Drupal\entity\EntityAccessControlHandler',
+    'form' => [
+      'add' => 'Drupal\data_stream_notification\Form\DataStreamNotificationForm',
+      'edit' => 'Drupal\data_stream_notification\Form\DataStreamNotificationForm',
+      'delete' => 'Drupal\Core\Entity\EntityDeleteForm',
+    ],
+    'list_builder' => 'Drupal\data_stream_notification\DataStreamNotificationListBuilder',
+    'permission_provider' => '\Drupal\entity\EntityPermissionProvider',
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\DefaultHtmlRouteProvider',
+    ],
+  ],
+  links: [
+    'collection' => '/data-stream-notifications',
+    'add-form' => '/data-stream-notifications/add',
+    'edit-form' => '/data-stream-notifications/{data_stream_notification}/edit',
+    'delete-form' => '/data-stream-notifications/{data_stream_notification}/delete',
+    'enable' => '/data-stream-notifications/{data_stream_notification}/enable',
+    'disable' => '/data-stream-notifications/{data_stream_notification}/disable',
+  ],
+  admin_permission: 'administer data stream notification',
+  label_count: [
+    'singular' => '@count data stream notification',
+    'plural' => '@count data stream notifications',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'data_stream',
+    'activation_threshold',
+    'deactivation_threshold',
+    'condition_operator',
+    'condition',
+    'delivery_interval',
+    'delivery',
+  ],
+)]
 class DataStreamNotification extends ConfigEntityBase implements DataStreamNotificationInterface {
 
   /**

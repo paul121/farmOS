@@ -5,28 +5,29 @@ declare(strict_types=1);
 namespace Drupal\farm_map\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the LayerStyle config entity.
  *
- * @ConfigEntityType(
- *   id = "layer_style",
- *   label = @Translation("Layer style"),
- *   label_collection = @Translation("Layer styles"),
- *   handlers = { },
- *   admin_permission = "administer farm map",
- *   entity_keys = {
- *     "id" = "id",
- *   },
- *   config_export = {
- *     "id",
- *     "color",
- *     "conditions",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'layer_style',
+  label: new TranslatableMarkup('Layer style'),
+  label_collection: new TranslatableMarkup('Layer styles'),
+  entity_keys: [
+    'id' => 'id',
+  ],
+  handlers: [],
+  admin_permission: 'administer farm map',
+  config_export: [
+    'id',
+    'color',
+    'conditions',
+  ],
+)]
 class LayerStyle extends ConfigEntityBase implements LayerStyleInterface {
 
   /**

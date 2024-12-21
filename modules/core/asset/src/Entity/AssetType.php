@@ -5,56 +5,57 @@ declare(strict_types=1);
 namespace Drupal\asset\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the asset type entity.
- *
- * @ConfigEntityType(
- *   id = "asset_type",
- *   label = @Translation("Asset type"),
- *   label_collection = @Translation("Asset types"),
- *   label_singular = @Translation("Asset type"),
- *   label_plural = @Translation("Asset types"),
- *   label_count = @PluralTranslation(
- *     singular = "@count asset type",
- *     plural = "@count asset types",
- *   ),
- *   handlers = {
- *     "list_builder" = "Drupal\asset\AssetTypeListBuilder",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "form" = {
- *       "add" = "Drupal\asset\Form\AssetTypeForm",
- *       "edit" = "Drupal\asset\Form\AssetTypeForm",
- *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\DefaultHtmlRouteProvider",
- *     },
- *   },
- *   admin_permission = "administer asset types",
- *   config_prefix = "type",
- *   bundle_of = "asset",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "uuid" = "uuid"
- *   },
- *   links = {
- *     "canonical" = "/admin/structure/asset-type/{asset_type}",
- *     "add-form" = "/admin/structure/asset-type/add",
- *     "edit-form" = "/admin/structure/asset-type/{asset_type}/edit",
- *     "delete-form" = "/admin/structure/asset-type/{asset_type}/delete",
- *     "collection" = "/admin/structure/asset-type"
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "workflow",
- *     "new_revision",
- *   }
- * )
  */
+#[ConfigEntityType(
+  id: 'asset_type',
+  label: new TranslatableMarkup('Asset type'),
+  label_collection: new TranslatableMarkup('Asset types'),
+  label_singular: new TranslatableMarkup('Asset type'),
+  label_plural: new TranslatableMarkup('Asset types'),
+  config_prefix: 'type',
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'uuid' => 'uuid',
+  ],
+  handlers: [
+    'list_builder' => 'Drupal\asset\AssetTypeListBuilder',
+    'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+    'form' => [
+      'add' => 'Drupal\asset\Form\AssetTypeForm',
+      'edit' => 'Drupal\asset\Form\AssetTypeForm',
+      'delete' => '\Drupal\Core\Entity\EntityDeleteForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\DefaultHtmlRouteProvider',
+    ],
+  ],
+  links: [
+    'canonical' => '/admin/structure/asset-type/{asset_type}',
+    'add-form' => '/admin/structure/asset-type/add',
+    'edit-form' => '/admin/structure/asset-type/{asset_type}/edit',
+    'delete-form' => '/admin/structure/asset-type/{asset_type}/delete',
+    'collection' => '/admin/structure/asset-type',
+  ],
+  admin_permission: 'administer asset types',
+  bundle_of: 'asset',
+  label_count: [
+    'singular' => '@count asset type',
+    'plural' => '@count asset types',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'description',
+    'workflow',
+    'new_revision',
+  ],
+)]
 class AssetType extends ConfigEntityBundleBase implements AssetTypeInterface {
 
   /**

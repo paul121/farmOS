@@ -5,38 +5,39 @@ declare(strict_types=1);
 namespace Drupal\quantity\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the quantity type entity.
- *
- * @ConfigEntityType(
- *   id = "quantity_type",
- *   label = @Translation("Quantity type"),
- *   label_collection = @Translation("Quantity types"),
- *   label_singular = @Translation("Quantity type"),
- *   label_plural = @Translation("Quantity types"),
- *   label_count = @PluralTranslation(
- *     singular = "@count quantity type",
- *     plural = "@count quantity types",
- *   ),
- *   handlers = {
- *     "access" = "\Drupal\entity\BundleEntityAccessControlHandler",
- *   },
- *   config_prefix = "type",
- *   bundle_of = "quantity",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "uuid" = "uuid"
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "new_revision",
- *   }
- * )
  */
+#[ConfigEntityType(
+  id: 'quantity_type',
+  label: new TranslatableMarkup('Quantity type'),
+  label_collection: new TranslatableMarkup('Quantity types'),
+  label_singular: new TranslatableMarkup('Quantity type'),
+  label_plural: new TranslatableMarkup('Quantity types'),
+  config_prefix: 'type',
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'uuid' => 'uuid',
+  ],
+  handlers: [
+    'access' => '\Drupal\entity\BundleEntityAccessControlHandler',
+  ],
+  bundle_of: 'quantity',
+  label_count: [
+    'singular' => '@count quantity type',
+    'plural' => '@count quantity types',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'description',
+    'new_revision',
+  ],
+)]
 class QuantityType extends ConfigEntityBundleBase implements QuantityTypeInterface {
 
   /**

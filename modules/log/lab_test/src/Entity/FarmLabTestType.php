@@ -5,28 +5,29 @@ declare(strict_types=1);
 namespace Drupal\farm_lab_test\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the FarmLabTestType entity.
  *
- * @ConfigEntityType(
- *   id = "lab_test_type",
- *   label = @Translation("Lab test type"),
- *   label_collection = @Translation("Lab test type"),
- *   handlers = { },
- *   admin_permission = "administer site configuration",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'lab_test_type',
+  label: new TranslatableMarkup('Lab test type'),
+  label_collection: new TranslatableMarkup('Lab test type'),
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+  ],
+  handlers: [],
+  admin_permission: 'administer site configuration',
+  config_export: [
+    'id',
+    'label',
+  ],
+)]
 class FarmLabTestType extends ConfigEntityBase implements FarmLabTestTypeInterface {
 
   /**

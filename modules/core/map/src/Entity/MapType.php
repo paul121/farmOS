@@ -5,31 +5,32 @@ declare(strict_types=1);
 namespace Drupal\farm_map\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the MapType config entity.
  *
- * @ConfigEntityType(
- *   id = "map_type",
- *   label = @Translation("Map type"),
- *   label_collection = @Translation("Map types"),
- *   handlers = { },
- *   admin_permission = "administer farm map",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "behaviors",
- *     "options",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'map_type',
+  label: new TranslatableMarkup('Map type'),
+  label_collection: new TranslatableMarkup('Map types'),
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+  ],
+  handlers: [],
+  admin_permission: 'administer farm map',
+  config_export: [
+    'id',
+    'label',
+    'description',
+    'behaviors',
+    'options',
+  ],
+)]
 class MapType extends ConfigEntityBase implements MapTypeInterface {
 
   /**

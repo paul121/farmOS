@@ -5,56 +5,57 @@ declare(strict_types=1);
 namespace Drupal\plan\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Defines the plan type entity.
- *
- * @ConfigEntityType(
- *   id = "plan_type",
- *   label = @Translation("Plan type"),
- *   label_collection = @Translation("Plan types"),
- *   label_singular = @Translation("Plan type"),
- *   label_plural = @Translation("Plan types"),
- *   label_count = @PluralTranslation(
- *     singular = "@count plan type",
- *     plural = "@count plan types",
- *   ),
- *   handlers = {
- *     "list_builder" = "Drupal\plan\PlanTypeListBuilder",
- *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "form" = {
- *       "add" = "Drupal\plan\Form\PlanTypeForm",
- *       "edit" = "Drupal\plan\Form\PlanTypeForm",
- *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *     "route_provider" = {
- *       "default" = "Drupal\entity\Routing\DefaultHtmlRouteProvider",
- *     },
- *   },
- *   admin_permission = "administer plan types",
- *   config_prefix = "type",
- *   bundle_of = "plan",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *     "uuid" = "uuid"
- *   },
- *   links = {
- *     "canonical" = "/admin/structure/plan-type/{plan_type}",
- *     "add-form" = "/admin/structure/plan-type/add",
- *     "edit-form" = "/admin/structure/plan-type/{plan_type}/edit",
- *     "delete-form" = "/admin/structure/plan-type/{plan_type}/delete",
- *     "collection" = "/admin/structure/plan-type"
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "workflow",
- *     "new_revision",
- *   }
- * )
  */
+#[ConfigEntityType(
+  id: 'plan_type',
+  label: new TranslatableMarkup('Plan type'),
+  label_collection: new TranslatableMarkup('Plan types'),
+  label_singular: new TranslatableMarkup('Plan type'),
+  label_plural: new TranslatableMarkup('Plan types'),
+  config_prefix: 'type',
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+    'uuid' => 'uuid',
+  ],
+  handlers: [
+    'list_builder' => 'Drupal\plan\PlanTypeListBuilder',
+    'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+    'form' => [
+      'add' => 'Drupal\plan\Form\PlanTypeForm',
+      'edit' => 'Drupal\plan\Form\PlanTypeForm',
+      'delete' => '\Drupal\Core\Entity\EntityDeleteForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\DefaultHtmlRouteProvider',
+    ],
+  ],
+  links: [
+    'canonical' => '/admin/structure/plan-type/{plan_type}',
+    'add-form' => '/admin/structure/plan-type/add',
+    'edit-form' => '/admin/structure/plan-type/{plan_type}/edit',
+    'delete-form' => '/admin/structure/plan-type/{plan_type}/delete',
+    'collection' => '/admin/structure/plan-type',
+  ],
+  admin_permission: 'administer plan types',
+  bundle_of: 'plan',
+  label_count: [
+    'singular' => '@count plan type',
+    'plural' => '@count plan types',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'description',
+    'workflow',
+    'new_revision',
+  ],
+)]
 class PlanType extends ConfigEntityBundleBase implements PlanTypeInterface {
 
   /**
