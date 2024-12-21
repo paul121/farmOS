@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick\Entity;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityWithPluginCollectionInterface;
@@ -11,52 +13,51 @@ use Drupal\farm_quick\QuickFormPluginCollection;
 
 /**
  * Defines the quick form instance config entity.
- *
- * @ConfigEntityType(
- *   id = "quick_form",
- *   label = @Translation("Quick form"),
- *   label_collection = @Translation("Quick forms"),
- *   label_singular = @Translation("quick form"),
- *   label_plural = @Translation("quick forms"),
- *   label_count = @PluralTranslation(
- *     singular = "@count quick form",
- *     plural = "@count quick forms",
- *   ),
- *   handlers = {
- *     "access" = "\Drupal\entity\EntityAccessControlHandler",
- *     "permission_provider" = "\Drupal\entity\EntityPermissionProvider",
- *     "list_builder" = "Drupal\farm_quick\QuickFormListBuilder",
- *     "form" = {
- *       "add" = "Drupal\farm_quick\Form\QuickFormEntityForm",
- *       "edit" = "Drupal\farm_quick\Form\QuickFormEntityForm",
- *       "configure" = "Drupal\farm_quick\Form\ConfigureQuickForm",
- *       "delete" = "\Drupal\Core\Entity\EntityDeleteForm",
- *     },
- *     "route_provider" = {
- *        "default" = "Drupal\entity\Routing\DefaultHtmlRouteProvider",
- *     },
- *   },
- *   admin_permission = "administer quick_form",
- *   entity_keys = {
- *     "id" = "id",
- *     "status" = "status",
- *     "label" = "label",
- *   },
- *   links = {
- *      "edit-form" = "/setup/quick/{quick_form}/edit",
- *      "delete-form" = "/setup/quick/{quick_form}/delete",
- *      "collection" = "/setup/quick"
- *   },
- *   config_export = {
- *     "id",
- *     "plugin",
- *     "label",
- *     "description",
- *     "helpText",
- *     "settings",
- *   },
- * )
  */
+#[ConfigEntityType(
+  id: 'quick_form',
+  label: new TranslatableMarkup('Quick form'),
+  label_collection: new TranslatableMarkup('Quick forms'),
+  label_singular: new TranslatableMarkup('quick form'),
+  label_plural: new TranslatableMarkup('quick forms'),
+  label_count: [
+    'singular' => '@count quick form',
+    'plural' => '@count quick forms',
+  ],
+  handlers: [
+    'access' => '\Drupal\entity\EntityAccessControlHandler',
+    'permission_provider' => '\Drupal\entity\EntityPermissionProvider',
+    'list_builder' => 'Drupal\farm_quick\QuickFormListBuilder',
+    'form' => [
+      'add' => 'Drupal\farm_quick\Form\QuickFormEntityForm',
+      'edit' => 'Drupal\farm_quick\Form\QuickFormEntityForm',
+      'configure' => 'Drupal\farm_quick\Form\ConfigureQuickForm',
+      'delete' => '\Drupal\Core\Entity\EntityDeleteForm',
+    ],
+    'route_provider' => [
+      'default' => 'Drupal\entity\Routing\DefaultHtmlRouteProvider',
+    ],
+  ],
+  admin_permission: 'administer quick_form',
+  entity_keys: [
+    'id' => 'id',
+    'status' => 'status',
+    'label' => 'label',
+  ],
+  links: [
+    'edit-form' => '/setup/quick/{quick_form}/edit',
+    'delete-form' => '/setup/quick/{quick_form}/delete',
+    'collection' => '/setup/quick',
+  ],
+  config_export: [
+    'id',
+    'plugin',
+    'label',
+    'description',
+    'helpText',
+    'settings',
+  ],
+)]
 class QuickFormInstance extends ConfigEntityBase implements QuickFormInstanceInterface, EntityWithPluginCollectionInterface {
 
   /**
