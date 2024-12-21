@@ -4,32 +4,33 @@ declare(strict_types=1);
 
 namespace Drupal\farm_id_tag\Entity;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
  * Defines the FarmIDTagType entity.
  *
- * @ConfigEntityType(
- *   id = "tag_type",
- *   label = @Translation("ID tag type"),
- *   label_collection = @Translation("ID tag types"),
- *   handlers = {
- *     "access" = "\Drupal\entity\EntityAccessControlHandler",
- *     "permission_provider" = "\Drupal\entity\EntityPermissionProvider",
- *   },
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "bundles",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'tag_type',
+  label: new TranslatableMarkup('ID tag type'),
+  label_collection: new TranslatableMarkup('ID tag types'),
+  handlers: [
+    'access' => '\Drupal\entity\EntityAccessControlHandler',
+    'permission_provider' => '\Drupal\entity\EntityPermissionProvider',
+  ],
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'bundles',
+  ],
+)]
 class FarmIDTagType extends ConfigEntityBase implements FarmIDTagTypeInterface {
 
   /**

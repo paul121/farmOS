@@ -4,32 +4,33 @@ declare(strict_types=1);
 
 namespace Drupal\farm_flag\Entity;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
  * Defines the FarmFlag entity.
  *
- * @ConfigEntityType(
- *   id = "flag",
- *   label = @Translation("Flag"),
- *   label_collection = @Translation("Flags"),
- *   handlers = {
- *     "access" = "\Drupal\entity\EntityAccessControlHandler",
- *     "permission_provider" = "\Drupal\entity\EntityPermissionProvider",
- *   },
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "entity_types",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'flag',
+  label: new TranslatableMarkup('Flag'),
+  label_collection: new TranslatableMarkup('Flags'),
+  handlers: [
+    'access' => '\Drupal\entity\EntityAccessControlHandler',
+    'permission_provider' => '\Drupal\entity\EntityPermissionProvider',
+  ],
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'entity_types',
+  ],
+)]
 class FarmFlag extends ConfigEntityBase implements FarmFlagInterface {
 
   /**

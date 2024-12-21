@@ -4,32 +4,33 @@ declare(strict_types=1);
 
 namespace Drupal\farm_map\Entity;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Entity\Attribute\ConfigEntityType;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
  * Defines the MapBehavior config entity.
  *
- * @ConfigEntityType(
- *   id = "map_behavior",
- *   label = @Translation("Map behavior"),
- *   label_collection = @Translation("Map behaviors"),
- *   handlers = { },
- *   admin_permission = "administer farm map",
- *   entity_keys = {
- *     "id" = "id",
- *     "label" = "label",
- *   },
- *   config_export = {
- *     "id",
- *     "label",
- *     "description",
- *     "library",
- *     "settings",
- *   },
- * )
- *
  * @ingroup farm
  */
+#[ConfigEntityType(
+  id: 'map_behavior',
+  label: new TranslatableMarkup('Map behavior'),
+  label_collection: new TranslatableMarkup('Map behaviors'),
+  handlers: [],
+  admin_permission: 'administer farm map',
+  entity_keys: [
+    'id' => 'id',
+    'label' => 'label',
+  ],
+  config_export: [
+    'id',
+    'label',
+    'description',
+    'library',
+    'settings',
+  ],
+)]
 class MapBehavior extends ConfigEntityBase implements MapBehaviorInterface {
 
   /**
