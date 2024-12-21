@@ -57,6 +57,7 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'FieldWidget', 'Drupal\Core\Field\Attribute\FieldWidget'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateDestination', 'Drupal\migrate\Attribute\MigrateDestination'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateProcessPlugin', 'Drupal\migrate\Attribute\MigrateProcess'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateSource', 'Drupal\migrate\Attribute\MigrateSource'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsDisplayExtender', 'Drupal\views\Attribute\ViewsDisplayExtender'),
   ]);
 };
