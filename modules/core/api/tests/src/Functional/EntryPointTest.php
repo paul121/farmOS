@@ -59,7 +59,7 @@ class EntryPointTest extends FarmBrowserTestBase {
       'url.site',
       'user.roles:authenticated',
     ];
-    $this->assertTrue($response->hasHeader('X-Drupal-Cache-Contexts'));
+    $this->assertFalse($response->hasHeader('X-Drupal-Cache-Contexts'));
     $optimized_expected_cache_contexts = \Drupal::service('cache_contexts_manager')->optimizeTokens($expected_cache_contexts);
     $this->assertSame($optimized_expected_cache_contexts, explode(' ', $response->getHeader('X-Drupal-Cache-Contexts')[0]));
     $links = $document['links'];
