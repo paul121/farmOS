@@ -15,7 +15,7 @@
         "phpcompatibility/php-compatibility": "^9",
         "phpstan/phpstan": "^1.8",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpunit/phpunit": "^9",
+        "phpunit/phpunit": "^10",
         "phpspec/prophecy-phpunit": "^2",
         "symfony/phpunit-bridge": "^6.2"
     },
