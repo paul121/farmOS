@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\farm_farm\Plugin\Organization\OrganizationType;
 
 use Drupal\farm_entity\Plugin\Organization\OrganizationType\FarmOrganizationType;

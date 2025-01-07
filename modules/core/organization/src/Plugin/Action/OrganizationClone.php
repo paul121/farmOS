@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\organization\Plugin\Action;
 
 use Drupal\Core\Action\Plugin\Action\EntityActionBase;
@@ -61,7 +63,7 @@ class OrganizationClone extends EntityActionBase {
   /**
    * {@inheritdoc}
    */
-  public function execute(OrganizationInterface $organization = NULL) {
+  public function execute(?OrganizationInterface $organization = NULL) {
     if ($organization) {
       $cloned_organization = $organization->createDuplicate();
       $new_name = $organization->getName() . ' ' . $this->t('(clone of organization #@id)', ['@id' => $organization->id()]);
@@ -75,7 +77,7 @@ class OrganizationClone extends EntityActionBase {
   /**
    * {@inheritdoc}
    */
-  public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
+  public function access($object, ?AccountInterface $account = NULL, $return_as_object = FALSE) {
     /** @var \Drupal\organization\Entity\OrganizationInterface $object */
     $result = $object->access('view', $account, TRUE)
       ->andIf($object->access('create', $account, TRUE));

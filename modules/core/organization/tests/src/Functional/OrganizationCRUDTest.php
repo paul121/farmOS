@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\organization\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;

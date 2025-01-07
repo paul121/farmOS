@@ -5,6 +5,8 @@
  * Hooks and customizations for the organization module.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Render\Element;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\organization\Entity\OrganizationInterface;

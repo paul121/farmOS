@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\organization\Plugin\Action;
 
 use Drupal\Core\Access\AccessResult;
@@ -22,7 +24,7 @@ abstract class OrganizationStateChangeBase extends EntityActionBase {
   /**
    * {@inheritdoc}
    */
-  public function execute(OrganizationInterface $organization = NULL) {
+  public function execute(?OrganizationInterface $organization = NULL) {
 
     // Bail if there is no organization.
     if (empty($organization)) {
@@ -57,7 +59,7 @@ abstract class OrganizationStateChangeBase extends EntityActionBase {
   /**
    * {@inheritdoc}
    */
-  public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
+  public function access($object, ?AccountInterface $account = NULL, $return_as_object = FALSE) {
     /** @var \Drupal\organization\Entity\OrganizationInterface $object */
     // First check entity and state field access.
     $result = $object->get('status')->access('edit', $account, TRUE)

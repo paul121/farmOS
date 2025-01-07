@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\farm_entity;
 
 use Drupal\Component\Plugin\Exception\PluginException;
