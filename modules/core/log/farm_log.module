@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\log\Entity\LogInterface;
 
 /**
  * Implements hook_entity_prepare_form().
@@ -21,7 +22,10 @@ function farm_log_entity_prepare_form(EntityInterface $entity, $operation, FormS
   }
 
   // If the entity is not a log, bail.
-  if ($entity->getEntityTypeId() !== 'log') {
+  if (
+    $entity->getEntityTypeId() !== 'log' ||
+    !$entity instanceof LogInterface
+  ) {
     return;
   }
 

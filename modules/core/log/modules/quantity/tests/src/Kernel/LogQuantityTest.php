@@ -19,14 +19,14 @@ class LogQuantityTest extends KernelTestBase {
   /**
    * The log storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\log\LogStorage
    */
   protected $logStorage;
 
   /**
    * The quantity storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\Sql\SqlContentEntityStorage
    */
   protected $quantityStorage;
 

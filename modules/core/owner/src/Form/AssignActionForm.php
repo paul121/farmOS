@@ -58,7 +58,7 @@ class AssignActionForm extends ConfirmFormBase {
   /**
    * The entities to assign.
    *
-   * @var \Drupal\Core\Entity\EntityInterface[]
+   * @var \Drupal\Core\Entity\ContentEntityInterface[]
    */
   protected $entities;
 

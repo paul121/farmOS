@@ -29,21 +29,21 @@ abstract class QuickFormTestBase extends KernelTestBase {
   /**
    * Asset entity storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\asset\AssetStorage
    */
   protected $assetStorage;
 
   /**
    * Log entity storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\log\LogStorage
    */
   protected $logStorage;
 
   /**
    * Taxonomy term entity storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\taxonomy\TermStorageInterface
    */
   protected $termStorage;
 

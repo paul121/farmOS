@@ -60,7 +60,7 @@ class EntityFlagActionForm extends ConfirmFormBase {
   /**
    * The entities to flag.
    *
-   * @var \Drupal\Core\Entity\EntityInterface[]
+   * @var \Drupal\Core\Entity\ContentEntityInterface[]
    */
   protected $entities;
 

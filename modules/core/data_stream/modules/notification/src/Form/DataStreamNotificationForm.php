@@ -18,6 +18,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DataStreamNotificationForm extends EntityForm {
 
   /**
+   * The data stream notification entity.
+   *
+   * @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface
+   */
+  protected $entity;
+
+  /**
    * The notification condition manager service.
    *
    * @var \Drupal\data_stream_notification\NotificationConditionManagerInterface

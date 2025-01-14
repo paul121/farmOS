@@ -51,7 +51,7 @@ class AssetParentActionForm extends ConfirmFormBase {
   /**
    * The assets to update.
    *
-   * @var \Drupal\Core\Entity\EntityInterface[]
+   * @var \Drupal\asset\Entity\AssetInterface[]
    */
   protected $entities;
 

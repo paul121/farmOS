@@ -48,9 +48,9 @@ class LogCategorizeActionForm extends ConfirmFormBase {
   protected $entityType;
 
   /**
-   * The assets to create logs for.
+   * The logs to categorize.
    *
-   * @var \Drupal\Core\Entity\EntityInterface[]
+   * @var \Drupal\log\Entity\LogInterface[]
    */
   protected $entities;
 
