@@ -10,6 +10,8 @@ declare(strict_types=1);
 use Drupal\Core\Entity\ContentEntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\entity\EntityAccessControlHandler;
 use Drupal\entity\EntityPermissionProvider;
@@ -135,7 +137,11 @@ function farm_entity_entity_presave(EntityInterface $entity) {
     'plan',
     'quantity',
   ];
-  if (!in_array($entity->getEntityTypeId(), $entity_types)) {
+  if (
+    !in_array($entity->getEntityTypeId(), $entity_types)
+    || !$entity instanceof RevisionLogInterface
+    || !$entity instanceof FieldableEntityInterface
+  ) {
     return;
   }
 
@@ -144,7 +150,6 @@ function farm_entity_entity_presave(EntityInterface $entity) {
   // @see https://www.drupal.org/project/drupal/issues/2795279
   // @see https://github.com/json-api/json-api/pull/824
   if ($entity->type->entity->shouldCreateNewRevision() && $entity->getEntityType()->isRevisionable()) {
-    /** @var \Drupal\Core\Entity\RevisionLogInterface $entity */
 
     // Always create a new revision.
     $entity->setNewRevision(TRUE);
