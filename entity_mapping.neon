@@ -1,0 +1,70 @@
+parameters:
+  drupal:
+    entityMapping:
+      asset:
+        class: Drupal\asset\Entity\Asset
+        storage: Drupal\asset\AssetStorage
+      asset_type:
+        class: Drupal\asset\Entity\AssetType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      data_stream:
+        class: Drupal\data_stream\Entity\DataStream
+        storage: Drupal\Core\Entity\Sql\SqlContentEntityStorage
+      data_stream_type:
+        class: Drupal\data_stream\Entity\DataStreamType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      field_module:
+        class: Drupal\farm_fieldkit\Entity\FieldModule
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      flag:
+        class: Drupal\farm_flag\Entity\FarmFlag
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      lab_test_type:
+        class: Drupal\farm_lab_test\Entity\FarmLabTestType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      land_type:
+        class: Drupal\farm_land\Entity\FarmLandType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      layer_style:
+        class: Drupal\farm_map\Entity\LayerStyle
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      # @todo Remove log and log_type once included in drupal/log module.
+      log:
+        class: Drupal\log\Entity\Log
+        storage: Drupal\log\LogStorage
+      log_type:
+        class: Drupal\log\Entity\LogType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      map_behavior:
+        class: Drupal\farm_map\Entity\MapBehavior
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      map_type:
+        class: Drupal\farm_map\Entity\MapType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      plan:
+        class: Drupal\plan\Entity\Plan
+        storage: Drupal\plan\PlanStorage
+      plan_type:
+        class: Drupal\plan\Entity\PlanType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      plan_record:
+        class: Drupal\plan\Entity\PlanRecord
+        storage: Drupal\Core\Entity\Sql\SqlContentEntityStorage
+      plan_record_type:
+        class: Drupal\plan\Entity\PlanRecordType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      quantity:
+        class: Drupal\quantity\Entity\Quantity
+        storage: Drupal\Core\Entity\Sql\SqlContentEntityStorage
+      quantity_type:
+        class: Drupal\quantity\Entity\QuantityType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      quick_form:
+        class: Drupal\farm_quick\Entity\QuickFormInstance
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      structure_type:
+        class: Drupal\farm_structure\Entity\FarmStructureType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      tag_type:
+        class: Drupal\farm_id_tag\Entity\FarmIDTagType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
