@@ -42,8 +42,6 @@ function farm_log_entity_prepare_form(EntityInterface $entity, $operation, FormS
     // because those throw a client error if the parameter is not the expected
     // cardinality (single value vs array of values).
     $asset_ids = (array) $query->all()['asset'];
-
-    /** @var \Drupal\Core\Field\EntityReferenceFieldItemList $asset_field */
     $asset_field = $entity->get('asset');
 
     // Add each asset the user has view access to.

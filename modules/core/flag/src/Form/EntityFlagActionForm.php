@@ -209,7 +209,6 @@ class EntityFlagActionForm extends ConfirmFormBase {
     // Update flags on accessible entities.
     $total_count = 0;
     foreach ($accessible_entities as $entity) {
-      /** @var \Drupal\Core\Field\FieldItemListInterface $flag_field */
       if ($flag_field = $entity->get($this->flagFieldName)) {
 
         // Save existing flags if appending.
