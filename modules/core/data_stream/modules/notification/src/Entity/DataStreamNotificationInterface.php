@@ -50,4 +50,12 @@ interface DataStreamNotificationInterface extends ConfigEntityInterface, EntityW
    */
   public function incrementState(string $key): array;
 
+  /**
+   * Helper function to return the state key for the notification.
+   *
+   * @return string
+   *   The state key.
+   */
+  public function getStateKey(): string;
+
 }

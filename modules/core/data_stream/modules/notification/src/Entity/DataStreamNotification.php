@@ -256,12 +256,9 @@ class DataStreamNotification extends ConfigEntityBase implements DataStreamNotif
   }
 
   /**
-   * Helper function to return the state key for the notification.
-   *
-   * @return string
-   *   The state key.
+   * {@inheritdoc}
    */
-  protected function getStateKey() {
+  public function getStateKey(): string {
     return 'data_stream_notification.state.' . $this->id();
   }
 
