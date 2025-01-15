@@ -17,6 +17,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AssetTypeForm extends EntityForm {
 
   /**
+   * The asset type entity.
+   *
+   * @var \Drupal\asset\Entity\AssetTypeInterface
+   */
+  protected $entity;
+
+  /**
    * The workflow manager.
    *
    * @var \Drupal\state_machine\WorkflowManagerInterface

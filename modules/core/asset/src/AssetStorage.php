@@ -80,7 +80,7 @@ class AssetStorage extends SqlContentEntityStorage {
    * {@inheritdoc}
    */
   protected function doPreSave(EntityInterface $entity) {
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    /** @var \Drupal\asset\Entity\AssetInterface $entity */
     $id = parent::doPreSave($entity);
 
     // If there is no original entity, bail.
