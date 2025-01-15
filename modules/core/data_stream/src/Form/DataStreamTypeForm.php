@@ -13,6 +13,13 @@ use Drupal\Core\Form\FormStateInterface;
 class DataStreamTypeForm extends EntityForm {
 
   /**
+   * The data stream type entity.
+   *
+   * @var \Drupal\data_stream\Entity\DataStreamTypeInterface
+   */
+  protected $entity;
+
+  /**
    * {@inheritdoc}
    */
   public function form(array $form, FormStateInterface $form_state) {

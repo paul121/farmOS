@@ -435,6 +435,7 @@ class DataStreamNotificationForm extends EntityForm {
 
     // Save the condition and delivery values, defaulting to an empty array.
     // The parent method will skip these since they are plugin collections.
+    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $entity */
     $values = $form_state->getValues();
     foreach (['condition', 'delivery'] as $type) {
       $entity->set($type, $values[$type] ?? []);

@@ -165,6 +165,7 @@ class DataStreamNotification extends ConfigEntityBase implements DataStreamNotif
     parent::postDelete($storage, $entities);
 
     // Clear the notification state on deletion.
+    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $entity */
     foreach ($entities as $entity) {
       \Drupal::state()->delete($entity->getStateKey());
     }

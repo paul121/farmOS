@@ -20,6 +20,7 @@ class DataStreamNotificationListBuilder extends ConfigEntityListBuilder {
       'enabled' => [],
       'disabled' => [],
     ];
+    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $entity */
     foreach (parent::load() as $entity) {
       if ($entity->status()) {
         $entities['enabled'][] = $entity;
@@ -35,6 +36,7 @@ class DataStreamNotificationListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $notification) {
+    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $notification */
     $row = parent::buildRow($notification);
     return [
       'data' => [
