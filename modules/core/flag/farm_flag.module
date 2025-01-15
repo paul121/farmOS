@@ -192,7 +192,6 @@ function template_preprocess_field__flag(array &$variables) {
  * Implements hook_entity_type_build().
  */
 function farm_flag_entity_type_build(array &$entity_types) {
-  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
 
   // Enable the entity flag action on entity types with a flag field.
   foreach (['asset', 'log', 'plan'] as $entity_type) {

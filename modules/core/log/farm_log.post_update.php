@@ -13,7 +13,6 @@ use Drupal\log\Entity\LogType;
  * Update core log types to make "done" their default status.
  */
 function farm_log_post_update_farm_log_workflow(&$sandbox) {
-  /** @var \Drupal\log\Entity\LogType[] $log_types */
   $core_log_types = [
     'activity',
     'birth',

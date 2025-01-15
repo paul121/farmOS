@@ -284,6 +284,7 @@ class GroupTest extends KernelTestBase {
 
     // Create two group assets.
     /** @var \Drupal\asset\Entity\AssetInterface[] $groups */
+    $groups = [];
     $group = Asset::create([
       'type' => 'group',
       'name' => $this->randomMachineName(),

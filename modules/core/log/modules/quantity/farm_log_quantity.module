@@ -94,7 +94,6 @@ function farm_log_quantity_default_type(?string $log_type = NULL) {
   // If a log type is specified, attempt to look up the default quantity type
   // from the log type's third party settings.
   if (!empty($log_type)) {
-    /** @var \Drupal\log\Entity\LogType $log_type_storage */
     $log_type_definition = \Drupal::service('entity_type.manager')->getStorage('log_type')->load($log_type);
     $type = $log_type_definition->getThirdPartySetting('farm_log_quantity', 'default_quantity_type', NULL);
     if (!empty($type)) {

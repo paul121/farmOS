@@ -63,7 +63,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
     }
 
     // Load mother asset.
-    /** @var \Drupal\asset\Entity\AssetInterface $mother */
+    /** @var \Drupal\asset\Entity\AssetInterface[] $mothers */
     $mothers = $log->get('mother')->referencedEntities();
     $mother = reset($mothers);
 

@@ -25,7 +25,6 @@ class EntityReferenceFieldItemNormalizer extends CoreEntityReferenceFieldItemNor
   public function normalize($field_item, $format = NULL, array $context = []): array|string|int|float|bool|\ArrayObject|NULL {
 
     // Attempt to load the referenced entity.
-    /** @var \Drupal\Core\Entity\EntityInterface $entity */
     if ($entity = $field_item->get('entity')->getValue()) {
 
       // Return content entity labels, if desired.

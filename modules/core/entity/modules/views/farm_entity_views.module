@@ -43,7 +43,6 @@ function farm_entity_views_modules_installed($modules, $is_syncing) {
  * Implements hook_entity_type_build().
  */
 function farm_entity_views_entity_type_build(array &$entity_types) {
-  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
 
   // Set the views data handler class to FarmEntityViewsData.
   foreach (['asset', 'log', 'plan', 'plan_record', 'quantity'] as $entity_type) {

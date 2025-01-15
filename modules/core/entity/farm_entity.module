@@ -56,7 +56,6 @@ function farm_entity_module_implements_alter(&$implementations, $hook) {
  * Implements hook_entity_type_build().
  */
 function farm_entity_entity_type_build(array &$entity_types) {
-  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
 
   // Allow the "view label" operation on the bundle entity type.
   foreach (['asset', 'log', 'plan', 'quantity', 'data_stream'] as $entity_type) {

@@ -127,7 +127,7 @@ function farm_install_modules(array &$install_state) {
   }
 
   // Load a list of all available modules, so that we can display their names.
-  /** @var \Drupal\Core\Extension\ModuleExtensionList $module_list */
+  /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
   $module_extension_list = \Drupal::service('extension.list.module');
 
   // Assemble the batch operation for installing modules.

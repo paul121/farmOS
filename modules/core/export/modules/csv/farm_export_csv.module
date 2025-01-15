@@ -14,7 +14,6 @@ use Drupal\farm_export_csv\Routing\EntityCsvActionRouteProvider;
  * Implements hook_entity_type_build().
  */
 function farm_export_csv_entity_type_build(array &$entity_types) {
-  /** @var \Drupal\Core\Entity\EntityTypeInterface[] $entity_types */
 
   // Enable the entity CSV export action on assets, logs, and quantities.
   foreach (['asset', 'log', 'quantity'] as $entity_type) {

@@ -308,7 +308,7 @@ function farm_ui_theme_build_stacked_twocol_layout(array &$variables, string $en
   }
 
   // Build the layout.
-  /** @var \Drupal\Core\Layout\LayoutInterface $layoutInstance */
+  /** @var \Drupal\Core\Layout\LayoutInterface $layout */
   $layout = \Drupal::service('plugin.manager.core.layout')->createInstance('layout_twocol', []);
   $variables['content'] = $layout->build($regions);
 }

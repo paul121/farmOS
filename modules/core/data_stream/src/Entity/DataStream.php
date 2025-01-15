@@ -83,7 +83,6 @@ class DataStream extends ContentEntityBase implements DataStreamInterface {
    * {@inheritdoc}
    */
   public function getPlugin() {
-    /** @var \Drupal\data_stream\Plugin\DataStream\DataStreamType\DataStreamTypeInterface $plugin */
     return \Drupal::service('plugin.manager.data_stream_type')->createInstance($this->bundle());
   }
 
