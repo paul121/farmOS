@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_quick_birth\Kernel;
 
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Drupal\Tests\farm_quick\Kernel\QuickFormTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
@@ -206,9 +207,11 @@ class QuickBirthTest extends QuickFormTestBase {
     $this->assertEquals($breed2->id(), $child1->get('animal_type')->target_id);
     $this->assertEquals($today->getTimestamp(), $child1->get('birthdate')->value);
     $this->assertEquals('F', $child1->get('sex')->value);
-    $this->assertEquals('ear_tag', $child1->get('id_tag')[0]->type);
-    $this->assertEquals('123', $child1->get('id_tag')[0]->id);
-    $this->assertEquals('Left ear', $child1->get('id_tag')[0]->location);
+    $id_tag = $child1->get('id_tag')->first();
+    $this->assertInstanceOf(IdTagItem::class, $id_tag);
+    $this->assertEquals('ear_tag', $id_tag->type);
+    $this->assertEquals('123', $id_tag->id);
+    $this->assertEquals('Left ear', $id_tag->location);
     $parents = $child1->get('parent')->referencedEntities();
     $this->assertCount(2, $parents);
     $this->assertEquals($genetic_mother->id(), $parents[0]->id());

@@ -19,6 +19,10 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_widget = "id_tag",
  *   default_formatter = "id_tag"
  * )
+ *
+ * @property ?string $id
+ * @property ?string $type
+ * @property ?string $location
  */
 class IdTagItem extends FieldItemBase {
 

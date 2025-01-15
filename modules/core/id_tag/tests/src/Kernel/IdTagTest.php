@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_id_tag\Kernel;
 
+use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\asset\Entity\Asset;
 
@@ -57,9 +58,11 @@ class IdTagTest extends KernelTestBase {
     // Confirm that the asset was created with expected ID tag values.
     $assets = Asset::loadMultiple();
     $this->assertCount(1, $assets);
-    $this->assertEquals('123456', $assets[1]->get('id_tag')->id);
-    $this->assertEquals('other', $assets[1]->get('id_tag')->type);
-    $this->assertEquals('Frame', $assets[1]->get('id_tag')->location);
+    $id_tag = $assets[1]->get('id_tag')->first();
+    $this->assertInstanceOf(IdTagItem::class, $id_tag);
+    $this->assertEquals('123456', $id_tag->id);
+    $this->assertEquals('other', $id_tag->type);
+    $this->assertEquals('Frame', $id_tag->location);
 
     // Confirm that all sub-fields are optional.
     $asset = Asset::create([
