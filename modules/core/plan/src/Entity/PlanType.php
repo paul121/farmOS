@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\plan\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Defines the plan type entity.
@@ -105,33 +104,6 @@ class PlanType extends ConfigEntityBundleBase implements PlanTypeInterface {
    */
   public function setDescription($description) {
     return $this->set('description', $description);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    // If the plan type id changed, update all existing plans of that type.
-    if ($update && $this->getOriginalId() != $this->id()) {
-      $update_count = $this->entityTypeManager()->getStorage('plan')->updateType($this->getOriginalId(), $this->id());
-      if ($update_count) {
-        \Drupal::messenger()->addMessage(\Drupal::translation()->formatPlural($update_count,
-          'Changed the plan type of 1 post from %old-type to %type.',
-          'Changed the plan type of @count posts from %old-type to %type.',
-          [
-            '%old-type' => $this->getOriginalId(),
-            '%type' => $this->id(),
-          ]));
-      }
-    }
-    if ($update) {
-      // Clear the cached field definitions as some settings affect the field
-      // definitions.
-      $this->entityTypeManager()->clearCachedDefinitions();
-      \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
-    }
   }
 
   /**
