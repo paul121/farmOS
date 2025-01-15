@@ -11,6 +11,7 @@ use Drupal\Core\Entity\ContentEntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\RevisionableEntityBundleInterface;
 use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\entity\EntityAccessControlHandler;
@@ -148,7 +149,12 @@ function farm_entity_entity_presave(EntityInterface $entity) {
   // @see https://www.drupal.org/project/drupal/issues/2993557
   // @see https://www.drupal.org/project/drupal/issues/2795279
   // @see https://github.com/json-api/json-api/pull/824
-  if ($entity->type->entity->shouldCreateNewRevision() && $entity->getEntityType()->isRevisionable()) {
+  $entity_type = $entity->get('type')->getEntity();
+  if (
+    $entity_type instanceof RevisionableEntityBundleInterface
+    && $entity_type->shouldCreateNewRevision()
+    && $entity_type->getEntityType()->isRevisionable()
+  ) {
 
     // Always create a new revision.
     $entity->setNewRevision(TRUE);
