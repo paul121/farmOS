@@ -194,6 +194,7 @@ class DataStreamTest extends DataStreamTestBase {
     $this->assertEquals(201, $response->getStatusCode());
 
     // Assert that new data was saved in DB.
+    /** @var \Drupal\data_stream\Plugin\DataStream\DataStreamType\Basic $plugin */
     $plugin = $this->dataStream->getPlugin();
     $data = $plugin->storageGet($this->dataStream, ['limit' => 1, 'end' => $timestamp]);
     $this->assertEquals(1, count($data));
@@ -208,6 +209,7 @@ class DataStreamTest extends DataStreamTestBase {
     $this->assertEquals(201, $response->getStatusCode());
 
     // Assert that new data WAS NOT saved in DB.
+    /** @var \Drupal\data_stream\Plugin\DataStream\DataStreamType\Basic $plugin */
     $plugin = $this->dataStream->getPlugin();
     $data = $plugin->storageGet($this->dataStream, ['limit' => 5, 'end' => $timestamp]);
     $this->assertTrue(!in_array($bad_data_point, $data));
