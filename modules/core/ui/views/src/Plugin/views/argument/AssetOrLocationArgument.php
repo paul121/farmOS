@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_views\Plugin\views\argument;
 
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
 use Drupal\views\Views;
 
 /**
@@ -18,6 +19,11 @@ class AssetOrLocationArgument extends ArgumentPluginBase {
    * {@inheritdoc}
    */
   public function query($group_by = FALSE) {
+
+    // Bail if not a SQL query.
+    if (!$this->query instanceof Sql) {
+      return;
+    }
 
     // Join the log__asset table with a condition to match the asset ID.
     $this->ensureMyTable();

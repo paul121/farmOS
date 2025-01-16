@@ -7,6 +7,7 @@ namespace Drupal\farm_location\Plugin\views\argument;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\farm_location\AssetLocationInterface;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -69,6 +70,11 @@ class AssetLocation extends ArgumentPluginBase {
    * {@inheritdoc}
    */
   public function query($group_by = FALSE) {
+
+    // Bail if not a SQL query.
+    if (!$this->query instanceof Sql) {
+      return;
+    }
 
     // First query for a list of asset IDs in the location, then use this list
     // to filter the current View.

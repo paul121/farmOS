@@ -7,6 +7,7 @@ namespace Drupal\farm_group\Plugin\views\argument;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\farm_group\GroupMembershipInterface;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
+use Drupal\views\Plugin\views\query\Sql;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -71,6 +72,11 @@ class AssetGroup extends ArgumentPluginBase {
    * @see \Drupal\farm_location\Plugin\views\argument\AssetLocation
    */
   public function query($group_by = FALSE) {
+
+    // Bail if not a SQL query.
+    if (!$this->query instanceof Sql) {
+      return;
+    }
 
     // First query for a list of asset IDs in the group, then use this list to
     // filter the current View.

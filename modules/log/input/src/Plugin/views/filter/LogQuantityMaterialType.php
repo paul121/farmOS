@@ -7,6 +7,7 @@ namespace Drupal\farm_input\Plugin\views\filter;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
+use Drupal\views\Plugin\views\query\Sql;
 
 /**
  * Filter handler for log quantity material type terms.
@@ -38,6 +39,11 @@ class LogQuantityMaterialType extends TaxonomyIndexTid {
    * {@inheritdoc}
    */
   public function query() {
+
+    // Bail if not a SQL query.
+    if (!$this->query instanceof Sql) {
+      return;
+    }
 
     // Bail if there are no filter values.
     if (count($this->value) == 0) {

@@ -10,6 +10,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\views\Plugin\views\argument\NumericArgument;
+use Drupal\views\Plugin\views\query\Sql;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -99,6 +100,12 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
    * {@inheritdoc}
    */
   public function query($group_by = FALSE) {
+
+    // Bail if not a SQL query.
+    if (!$this->query instanceof Sql) {
+      return;
+    }
+
     // Getting the arguments through views rather than
     // from the Drupal route is important since it allows
     // the contextual filter previews in the views UI to
