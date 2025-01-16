@@ -46,6 +46,8 @@ return static function (RectorConfig $rectorConfig): void {
   // Ensure that annotations are not used when attributes are available.
   // @todo Remove this if/when PHPStan or PHP CodeSniffer can check for it.
   $rectorConfig->ruleWithConfiguration(AnnotationToAttributeRector::class, [
+
+    // Drupal core attributes.
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Action', 'Drupal\Core\Action\Attribute\Action'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'Block', 'Drupal\Core\Block\Attribute\Block'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ConfigEntityType', 'Drupal\Core\Entity\Attribute\ConfigEntityType'),
@@ -59,5 +61,15 @@ return static function (RectorConfig $rectorConfig): void {
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateProcessPlugin', 'Drupal\migrate\Attribute\MigrateProcess'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'MigrateSource', 'Drupal\migrate\Attribute\MigrateSource'),
     new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'ViewsDisplayExtender', 'Drupal\views\Attribute\ViewsDisplayExtender'),
+
+    // farmOS attributes.
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'AssetType', 'Drupal\farm_entity\Attribute\AssetType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'DataStreamType', 'Drupal\data_stream\Attribute\DataStreamType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'LogType', 'Drupal\log\Attribute\LogType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationCondition', 'Drupal\data_stream_notification\Attribute\NotificationCondition'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'NotificationDelivery', 'Drupal\data_stream_notification\Attribute\NotificationDelivery'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'PlanType', 'Drupal\plan\Attribute\PlanType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuantityType', 'Drupal\plan\Attribute\QuantityType'),
+    new AnnotationToAttributeConfiguration('10.0.0', '10.0.0', 'QuickForm', 'Drupal\farm_quick\Attribute\QuickForm'),
   ]);
 };
