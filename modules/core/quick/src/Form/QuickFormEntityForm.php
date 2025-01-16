@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\SubformState;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\farm_quick\Entity\QuickFormInstance;
+use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\QuickFormPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -60,7 +61,7 @@ class QuickFormEntityForm extends EntityForm {
 
     // Add tabs if the quick form plugin is configurable.
     $tab_group = NULL;
-    if ($this->entity->getPlugin()->isConfigurable()) {
+    if ($this->entity->getPlugin() instanceof ConfigurableQuickFormInterface) {
       $form['tabs'] = [
         '#type' => 'vertical_tabs',
       ];
@@ -155,7 +156,7 @@ class QuickFormEntityForm extends EntityForm {
     parent::validateForm($form, $form_state);
 
     // Validate plugin form.
-    if ($this->entity->getPlugin()->isConfigurable()) {
+    if ($this->entity->getPlugin() instanceof ConfigurableQuickFormInterface) {
       $this->entity->getPlugin()->validateConfigurationForm($form['settings'], SubformState::createForSubform($form['settings'], $form, $form_state));
     }
   }
@@ -167,7 +168,7 @@ class QuickFormEntityForm extends EntityForm {
     parent::submitForm($form, $form_state);
 
     // Submit plugin form.
-    if ($this->entity->getPlugin()->isConfigurable()) {
+    if ($this->entity->getPlugin() instanceof ConfigurableQuickFormInterface) {
       $this->entity->getPlugin()->submitConfigurationForm($form['settings'], SubformState::createForSubform($form['settings'], $form, $form_state));
     }
   }

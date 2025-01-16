@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_quick\Kernel;
 
 use Drupal\Core\Form\FormState;
+use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_quick\Form\QuickFormEntityForm;
 
@@ -86,6 +87,7 @@ class QuickFormTest extends KernelTestBase {
     $this->assertEquals(['create test log'], $quick_forms['configurable_test']->getPlugin()->getPermissions());
 
     // Confirm default configuration.
+    $this->assertInstanceOf(ConfigurableQuickFormInterface::class, $quick_forms['configurable_test']->getPlugin());
     $this->assertEquals(['test_default' => 100], $quick_forms['configurable_test']->getPlugin()->defaultConfiguration());
 
     // Confirm overridden label, description, and helpText of the
@@ -95,6 +97,7 @@ class QuickFormTest extends KernelTestBase {
     $this->assertEquals('Overridden help text', $quick_forms['configurable_test2']->getHelpText());
 
     // Confirm configuration of configurable_test2 quick form.
+    $this->assertInstanceOf(ConfigurableQuickFormInterface::class, $quick_forms['configurable_test2']->getPlugin());
     $this->assertEquals(['test_default' => 500], $quick_forms['configurable_test2']->getPlugin()->getConfiguration());
   }
 
