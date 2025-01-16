@@ -38,6 +38,7 @@ class TaxonomyTermForm extends GinContentFormBase {
     $form = parent::form($form, $form_state);
 
     // Term relations logic copied from Drupal\taxonomy\TermForm::form.
+    /** @var \Drupal\taxonomy\TermInterface $term */
     $term = $this->entity;
     $vocab_storage = $this->entityTypeManager->getStorage('taxonomy_vocabulary');
     /** @var \Drupal\taxonomy\TermStorageInterface $taxonomy_storage */
@@ -118,6 +119,7 @@ class TaxonomyTermForm extends GinContentFormBase {
    * {@inheritdoc}
    */
   public function buildEntity(array $form, FormStateInterface $form_state) {
+    /** @var \Drupal\taxonomy\TermInterface $term */
     $term = parent::buildEntity($form, $form_state);
 
     // Prevent leading and trailing spaces in term names.
