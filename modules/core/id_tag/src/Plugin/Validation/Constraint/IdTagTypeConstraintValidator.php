@@ -22,6 +22,7 @@ class IdTagTypeConstraintValidator extends ConstraintValidator {
     $bundle = $value->getEntity()->bundle();
     $valid_types = array_keys(farm_id_tag_type_options($bundle));
     if (!in_array($value->type, $valid_types)) {
+      // @phpstan-ignore property.notFound
       $this->context->addViolation($constraint->message, ['@type' => $value->type]);
     }
   }
