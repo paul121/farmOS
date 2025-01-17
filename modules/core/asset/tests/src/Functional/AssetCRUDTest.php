@@ -6,6 +6,7 @@ namespace Drupal\Tests\asset\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\asset\Entity\Asset;
+use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the asset CRUD.
@@ -129,6 +130,9 @@ class AssetCRUDTest extends AssetTestBase {
   public function doTestArchiveAsset() {
     $asset = $this->createAssetEntity();
     $asset->save();
+
+    // Assert field type for PHPStan checks.
+    $this->assertInstanceOf(StateItemInterface::class, $asset->get('status')->first());
 
     $this->assertEquals($asset->get('status')->first()->getString(), 'active', 'New assets are active by default');
     $this->assertNull($asset->getArchivedTime(), 'Archived timestamp is null by default');

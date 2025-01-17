@@ -6,6 +6,7 @@ namespace Drupal\Tests\plan\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\plan\Entity\Plan;
+use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the plan CRUD.
@@ -130,6 +131,9 @@ class PlanCRUDTest extends PlanTestBase {
   public function doTestArchivePlan() {
     $plan = $this->createPlanEntity();
     $plan->save();
+
+    // Assert field type for PHPStan checks.
+    $this->assertInstanceOf(StateItemInterface::class, $plan->get('status')->first());
 
     $this->assertEquals($plan->get('status')->first()->getString(), 'active', 'New plans are active by default');
     $this->assertNull($plan->getArchivedTime(), 'Archived timestamp is null by default');
