@@ -44,6 +44,7 @@ class EntityCsvActionRouteProvider implements EntityRouteProviderInterface {
       $route->setRequirement('_user_is_logged_in', 'TRUE');
       return $route;
     }
+    return NULL;
   }
 
 }
