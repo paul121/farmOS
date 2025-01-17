@@ -7,6 +7,7 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -67,6 +68,7 @@ function farm_log_quantity_form_log_form_alter(&$form, FormStateInterface $form_
     $bundle_select = &$form['quantity']['widget']['actions']['bundle'];
 
     // Load the log type storage.
+    assert($form_state->getFormObject() instanceof EntityFormInterface);
     /** @var \Drupal\log\Entity\Log $entity */
     $entity = $form_state->getFormObject()->getEntity();
 
