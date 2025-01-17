@@ -6,6 +6,7 @@ namespace Drupal\Tests\farm_import_csv\Kernel;
 
 use Drupal\asset\Entity\Asset;
 use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
+use Drupal\text\Plugin\Field\FieldType\TextLongItem;
 
 /**
  * Tests for asset CSV importers.
@@ -135,7 +136,8 @@ class AssetCsvImportTest extends CsvImportTestBase {
         $this->assertContains($parent->label(), $expected_values[$id]['parents']);
       }
       $this->assertEquals($expected_values[$id]['notes'], $asset->get('notes')->value);
-      $this->assertEquals('default', $asset->get('notes')->format);
+      $this->assertInstanceOf(TextLongItem::class, $asset->get('notes')->first());
+      $this->assertEquals('default', $asset->get('notes')->first()->format);
       $this->assertEquals($expected_values[$id]['status'], $asset->get('status')->value);
       $this->assertEquals('Imported via CSV.', $asset->getRevisionLogMessage());
     }

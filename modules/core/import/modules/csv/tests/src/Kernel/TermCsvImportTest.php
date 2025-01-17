@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_import_csv\Kernel;
 
 use Drupal\taxonomy\Entity\Term;
+use Drupal\text\Plugin\Field\FieldType\TextLongItem;
 
 /**
  * Tests for taxonomy term CSV importers.
@@ -67,7 +68,8 @@ class TermCsvImportTest extends CsvImportTestBase {
       $this->assertEquals('animal_type', $term->bundle());
       $this->assertEquals($expected_values[$id]['name'], $term->label());
       $this->assertEquals($expected_values[$id]['description'], $term->getDescription());
-      $this->assertEquals('default', $term->get('description')->format);
+      $this->assertInstanceOf(TextLongItem::class, $term->get('description')->first());
+      $this->assertEquals('default', $term->get('description')->first()->format);
       if (!empty($expected_values[$id]['parent'])) {
         $this->assertEquals($expected_values[$id]['parent'], $term->get('parent')->referencedEntities()[0]->label());
       }
