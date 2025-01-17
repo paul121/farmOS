@@ -169,6 +169,7 @@ class TaxonomyTermForm extends GinContentFormBase {
     $parent = [];
     // Get the parent directly from the term as
     // \Drupal\taxonomy\TermStorageInterface::loadParents() excludes the root.
+    /** @var \Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem $item */
     foreach ($term->get('parent') as $item) {
       $parent[] = (int) $item->target_id;
     }
