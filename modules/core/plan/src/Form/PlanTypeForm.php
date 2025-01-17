@@ -17,6 +17,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PlanTypeForm extends EntityForm {
 
   /**
+   * The plan type entity.
+   *
+   * @var \Drupal\plan\Entity\PlanTypeInterface
+   */
+  protected $entity;
+
+  /**
    * The workflow manager.
    *
    * @var \Drupal\state_machine\WorkflowManagerInterface
