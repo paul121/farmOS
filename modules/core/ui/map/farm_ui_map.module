@@ -64,7 +64,7 @@ function farm_ui_map_preprocess_block__farm_local_actions_block(&$variables, $bl
  * Implements hook_ENTITY_TYPE_view().
  */
 function farm_ui_map_asset_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  /** @var \Drupal\farm_entity\Plugin\Asset\AssetType\AssetTypeInterface $entity */
+  /** @var \Drupal\asset\Entity\AssetInterface $entity */
 
   // Bail if not the map_popup view mode.
   if ($view_mode !== 'map_popup') {
