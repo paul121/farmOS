@@ -259,9 +259,9 @@ class QuickBirthTest extends QuickFormTestBase {
     $this->assertEquals($child1->id(), $birth_log->get('asset')->referencedEntities()[0]->id());
     $this->assertEquals($child2->id(), $birth_log->get('asset')->referencedEntities()[1]->id());
     $this->assertEquals($birth_mother->id(), $birth_log->get('mother')->referencedEntities()[0]->id());
-    $this->assertEquals($location->id(), $birth_log->get('location')[0]->target_id);
+    $this->assertEquals($location->id(), $birth_log->get('location')->referencedEntities()[0]->id());
     $this->assertEquals(TRUE, $birth_log->get('is_movement')->value);
-    $this->assertEquals($group->id(), $birth_log->get('group')[0]->target_id);
+    $this->assertEquals($group->id(), $birth_log->get('group')->referencedEntities()[0]->id());
     $this->assertEquals(TRUE, $birth_log->get('is_group_assignment')->value);
     $this->assertEquals('done', $birth_log->get('status')->value);
     $this->assertEquals('Birth notes', $birth_log->get('notes')->value);
