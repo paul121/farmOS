@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_entity\Functional;
 
+use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 
 /**
@@ -200,6 +201,8 @@ class FarmEntityBundleFieldTest extends FarmBrowserTestBase {
     // Test that the database table exists if the field storage definition
     // exists.
     if ($exists) {
+      // Check entity storage type for PHPstan.
+      $this->assertInstanceOf(SqlEntityStorageInterface::class, $this->entityTypeManager->getStorage($entity_type));
       /** @var \Drupal\Core\Entity\Sql\DefaultTableMapping $table_mapping */
       $table_mapping = $this->entityTypeManager->getStorage($entity_type)->getTableMapping();
 
