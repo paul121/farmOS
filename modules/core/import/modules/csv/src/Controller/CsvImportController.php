@@ -232,6 +232,7 @@ class CsvImportController extends ControllerBase {
     }
 
     // Add the importer form.
+    // @phpstan-ignore arguments.count
     $build['form'] = $this->formBuilder->getForm('Drupal\farm_import_csv\Form\CsvImportForm', $migration_id);
 
     // If entities have been created by this importer, display a View of them.

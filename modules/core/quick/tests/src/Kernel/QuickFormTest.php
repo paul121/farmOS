@@ -110,6 +110,8 @@ class QuickFormTest extends KernelTestBase {
     $form_state = (new FormState())->setValues([
       'test' => '12',
     ]);
+
+    // @phpstan-ignore arguments.count
     \Drupal::formBuilder()->submitForm('\Drupal\farm_quick\Form\QuickForm', $form_state, 'test');
 
     // Load the form state storage.
