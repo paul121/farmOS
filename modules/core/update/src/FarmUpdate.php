@@ -222,6 +222,7 @@ class FarmUpdate implements FarmUpdateInterface {
   protected function getConfigShortname($type, $name) {
     $shortname = $name;
     if ($type != 'system.simple') {
+      /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $definition */
       $definition = $this->entityManager->getDefinition($type);
       $prefix = $definition->getConfigPrefix() . '.';
       if (strpos($name, $prefix) === 0) {
