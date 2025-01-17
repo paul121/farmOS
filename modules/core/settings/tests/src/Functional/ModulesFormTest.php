@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_settings\Functional;
 
+use Drupal\FunctionalJavascriptTests\JSWebAssert;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 
 /**
@@ -127,7 +128,9 @@ class ModulesFormTest extends WebDriverTestBase {
     $page->pressButton('install-modules');
 
     // Wait for the batch process to complete.
-    $this->assertSession()->waitForText('Install modules', 30000);
+    $session = $this->assertSession();
+    $this->assertInstanceOf(JSWebAssert::class, $session);
+    $session->waitForText('Install modules', 30000);
 
     // Rebuild the list of installed modules.
     $this->rebuildContainer();
