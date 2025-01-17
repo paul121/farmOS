@@ -45,7 +45,7 @@ class LocationAPITest extends FarmBrowserTestBase {
     // Setup the request.
     $request_options[RequestOptions::HEADERS]['Accept'] = 'application/vnd.api+json';
     $request_options[RequestOptions::HEADERS]['Content-Type'] = 'application/vnd.api+json';
-    $request_options[RequestOptions::HEADERS]['Authorization'] = 'Basic ' . base64_encode($this->user->name->value . ':' . $this->user->passRaw);
+    $request_options[RequestOptions::HEADERS]['Authorization'] = 'Basic ' . base64_encode($this->user->getAccountName() . ':' . $this->user->get('passRaw')->value);
     $asset_uri = "base://api/asset/object";
 
     // Create an asset with no intrinsic geometry.
