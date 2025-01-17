@@ -164,7 +164,7 @@ class GeofieldWidget extends GeofieldBaseWidget {
 
     // Get the current form state value. Prioritize form state over field value.
     $form_value = $form_state->getValue([$field_name, $delta]);
-    $field_value = $items[$delta]->value;
+    $field_value = $items->get($delta)->getValue();
     $current_value = $form_value['value'] ?? $field_value;
     $element['#default_value'] = $current_value;
 
