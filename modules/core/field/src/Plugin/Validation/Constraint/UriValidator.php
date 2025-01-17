@@ -24,6 +24,7 @@ class UriValidator extends ConstraintValidator {
 
     // Require a scheme.
     if (!str_contains($value->value, ':')) {
+      // @phpstan-ignore property.notFound
       $this->context->addViolation($constraint->message);
     }
 
@@ -112,6 +113,7 @@ class UriValidator extends ConstraintValidator {
         (?:\# (?:[A-Za-z0-9\-._~!$&'()*+,;=:@\/?]|%[0-9A-Fa-f]{2})* )?
       )$/x";
     if (!preg_match($regex, $value->value)) {
+      // @phpstan-ignore property.notFound
       $this->context->addViolation($constraint->message);
     }
   }
