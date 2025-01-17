@@ -190,7 +190,10 @@ class GinContentFormBase extends ContentEntityForm implements RenderCallbackInte
       $revision_items = [];
 
       // Only add created metadata if available.
-      if ($this->entity instanceof EntityOwnerInterface) {
+      if (
+        $this->entity instanceof EntityOwnerInterface
+        && method_exists($this->entity, 'getCreatedTime')
+      ) {
         $author = $this->entity->getOwner()->getAccountName();
         $date = $this->dateFormatter->format($this->entity->getCreatedTime(), 'short', '', $this->currentUser()->getTimeZone(), '');
         $revision_items[] = $this->t('Created @timestamp by @author', ['@timestamp' => $date, '@author' => $author]);
