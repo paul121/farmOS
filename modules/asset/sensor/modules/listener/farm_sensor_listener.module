@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-use Drupal\asset\Entity\AssetInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Url;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\data_stream\Entity\DataStream;
 use Drupal\data_stream\Entity\DataStreamInterface;
 
