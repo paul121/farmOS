@@ -11,6 +11,7 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
+use Drupal\migrate\Plugin\migrate\id_map\Sql;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -106,8 +107,11 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
    */
   public function onMigratePostImport(MigrateImportEvent $event) {
 
-    // If this is not a csv_file source migration, bail.
-    if ($event->getMigration()->getSourcePlugin()->getPluginId() != 'csv_file') {
+    // If this is not a SQL or csv_file source migration, bail.
+    if (
+      !$event->getMigration()->getIdMap() instanceof Sql
+      || $event->getMigration()->getSourcePlugin()->getPluginId() != 'csv_file'
+    ) {
       return;
     }
 
