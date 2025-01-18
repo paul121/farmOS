@@ -2,7 +2,7 @@ includes:
   - baseline.neon
 parameters:
   level: 2
-  phpVersion: 80103
+  phpVersion: 80227
   reportUnmatchedIgnoredErrors: true
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
