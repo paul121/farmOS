@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Drupal\\\\asset\\\\Entity\\\\AssetTypeInterface\\:\\:getWorkflowId\\(\\)\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/asset/src/Form/AssetTypeForm.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Serializer\\\\SerializerInterface\\:\\:normalize\\(\\)\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/export/modules/csv/src/Normalizer/QuantityCsvNormalizer.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Serializer\\\\SerializerInterface\\:\\:normalize\\(\\)\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/geo/src/Normalizer/ContentEntityGeometryNormalizer.php
+
+		-
+			message: "#^Call to an undefined method Drupal\\\\plan\\\\Entity\\\\PlanTypeInterface\\:\\:getWorkflowId\\(\\)\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/plan/src/Form/PlanTypeForm.php

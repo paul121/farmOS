@@ -1,5 +1,8 @@
+includes:
+  - baseline.neon
 parameters:
   level: 2
+  reportUnmatchedIgnoredErrors: true
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
     - '#^Unsafe usage of new static#'
