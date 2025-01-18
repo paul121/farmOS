@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\Tests\farm_quick\Kernel;
 
 use Drupal\Core\Form\FormState;
-use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\farm_quick\Form\QuickFormEntityForm;
+use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 
 /**
  * Tests for farmOS quick forms.

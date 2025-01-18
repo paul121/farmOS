@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_id_tag\Kernel;
 
-use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\asset\Entity\Asset;
+use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 
 /**
  * Test ID tag field.
