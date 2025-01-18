@@ -118,10 +118,9 @@ function farm_inventory_preprocess_quantity(array &$variables) {
     unset($variables['content']['inventory_asset']);
 
     // Get the adjustment label.
-    /** @var \Drupal\Core\Field\FieldItemListInterface $adjustment_field */
     $adjustment_field = $quantity->get('inventory_adjustment');
     $adjustment_values = $adjustment_field->getFieldDefinition()->getSetting('allowed_values');
-    $adjustment = $adjustment_values[$adjustment_field->first()->value];
+    $adjustment = $adjustment_values[$adjustment_field->value];
 
     // Get the inventory asset.
     $assets = $quantity->get('inventory_asset')->referencedEntities();
