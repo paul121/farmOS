@@ -9,3 +9,10 @@ parameters:
   scanDirectories:
     # Tell PHPStan where to find GeoPHP classes.
     - vendor/itamair/geophp
+  drupal:
+    rules:
+      testClassSuffixNameRule: false
+      dependencySerializationTraitPropertyRule: false
+      accessResultConditionRule: false
+      classExtendsInternalClassRule: true
+      pluginManagerInspectionRule: false
