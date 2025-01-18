@@ -12,7 +12,7 @@ parameters:
   drupal:
     rules:
       testClassSuffixNameRule: false
-      dependencySerializationTraitPropertyRule: false
-      accessResultConditionRule: false
+      dependencySerializationTraitPropertyRule: true
+      accessResultConditionRule: true
       classExtendsInternalClassRule: true
       pluginManagerInspectionRule: false
