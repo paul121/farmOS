@@ -38,7 +38,7 @@ class IdTagWidget extends WidgetBase {
     $tag_type = $items[$delta]->type ?? NULL;
 
     // Get the current asset bundle.
-    $bundle = $items->getParent()->getEntity()->bundle();
+    $bundle = $items->getEntity()->bundle();
 
     // Load allowed tag types.
     $tag_types = farm_id_tag_type_options($bundle);
