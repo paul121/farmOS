@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\farm_id_tag\Plugin\Validation\Constraint;
 
+use Drupal\farm_id_tag\Plugin\Field\FieldType\IdTagItem;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -16,7 +17,7 @@ class IdTagTypeConstraintValidator extends ConstraintValidator {
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
-    if (empty($value->type)) {
+    if (empty($value->type) || !$value instanceof IdTagItem) {
       return;
     }
     $bundle = $value->getEntity()->bundle();
