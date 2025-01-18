@@ -178,6 +178,7 @@ class SensorDataApiTest extends FarmBrowserTestBase {
   protected function processRequest(string $method, Url $url, array $request_options = []) {
     $this->refreshVariables();
     $request_options[RequestOptions::HTTP_ERRORS] = FALSE;
+    // @phpstan-ignore method.notFound
     $client = $this->getSession()->getDriver()->getClient()->getClient();
     return $client->request($method, $url->setAbsolute(TRUE)->toString(), $request_options);
   }
