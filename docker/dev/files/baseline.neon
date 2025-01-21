@@ -16,6 +16,11 @@ parameters:
 			path: web/profiles/farm/modules/core/geo/src/Normalizer/ContentEntityGeometryNormalizer.php
 
 		-
+			message: "#^Access to an undefined property Drupal\\\\user\\\\UserInterface\\:\\:\\$pass_raw\\.$#"
+			count: 2
+			path: web/profiles/farm/modules/core/login/tests/src/Functional/OauthPasswordTest.php
+
+		-
 			message: "#^Access to an undefined property Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:\\$passRaw\\.$#"
 			count: 1
 			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
