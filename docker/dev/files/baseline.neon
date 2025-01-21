@@ -16,6 +16,21 @@ parameters:
 			path: web/profiles/farm/modules/core/geo/src/Normalizer/ContentEntityGeometryNormalizer.php
 
 		-
+			message: "#^Access to an undefined property Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:\\$passRaw\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
+
+		-
+			message: "#^Access to an undefined property Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:\\$sessionId\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
+
+		-
+			message: "#^Binary operation \"\\.\\=\" between Drupal\\\\Core\\\\Field\\\\FieldItemListInterface and 'incorrect' results in an error\\.$#"
+			count: 1
+			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
+
+		-
 			message: "#^Call to an undefined method Drupal\\\\plan\\\\Entity\\\\PlanTypeInterface\\:\\:getWorkflowId\\(\\)\\.$#"
 			count: 1
 			path: web/profiles/farm/modules/core/plan/src/Form/PlanTypeForm.php
