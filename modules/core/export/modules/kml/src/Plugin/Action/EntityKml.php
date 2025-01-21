@@ -147,7 +147,7 @@ class EntityKml extends EntityActionBase {
     }
 
     // Make the file temporary.
-    $file->status = 0;
+    $file->set('status', 0);
     $file->save();
 
     // Show a link to the file.

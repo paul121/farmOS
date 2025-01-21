@@ -136,39 +136,42 @@ class LocationTest extends KernelTestBase {
     $this->assertEquals($this->locations[0]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Empty geometry is populated from location.');
 
     // When multiple locations are added, all of their geometries are combined.
-    $log->location = [
-      ['target_id' => $this->locations[0]->id()],
-      ['target_id' => $this->locations[1]->id()],
-    ];
-    $log->geometry->value = '';
+    $log->set(
+      'location',
+      [
+        $this->locations[0]->id(),
+        $this->locations[1]->id(),
+      ],
+    );
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $combined = $this->combineWkt([$this->polygons[0], $this->polygons[1]]);
     $this->assertEquals($combined, $log->get('geometry')->value, 'Geometries from multiple locations are combined.');
 
     // When a log's locations change, and the geometry is not customized, the
     // geometry is updated.
-    $log->location = ['target_id' => $this->locations[1]->id()];
+    $log->set('location', [$this->locations[1]->id()]);
     $log->save();
     $this->assertEquals($this->locations[1]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Geometry is updated when locations are changed.');
 
     // When a log's geometry is cleared, it is re-copied from locations.
-    $log->geometry->value = '';
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $this->assertEquals($this->locations[1]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Geometry is re-copied from locations when it is cleared.');
 
     // When a log's geometry is set, it is saved.
-    $log->geometry->value = $this->polygons[2];
+    $log->set('geometry', ['value' => $this->polygons[2]]);
     $log->save();
     $this->assertEquals($this->polygons[2], $log->get('geometry')->value, 'Custom geometry can be saved.');
 
     // When a log's locations change, and the geometry is customized, the
     // geometry is not updated.
-    $log->location = ['target_id' => $this->locations[0]->id()];
+    $log->set('location', [$this->locations[0]->id()]);
     $log->save();
     $this->assertEquals($this->polygons[2], $log->get('geometry')->value, 'Custom geometry is not overwritten when locations change.');
 
     // When a log's custom geometry is cleared, it is re-copied from locations.
-    $log->geometry->value = '';
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $this->assertEquals($this->locations[0]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Geometry is re-copied from locations when custom geometry is cleared.');
 
@@ -194,29 +197,32 @@ class LocationTest extends KernelTestBase {
       'is_location' => FALSE,
     ]);
     $object->save();
-    $log->asset = ['target_id' => $object->id()];
-    $log->location = [];
-    $log->geometry->value = '';
+    $log->set('asset', [$object->id()]);
+    $log->set('location', []);
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $this->assertEmpty($log->get('geometry')->value, 'Non-location asset geometry is not copied.');
 
     // If both location and non-location assets are referenced, only the
     // location asset geometry is copied.
-    $log->asset = [
-      ['target_id' => $this->locations[0]->id()],
-      ['target_id' => $object->id()],
-    ];
-    $log->location = [];
-    $log->geometry->value = '';
+    $log->set(
+      'asset',
+      [
+        $this->locations[0]->id(),
+        $object->id(),
+      ],
+    );
+    $log->set('location', []);
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $this->assertEquals($this->locations[0]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Only location asset geometry is copied.');
 
     // If location assets are referenced in both the asset and location field,
     // only the geometry of the asset referenced in the location field is
     // copied.
-    $log->asset = ['target_id' => $this->locations[0]->id()];
-    $log->location = ['target_id' => $this->locations[1]->id()];
-    $log->geometry->value = '';
+    $log->set('asset', [$this->locations[0]->id()]);
+    $log->set('location', [$this->locations[1]->id()]);
+    $log->set('geometry', ['value' => '']);
     $log->save();
     $this->assertEquals($this->locations[1]->get('intrinsic_geometry')->value, $log->get('geometry')->value, 'Only location asset geometry is copied when both assets and locations are referenced.');
 
@@ -283,7 +289,7 @@ class LocationTest extends KernelTestBase {
     $this->populateEntityTestCache($asset);
 
     // When a movement log's locations are changed, the asset location changes.
-    $first_log->location = ['target_id' => $this->locations[1]->id()];
+    $first_log->set('location', [$this->locations[1]->id()]);
     $first_log->save();
     $this->assertEquals($this->logLocation->getLocation($first_log), $this->assetLocation->getLocation($asset), 'Asset with changed movement log has same location as log.');
     $this->assertEquals($this->logLocation->getGeometry($first_log), $this->assetLocation->getGeometry($asset), 'Asset with changed movement log has same geometry as log.');
@@ -314,7 +320,7 @@ class LocationTest extends KernelTestBase {
     $this->assertEntityTestCache($asset, TRUE);
 
     // When the log is marked as "done", the asset location is updated.
-    $second_log->status = 'done';
+    $second_log->set('status', 'done');
     $second_log->save();
     $this->assertEquals($this->logLocation->getLocation($second_log), $this->assetLocation->getLocation($asset), 'Asset with second movement log has new location');
     $this->assertEquals($this->logLocation->getGeometry($second_log), $this->assetLocation->getGeometry($asset), 'Asset with second movement log has new geometry.');
@@ -420,7 +426,7 @@ class LocationTest extends KernelTestBase {
     $this->assertEquals($this->polygons[0], $this->assetLocation->getGeometry($asset), 'Movement logs of a fixed asset do not affect geometry.');
 
     // Set is_fixed to FALSE on the asset.
-    $asset->is_fixed = FALSE;
+    $asset->set('is_fixed', FALSE);
     $asset->save();
 
     // If an asset has a movement log and is no longer fixed, it's location and

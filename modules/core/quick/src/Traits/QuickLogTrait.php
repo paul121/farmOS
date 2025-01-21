@@ -56,23 +56,23 @@ trait QuickLogTrait {
 
         // If the quantity is an array of values, pass it to createQuantity.
         if (is_array($qty)) {
-          $log->quantity[] = $this->createQuantity($qty, $log->bundle());
+          $log->get('quantity')->appendItem($this->createQuantity($qty, $log->bundle()));
         }
 
         // Otherwise, add it directly to the log.
         else {
-          $log->quantity[] = $qty;
+          $log->get('quantity')->appendItem($qty);
         }
       }
     }
 
     // If not specified, set the log's status to "done".
     if (!isset($values['status'])) {
-      $log->status = 'done';
+      $log->set('status', 'done');
     }
 
     // Track which quick form created the entity.
-    $log->quick[] = $this->getQuickId();
+    $log->get('quick')->appendItem($this->getQuickId());
 
     // Save the log.
     $log->save();

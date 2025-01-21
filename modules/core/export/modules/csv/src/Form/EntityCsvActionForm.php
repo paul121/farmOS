@@ -353,7 +353,7 @@ class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface
     }
 
     // Make the file temporary.
-    $file->status = 0;
+    $file->set('status', 0);
     $file->save();
 
     // Add warning message for inaccessible entities.

@@ -90,7 +90,7 @@ class LogQuantityEventSubscriber implements EventSubscriberInterface {
     }
 
     // Get any quantities the log references.
-    $quantities = $log->quantity->referencedEntities();
+    $quantities = $log->get('quantity')->referencedEntities();
 
     // Delete quantity entities.
     if (!empty($quantities)) {

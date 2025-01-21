@@ -50,7 +50,7 @@ trait QuickAssetTrait {
     $asset = Asset::create($values);
 
     // Track which quick form created the entity.
-    $asset->quick[] = $this->getQuickId();
+    $asset->get('quick')->appendItem($this->getQuickId());
 
     // Save the asset.
     $asset->save();

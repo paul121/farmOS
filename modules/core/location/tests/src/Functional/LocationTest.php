@@ -93,7 +93,7 @@ class LocationTest extends WebDriverTestBase {
     $this->assertSession()->pageTextNotContains("Intrinsic geometry");
 
     // Make the asset fixed.
-    $this->asset->is_fixed = TRUE;
+    $this->asset->set('is_fixed', TRUE);
     $this->asset->save();
 
     // Go back to the edit form.

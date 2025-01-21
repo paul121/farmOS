@@ -66,7 +66,7 @@ class GroupTest extends WebDriverTestBase {
     $this->assertFalse($group_field->isVisible());
 
     // Make the log a group assignment.
-    $log->is_group_assignment = TRUE;
+    $log->set('is_group_assignment', TRUE);
     $log->save();
 
     // Go back to the edit form.

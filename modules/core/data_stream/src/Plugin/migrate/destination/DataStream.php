@@ -52,7 +52,7 @@ class DataStream extends EntityContentBase {
       // Update the assets data_stream field if the asset was found
       // and the asset type has the field.
       if (!is_null($asset) && $asset->hasField('data_stream')) {
-        $asset->data_stream[] = $entity->id();
+        $asset->get('data_stream')->appendItem($entity->id());
         $asset->save();
       }
     }

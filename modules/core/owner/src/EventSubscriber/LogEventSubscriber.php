@@ -65,7 +65,7 @@ class LogEventSubscriber implements EventSubscriberInterface {
     }
 
     // Add the current user to the log's owners.
-    $log->owner[] = ['target_id' => $this->currentUser->id()];
+    $log->set('owner', [$this->currentUser->id()]);
   }
 
 }

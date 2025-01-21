@@ -176,7 +176,7 @@ class GroupTest extends KernelTestBase {
     $this->assertEntityTestCache($animal, TRUE);
 
     // When the log is marked as "done", the asset's membership is updated.
-    $second_log->status = 'done';
+    $second_log->set('status', 'done');
     $second_log->save();
     $this->assertEquals($second_group->id(), $this->groupMembership->getGroup($animal)[0]->id(), 'A second group assignment log updates group membership.');
     $this->assertCorrectAssets([$animal], $this->groupMembership->getGroupMembers([$second_group]), TRUE, 'Completed group assignment logs add group members.');
@@ -419,7 +419,7 @@ class GroupTest extends KernelTestBase {
     $this->assertCorrectAssets([], $this->groupMembership->getGroupMembers([$first_group], TRUE), TRUE, 'The first group has no recursive members.');
 
     // Save the second log to create the nested group membership.
-    $second_log->status = 'done';
+    $second_log->set('status', 'done');
     $second_log->save();
 
     // Assert that the second group has a group and a single member.
