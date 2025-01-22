@@ -17,18 +17,74 @@ env:
 
 jobs:
 
-  build:
-    name: Build Docker images
+  build-amd:
+    name: Build AMD Docker images
     runs-on: ubuntu-latest
     strategy:
       matrix:
         platform:
          - amd64
-         - arm32v7
-         - arm64v8
         include:
           - platform: amd64
             DOCKER_PLATFORM_NAME: linux/amd64
+    steps:
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Set default FARMOS_REPO and FARMOS_VERSION
+        run: |
+          echo "FARMOS_REPO=${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+          echo "FARMOS_VERSION=3.x" >> $GITHUB_ENV
+      - name: Set FARMOS_VERSION for branch push event
+        if: github.event_name == 'push' && github.ref_type == 'branch'
+        run: echo "FARMOS_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
+      - name: Set FARMOS_VERSION for tag push event
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        run: echo "FARMOS_VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
+      - name: Set FARMOS_VERSION and FARMOS_REPO for pull request event
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "FARMOS_VERSION=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
+          echo "FARMOS_REPO=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
+      # This builds the production/dev Docker images using the specified FARMOS_VERSION,
+      # but notably it does NOT override the default PROJECT_VERSION, so the
+      # farmOS Composer project 3.x branch is always used.
+      - name: Build and save the farmOS Docker image
+        run: |
+          COMMON_BUILD_ARGS="--load --build-arg FARMOS_REPO=https://github.com/${FARMOS_REPO} --build-arg FARMOS_VERSION=${FARMOS_VERSION} --platform ${{ matrix.DOCKER_PLATFORM_NAME }}"
+          PROD_IMG_NAME=$DOCKER_IMG_PREFIX:3.x-${{ matrix.platform }}
+          DEV_IMG_NAME=$DOCKER_IMG_PREFIX:3.x-dev-${{ matrix.platform }}
+          docker buildx build $COMMON_BUILD_ARGS -t $PROD_IMG_NAME docker
+          docker buildx build $COMMON_BUILD_ARGS -t $DEV_IMG_NAME --target dev docker
+          docker save $PROD_IMG_NAME > /tmp/farmos-${{ matrix.platform }}.tar
+          docker save $DEV_IMG_NAME > /tmp/farmos-dev-${{ matrix.platform }}.tar
+      - name: Cache the farmOS Docker image
+        uses: actions/cache@v4
+        with:
+          path: /tmp/farmos-${{ matrix.platform }}.tar
+          key: farmos-${{ matrix.platform }}-${{ github.run_id }}
+      - name: Cache the farmOS dev Docker image
+        uses: actions/cache@v4
+        with:
+          path: /tmp/farmos-dev-${{ matrix.platform }}.tar
+          key: farmos-dev-${{ matrix.platform }}-${{ github.run_id }}
+    outputs:
+      farmos_version: ${{ env.FARMOS_VERSION }}
+
+  build-arm:
+    name: Build ARM Docker images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+         - arm32v7
+         - arm64v8
+        include:
           - platform: arm32v7
             DOCKER_PLATFORM_NAME: linux/arm/v7
           - platform: arm64v8
@@ -85,7 +141,7 @@ jobs:
   phpcs:
     name: PHP Codesniffer
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-amd
     strategy:
       matrix:
         platform:
@@ -112,7 +168,7 @@ jobs:
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-amd
     strategy:
       matrix:
         platform:
@@ -134,7 +190,7 @@ jobs:
   rector:
     name: Rector
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-amd
     strategy:
       matrix:
         platform:
@@ -157,7 +213,7 @@ jobs:
   test:
     name: Run PHPUnit tests
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-amd
     strategy:
       matrix:
         dbms:
@@ -223,7 +279,8 @@ jobs:
     if: github.repository == 'farmOS/farmOS' && github.event_name == 'push' && github.ref_type == 'tag'
     runs-on: ubuntu-latest
     needs:
-      - build
+      - build-amd
+      - build-arm
       - phpcs
       - phpstan
       - rector
@@ -264,11 +321,7 @@ jobs:
     if: github.repository == 'farmOS/farmOS' && github.event_name == 'push' && (github.ref_type == 'tag' || (github.ref_type == 'branch' && needs.build.outputs.farmos_version == '3.x'))
     runs-on: ubuntu-latest
     needs:
-      - build
-      - phpcs
-      - phpstan
-      - rector
-      - test
+      - release
     strategy:
       matrix:
         platform:
@@ -324,7 +377,6 @@ jobs:
     if: github.repository == 'farmOS/farmOS' && github.event_name == 'push' && (github.ref_type == 'tag' || (github.ref_type == 'branch' && needs.build.outputs.farmos_version == '3.x'))
     runs-on: ubuntu-latest
     needs:
-      - build
       - publish-multi-arch-images
     steps:
       - name: Set FARMOS_VERSION from previous output
@@ -367,9 +419,7 @@ jobs:
     name: Announce new release on farmOS-microblog
     if: needs.publish-manifest.outputs.announce
     needs:
-      - build
       - release
-      - publish-manifest
     uses: farmOS/farmOS-microblog/.github/workflows/create-message.yml@main
     with:
       message: '#farmOS ${{ needs.build.outputs.farmos_version }} has been released! https://github.com/farmOS/farmOS/releases/${{ needs.build.outputs.farmos_version }}'
@@ -381,9 +431,7 @@ jobs:
     if: needs.publish-manifest.outputs.announce
     runs-on: ubuntu-latest
     needs:
-      - build
       - release
-      - publish-manifest
     steps:
       - name: Discourse API request
         env:
