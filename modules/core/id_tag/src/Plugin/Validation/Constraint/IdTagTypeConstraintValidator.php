@@ -17,15 +17,26 @@ class IdTagTypeConstraintValidator extends ConstraintValidator {
    * {@inheritdoc}
    */
   public function validate($value, Constraint $constraint) {
-    $id_tag = $value->first();
-    if (!$id_tag instanceof IdTagItem || empty($id_tag->type)) {
+    /** @var \Drupal\Core\Field\FieldItemListInterface $value */
+
+    // Bail if it is an empty field.
+    if ($value->isEmpty()) {
       return;
     }
+
+    // Get valid tag types for the asset bundle.
     $bundle = $value->getEntity()->bundle();
     $valid_types = array_keys(farm_id_tag_type_options($bundle));
-    if (!in_array($id_tag->type, $valid_types)) {
-      // @phpstan-ignore property.notFound
-      $this->context->addViolation($constraint->message, ['@type' => $id_tag->type]);
+
+    // Check for a valid ID tag type on each field delta.
+    foreach ($value as $id_tag) {
+      if (!$id_tag instanceof IdTagItem || empty($id_tag->type)) {
+        continue;
+      }
+      if (!in_array($id_tag->type, $valid_types)) {
+        // @phpstan-ignore property.notFound
+        $this->context->addViolation($constraint->message, ['@type' => $id_tag->type]);
+      }
     }
   }
 
