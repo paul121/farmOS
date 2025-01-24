@@ -64,7 +64,7 @@ class EntityTypeLabelLocalTask extends LocalTaskDefault implements ContainerFact
     // Bail if no entity type option is provided.
     $entity_type = $this->pluginDefinition['options']['entity_type'] ?? NULL;
     if (!$entity_type) {
-      return $this->t('View');
+      return $this->t('View')->render();
     }
 
     // Get the entity from the route match.
@@ -78,7 +78,7 @@ class EntityTypeLabelLocalTask extends LocalTaskDefault implements ContainerFact
 
     // Default to "View" if no entity is loaded.
     if (!$entity instanceof EntityInterface) {
-      return $this->t('View');
+      return $this->t('View')->render();
     }
 
     // For entity types with bundles, return the bundle label.
