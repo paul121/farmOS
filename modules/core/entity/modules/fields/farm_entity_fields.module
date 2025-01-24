@@ -90,15 +90,18 @@ function farm_entity_fields_entity_base_field_info_alter(&$fields, EntityTypeInt
 
     // Hide the field, if desired.
     if (!empty($options['hidden'])) {
+      // @phpstan-ignore booleanOr.alwaysTrue
       if ($options['hidden'] === TRUE || $options['hidden'] === 'form') {
         $form_display_options['region'] = 'hidden';
       }
+      // @phpstan-ignore identical.alwaysFalse
       if ($options['hidden'] === TRUE || $options['hidden'] === 'view') {
         $view_display_options['region'] = 'hidden';
       }
     }
 
     // Hide the label, if desired.
+    // @phpstan-ignore booleanAnd.rightAlwaysTrue
     if (!empty($options['label']) && $options['label'] == 'hidden') {
       $view_display_options['label'] = 'hidden';
     }
