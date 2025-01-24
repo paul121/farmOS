@@ -99,7 +99,7 @@ class LocationHierarchyForm extends FormBase {
    * @param \Drupal\asset\Entity\AssetInterface|null $asset
    *   Optionally specify the parent asset that this page is being built for.
    *
-   * @return string
+   * @return \Drupal\Core\StringTranslation\TranslatableMarkup
    *   Returns the translated page title.
    */
   public function getTitle(?AssetInterface $asset = NULL) {
