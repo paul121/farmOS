@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Drupal\farm_quick_movement\Plugin\QuickForm;
 
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\farm_location\AssetLocationInterface;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
@@ -261,11 +261,11 @@ class Movement extends QuickFormBase implements QuickFormInterface {
       return $entities;
     }
     foreach ($values as $value) {
-      if ($value instanceof EntityInterface) {
-        $entities[] = $value;
+      if (is_array($value) && !empty($value['target_id'])) {
+        $value = $this->entityTypeManager->getStorage('asset')->load($value['target_id']);
       }
-      elseif (!empty($value['target_id'])) {
-        $entities[] = $this->entityTypeManager->getStorage('asset')->load($value['target_id']);
+      if ($value instanceof AssetInterface) {
+        $entities[] = $value;
       }
     }
     return $entities;
