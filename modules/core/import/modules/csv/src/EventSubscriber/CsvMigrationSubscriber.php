@@ -35,9 +35,9 @@ class CsvMigrationSubscriber implements EventSubscriberInterface {
   protected $currentUser;
 
   /**
-   * The tempstore service.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\PrivateTempStoreFactory
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 

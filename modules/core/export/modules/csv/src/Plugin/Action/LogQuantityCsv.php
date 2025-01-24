@@ -24,9 +24,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class LogQuantityCsv extends EntityActionBase {
 
   /**
-   * The tempstore object.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 

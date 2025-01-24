@@ -23,9 +23,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class EntityFlagActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 

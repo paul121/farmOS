@@ -29,9 +29,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EntityCsvActionForm extends ConfirmFormBase implements BaseFormIdInterface {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
