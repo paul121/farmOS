@@ -40,8 +40,8 @@ class FarmMap extends RenderElementBase {
    *   appended to 'farm-map-' as the map element ID if one has not already
    *   been provided.
    *
-   * @return array
-   *   A renderable array representing the map.
+   * @return \Drupal\farm_map\Element\FarmMap
+   *   The farm map render element.
    *
    * @see \Drupal\farm_map\Event\MapRenderEvent
    */
