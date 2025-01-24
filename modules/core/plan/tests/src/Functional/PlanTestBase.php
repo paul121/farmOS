@@ -12,9 +12,7 @@ use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 abstract class PlanTestBase extends FarmBrowserTestBase {
 
   /**
-   * Modules to install.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'plan',
