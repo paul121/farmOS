@@ -21,9 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
 class AssetParentActionForm extends ConfirmFormBase {
 
   /**
-   * The tempstore factory.
+   * The private temp store.
    *
-   * @var \Drupal\Core\TempStore\SharedTempStore
+   * @var \Drupal\Core\TempStore\PrivateTempStore
    */
   protected $tempStore;
 
