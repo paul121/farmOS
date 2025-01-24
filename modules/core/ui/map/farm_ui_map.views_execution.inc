@@ -66,6 +66,7 @@ function farm_ui_map_views_pre_render(ViewExecutable $view) {
     $layer_group = $view->getBaseEntityType()->getCollectionLabel();
 
     // Get exposed filters.
+    /** @var array<string,string[]> $exposed_filters */
     $exposed_filters = $view->getExposedInput();
 
     // Add multiple asset layers to the page of all assets.
