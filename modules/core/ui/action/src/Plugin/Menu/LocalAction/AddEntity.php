@@ -82,7 +82,7 @@ class AddEntity extends LocalActionDefault {
     $bundle_label = $this->entityTypeManager->getStorage($entity_type->getBundleEntityType())->load($bundle)->label();
 
     // Build the link title.
-    return $this->t('Add @bundle @entity_type', ['@bundle' => $bundle_label, '@entity_type' => $entity_type_label]);
+    return $this->t('Add @bundle @entity_type', ['@bundle' => $bundle_label, '@entity_type' => $entity_type_label])->render();
   }
 
   /**
