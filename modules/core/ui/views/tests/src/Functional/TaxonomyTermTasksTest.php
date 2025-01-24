@@ -22,9 +22,9 @@ class TaxonomyTermTasksTest extends FarmBrowserTestBase {
   protected $user;
 
   /**
-   * Test animal asset.
+   * Test plant type.
    *
-   * @var \Drupal\asset\Entity\Asset
+   * @var \Drupal\taxonomy\Entity\Term
    */
   protected $favaPlantType;
 
