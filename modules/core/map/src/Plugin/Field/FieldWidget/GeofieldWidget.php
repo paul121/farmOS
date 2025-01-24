@@ -14,6 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\file\FileInterface;
 use Drupal\geofield\GeoPHP\GeoPHPInterface;
+use Drupal\geofield\Plugin\Field\FieldType\GeofieldItem;
 use Drupal\geofield\Plugin\Field\FieldWidget\GeofieldBaseWidget;
 use Drupal\geofield\Plugin\GeofieldBackendManager;
 use Drupal\geofield\WktGeneratorInterface;
@@ -162,11 +163,19 @@ class GeofieldWidget extends GeofieldBaseWidget {
     $element['#prefix'] = '<div id="' . $field_wrapper_id . '">';
     $element['#suffix'] = '</div>';
 
-    // Get the current form state value. Prioritize form state over field value.
+    // Determine the default value for the field.
+    // Prioritize the current form state value over the field value.
     $form_value = $form_state->getValue([$field_name, $delta]);
-    $field_value = $items[$delta]->value;
-    $current_value = $form_value['value'] ?? $field_value;
-    $element['#default_value'] = $current_value;
+    $default_value = $form_value['value'] ?? NULL;
+    $field = $items->get($delta);
+    if (
+      empty($default_value)
+      && $field instanceof GeofieldItem
+      && !$field->isEmpty()
+    ) {
+      $default_value = $field->get('value')->getValue();
+    }
+    $element['#default_value'] = $default_value;
 
     // Configure to display raw geometry.
     $display_raw_geometry = $this->getSetting('display_raw_geometry');
