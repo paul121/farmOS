@@ -84,7 +84,7 @@ class LogTest extends KernelTestBase {
 
     // Set the timestamp of one log to the future.
     $now = \Drupal::time()->getRequestTime();
-    $foo_log->timestamp = $now + 86400;
+    $foo_log->set('timestamp', $now + 86400);
     $foo_log->save();
 
     // Test that results can be filtered by timestamp.
@@ -92,7 +92,7 @@ class LogTest extends KernelTestBase {
     $this->assertNotContains($foo_log->id(), $log_ids, 'Log query results can be filtered by timestamp.');
 
     // Set the status of one log to complete.
-    $bar_log->status = 'complete';
+    $bar_log->set('status', 'complete');
     $bar_log->save();
 
     // Test that results can be filtered by status.
@@ -100,7 +100,7 @@ class LogTest extends KernelTestBase {
     $this->assertNotContains($bar_log->id(), $log_ids, 'Log query results can be filtered by status.');
 
     // Reference the asset in one of the logs.
-    $foo_log->asset[] = $asset;
+    $foo_log->get('asset')->appendItem($asset);
     $foo_log->save();
 
     // Test that results can be filtered by asset reference.
@@ -110,9 +110,9 @@ class LogTest extends KernelTestBase {
 
     // Set the timestamps of both logs to now.
     $now = \Drupal::time()->getRequestTime();
-    $foo_log->timestamp = $now;
+    $foo_log->set('timestamp', $now);
     $foo_log->save();
-    $bar_log->timestamp = $now;
+    $bar_log->set('timestamp', $now);
     $bar_log->save();
 
     // Test that logs with the same timestamp are sorted by ID descending.
@@ -121,7 +121,7 @@ class LogTest extends KernelTestBase {
 
     // Set the timestamp of one log to the future.
     $now = \Drupal::time()->getRequestTime();
-    $foo_log->timestamp = $now + 86400;
+    $foo_log->set('timestamp', $now + 86400);
     $foo_log->save();
 
     // Test that logs are sorted by timestamp descending.

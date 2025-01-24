@@ -321,7 +321,7 @@ class LocationHierarchyForm extends FormBase {
 
       // Add the new parent, if applicable.
       if (!empty($change['new_parent'])) {
-        $asset->get('parent')[] = ['target_id' => $change['new_parent']];
+        $asset->get('parent')->appendItem($change['new_parent']);
         if (!array_key_exists($asset->id(), $save_assets)) {
           $save_assets[$asset->id()] = $asset;
         }

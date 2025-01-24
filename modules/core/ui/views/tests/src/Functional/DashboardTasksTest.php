@@ -94,8 +94,8 @@ class DashboardTasksTest extends FarmBrowserTestBase {
     $this->assertSession()->pageTextContains('No logs found.');
 
     // Mark the log as pending in the future.
-    $this->log->status = 'pending';
-    $this->log->timestamp = \Drupal::time()->getCurrentTime() + 86400;
+    $this->log->set('status', 'pending');
+    $this->log->set('timestamp', \Drupal::time()->getCurrentTime() + 86400);
     $this->log->save();
 
     // Assert that the log is displayed.
@@ -104,8 +104,8 @@ class DashboardTasksTest extends FarmBrowserTestBase {
     $this->assertSession()->pageTextContains($this->log->label());
 
     // Mark the log as pending in the past.
-    $this->log->status = 'pending';
-    $this->log->timestamp = \Drupal::time()->getCurrentTime() - 86400;
+    $this->log->set('status', 'pending');
+    $this->log->set('timestamp', \Drupal::time()->getCurrentTime() - 86400);
     $this->log->save();
 
     // Assert that the log is displayed.
