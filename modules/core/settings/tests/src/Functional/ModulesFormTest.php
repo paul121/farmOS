@@ -95,8 +95,7 @@ class ModulesFormTest extends WebDriverTestBase {
     $field_name = $type . "[modules][$module]";
     $checkbox = $page->findField($field_name);
     $this->assertNotEmpty($checkbox, "The checkbox for $module exists.");
-
-    $this->assertEquals($checked, $checkbox->isChecked(), "The $module checkbox is " . $checked ? '' : 'not ' . 'checked.');
+    $this->assertEquals($checked, $checkbox->isChecked(), "The $module checkbox has expected state.");
     $this->assertEquals($disabled, $checkbox->hasAttribute('disabled'), "The $module checkbox is disabled: $disabled");
   }
 
