@@ -70,8 +70,8 @@ class QuickFormAddPage extends ControllerBase {
     // Add link for each configurable plugin.
     foreach ($plugins as $plugin_id => $plugin) {
       $render['#bundles'][$plugin_id] = [
-        'label' => Html::escape($plugin['label']),
-        'description' => Html::escape($plugin['description']) ?? '',
+        'label' => Html::escape($plugin['label'] ?? ''),
+        'description' => Html::escape($plugin['description'] ?? ''),
         'add_link' => Link::createFromRoute($plugin['label'], 'farm_quick.add_form', ['plugin' => $plugin_id]),
       ];
     }
