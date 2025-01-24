@@ -15,26 +15,6 @@ class DataStreamNotificationListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function load() {
-    $entities = [
-      'enabled' => [],
-      'disabled' => [],
-    ];
-    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $entity */
-    foreach (parent::load() as $entity) {
-      if ($entity->status()) {
-        $entities['enabled'][] = $entity;
-      }
-      else {
-        $entities['disabled'][] = $entity;
-      }
-    }
-    return $entities;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildRow(EntityInterface $notification) {
     /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $notification */
     $row = parent::buildRow($notification);
@@ -124,18 +104,22 @@ class DataStreamNotificationListBuilder extends ConfigEntityListBuilder {
     $list['disabled']['table']['#empty'] = $this->t('There are no disabled notifications.');
 
     // Build separate tables for enabled and disabled.
-    $entities = $this->load();
-    foreach (['enabled', 'disabled'] as $status) {
-      $list[$status]['table'] = [
-        '#type' => 'table',
-        '#header' => $this->buildHeader(),
-      ];
+    $list['enabled']['table'] = [
+      '#type' => 'table',
+      '#header' => $this->buildHeader(),
+    ];
+    $list['disabled']['table'] = [
+      '#type' => 'table',
+      '#header' => $this->buildHeader(),
+    ];
 
-      // Build a row for each entity.
-      foreach ($entities[$status] as $entity) {
-        if ($row = $this->buildRow($entity)) {
-          $list[$status]['table']['#rows'][$entity->id()] = $row;
-        }
+    // Build a row for each entity.
+    $entities = $this->load();
+    /** @var \Drupal\data_stream_notification\Entity\DataStreamNotificationInterface $entity */
+    foreach ($entities as $entity) {
+      if ($row = $this->buildRow($entity)) {
+        $status = $entity->status() ? 'enabled' : 'disabled';
+        $list[$status]['table']['#rows'][$entity->id()] = $row;
       }
     }
 
