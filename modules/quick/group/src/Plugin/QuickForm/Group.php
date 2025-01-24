@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quick_group\Plugin\QuickForm;
 
+use Drupal\asset\Entity\AssetInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -220,15 +220,12 @@ class Group extends QuickFormBase implements QuickFormInterface {
    */
   protected function loadEntityAutocompleteAssets($values) {
     $entities = [];
-    if (empty($values)) {
-      return $entities;
-    }
     foreach ($values as $value) {
-      if ($value instanceof EntityInterface) {
-        $entities[] = $value;
+      if (is_array($value) && !empty($value['target_id'])) {
+        $value = $this->entityTypeManager->getStorage('asset')->load($value['target_id']);
       }
-      elseif (!empty($value['target_id'])) {
-        $entities[] = $this->entityTypeManager->getStorage('asset')->load($value['target_id']);
+      if ($value instanceof AssetInterface) {
+        $entities[] = $value;
       }
     }
     return $entities;
