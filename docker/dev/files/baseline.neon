@@ -26,12 +26,12 @@ parameters:
 			path: web/profiles/farm/modules/core/login/tests/src/Functional/OauthPasswordTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:\\$passRaw\\.$#"
+			message: "#^Access to an undefined property Drupal\\\\user\\\\UserInterface\\:\\:\\$passRaw\\.$#"
 			count: 1
 			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
 
 		-
-			message: "#^Access to an undefined property Drupal\\\\Core\\\\Session\\\\AccountInterface\\:\\:\\$sessionId\\.$#"
+			message: "#^Access to an undefined property Drupal\\\\user\\\\UserInterface\\:\\:\\$sessionId\\.$#"
 			count: 1
 			path: web/profiles/farm/modules/core/login/tests/src/Functional/UserLoginTest.php
 
