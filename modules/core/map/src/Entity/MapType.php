@@ -92,7 +92,7 @@ class MapType extends ConfigEntityBase implements MapTypeInterface {
    * {@inheritdoc}
    */
   public function getMapBehaviors() {
-    return $this->behaviors ?? [];
+    return empty($this->behaviors) ? [] : $this->behaviors;
   }
 
   /**
