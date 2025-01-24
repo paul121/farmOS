@@ -28,7 +28,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
   /**
    * The layer style loader service.
    *
-   * @var \Drupal\farm_map\LayerStyleLoader
+   * @var \Drupal\farm_map\LayerStyleLoaderInterface
    */
   protected $layerStyleLoader;
 
