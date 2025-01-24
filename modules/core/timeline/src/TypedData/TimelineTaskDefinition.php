@@ -20,7 +20,7 @@ class TimelineTaskDefinition extends ComplexDataDefinitionBase {
    * {@inheritdoc}
    */
   public function getPropertyDefinitions() {
-    if (!isset($this->propertyDefinitions)) {
+    if (empty($this->propertyDefinitions)) {
 
       $this->propertyDefinitions['id'] = DataDefinition::create('string')
         ->setLabel($this->t('ID'))
