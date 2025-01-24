@@ -98,7 +98,7 @@ class ManagedRolePermissionsManager extends DefaultPluginManager implements Mana
    * {@inheritdoc}
    */
   protected function getDiscovery() {
-    if (!isset($this->discovery)) {
+    if (!$this->discovery) {
       $discovery = new YamlDiscovery('managed_role_permissions', $this->moduleHandler->getModuleDirectories());
       $this->discovery = new ContainerDerivativeDiscoveryDecorator($discovery);
     }
