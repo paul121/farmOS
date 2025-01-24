@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\farm_login\Functional;
 
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Test using an email in the UserLoginForm.
@@ -182,26 +182,26 @@ class UserLoginTest extends FarmBrowserTestBase {
   /**
    * A helper function to login using an email.
    *
-   * @param \Drupal\Core\Session\AccountInterface $account
+   * @param \Drupal\user\UserInterface $user
    *   User object representing the user to log in.
    *
    * @see drupalLogin()
    * @see drupalCreateUser()
    */
-  protected function drupalLoginUsingEmail(AccountInterface $account) {
+  protected function drupalLoginUsingEmail(UserInterface $user) {
     if ($this->loggedInUser) {
       $this->drupalLogout();
     }
 
     $this->drupalGet(Url::fromRoute('user.login'));
     $this->submitForm([
-      'name' => $account->getEmail(),
+      'name' => $user->getEmail(),
       // PHPStan level 2+ throws the following error on the next line:
       // Access to an undefined property
       // Drupal\Core\Session\AccountInterface::$passRaw.
       // We ignore this because we are following Drupal core's pattern.
       // @phpstan-ignore property.notFound
-      'pass' => $account->passRaw,
+      'pass' => $user->passRaw,
     ], 'Log in');
 
     // PHPStan level 2+ throws the following error on the next line:
@@ -210,11 +210,11 @@ class UserLoginTest extends FarmBrowserTestBase {
     // We ignore this because we are following Drupal core's pattern.
     // @see ::drupalUserIsLoggedIn()
     // @phpstan-ignore property.notFound
-    $account->sessionId = $this->getSession()->getCookie(\Drupal::service('session_configuration')->getOptions(\Drupal::request())['name']);
-    $this->assertTrue($this->drupalUserIsLoggedIn($account), 'User ' . $account->getAccountName() . ' successfully logged in.');
+    $user->sessionId = $this->getSession()->getCookie(\Drupal::service('session_configuration')->getOptions(\Drupal::request())['name']);
+    $this->assertTrue($this->drupalUserIsLoggedIn($user), 'User ' . $user->getAccountName() . ' successfully logged in.');
 
-    $this->loggedInUser = $account;
-    $this->container->get('current_user')->setAccount($account);
+    $this->loggedInUser = $user;
+    $this->container->get('current_user')->setAccount($user);
   }
 
 }
