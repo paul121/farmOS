@@ -346,7 +346,7 @@ class GeofieldWidget extends GeofieldBaseWidget {
 
     // Get the file extension.
     $matches = [];
-    if (preg_match('/(?<=\.)[^.]+$/', $file->getFilename(), $matches) && isset($matches[0])) {
+    if (preg_match('/(?<=\.)[^.]+$/', $file->getFilename(), $matches) && !empty($matches[0])) {
       // Return the associated GeoPHP type.
       if (isset(self::$geoPhpTypes[$matches[0]])) {
         return self::$geoPhpTypes[$matches[0]];
