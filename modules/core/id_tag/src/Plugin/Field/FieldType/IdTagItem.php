@@ -82,7 +82,7 @@ class IdTagItem extends FieldItemBase {
     $id = $this->get('id');
     $type = $this->get('type');
     $location = $this->get('location');
-    return ($id === NULL || $id->getValue() === '') && ($type === NULL || $type->getValue() === '') && ($location === NULL || $location->getValue() === '');
+    return $id->getValue() === ''&& $type->getValue() === '' && $location->getValue() === '';
   }
 
 }

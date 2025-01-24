@@ -67,7 +67,7 @@ class InventoryItem extends FieldItemBase {
     $measure = $this->get('measure');
     $value = $this->get('value');
     $units = $this->get('units');
-    return ($measure === NULL || $measure->getValue() === '') && ($value === NULL || $value->getValue() === '') && ($units === NULL || $units->getValue() === '');
+    return $measure->getValue() === '' && $value->getValue() === '' && $units->getValue() === '';
   }
 
 }
