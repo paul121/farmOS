@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Drupal\farm_ui_views\Plugin\views\argument;
 
 use Drupal\Core\Entity\EntityFieldManagerInterface;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
+use Drupal\taxonomy\TermStorageInterface;
 use Drupal\views\Plugin\views\argument\NumericArgument;
 use Drupal\views\Plugin\views\query\Sql;
 use Drupal\views\Views;
@@ -60,7 +60,7 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Entity\EntityStorageInterface $term_storage
+   * @param \Drupal\taxonomy\TermStorageInterface $term_storage
    *   The taxonomy term storage service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
@@ -73,7 +73,7 @@ class EntityTaxonomyTermReferenceArgument extends NumericArgument {
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    EntityStorageInterface $term_storage,
+    TermStorageInterface $term_storage,
     EntityTypeManagerInterface $entity_type_manager,
     EntityTypeBundleInfoInterface $entity_bundle_info,
     EntityFieldManagerInterface $entity_field_manager,
