@@ -1,5 +1,5 @@
 parameters:
-  level: 3
+  level: 4
   reportUnmatchedIgnoredErrors: true
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
