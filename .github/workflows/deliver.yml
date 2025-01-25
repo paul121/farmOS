@@ -24,15 +24,9 @@ jobs:
       matrix:
         platform:
          - amd64
-         - arm32v7
-         - arm64v8
         include:
           - platform: amd64
             DOCKER_PLATFORM_NAME: linux/amd64
-          - platform: arm32v7
-            DOCKER_PLATFORM_NAME: linux/arm/v7
-          - platform: arm64v8
-            DOCKER_PLATFORM_NAME: linux/arm64/v8
     steps:
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
