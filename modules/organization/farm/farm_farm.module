@@ -36,6 +36,34 @@ function farm_farm_entity_base_field_info(EntityTypeInterface $entity_type) {
 }
 
 /**
+ * Implements hook_farm_import_csv_base_fields().
+ */
+function farm_farm_farm_import_csv_base_fields(string $entity_type) {
+  $base_fields = [];
+
+  // Add farm organization base field to asset CSV importers.
+  if ($entity_type == 'asset') {
+    $base_fields[] = 'farm';
+  }
+
+  return $base_fields;
+}
+
+/**
+ * Implements hook_farm_ui_views_base_fields().
+ */
+function farm_farm_farm_ui_views_base_fields(string $entity_type) {
+  $base_fields = [];
+
+  // Add farm organization base field to farmOS asset Views.
+  if ($entity_type == 'asset') {
+    $base_fields[] = 'farm';
+  }
+
+  return $base_fields;
+}
+
+/**
  * Implements hook_farm_ui_theme_field_group_items().
  */
 function farm_farm_farm_ui_theme_field_group_items(string $entity_type, string $bundle) {
