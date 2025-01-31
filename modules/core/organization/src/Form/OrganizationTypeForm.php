@@ -17,6 +17,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class OrganizationTypeForm extends EntityForm {
 
   /**
+   * The organization type entity.
+   *
+   * @var \Drupal\organization\Entity\OrganizationTypeInterface
+   */
+  protected $entity;
+
+  /**
    * The workflow manager.
    *
    * @var \Drupal\state_machine\WorkflowManagerInterface

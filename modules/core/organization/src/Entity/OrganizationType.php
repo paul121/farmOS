@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\organization\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
-use Drupal\Core\Entity\EntityStorageInterface;
 
 /**
  * Defines the organization type entity.
@@ -105,34 +104,6 @@ class OrganizationType extends ConfigEntityBundleBase implements OrganizationTyp
    */
   public function setDescription($description) {
     return $this->set('description', $description);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    // If the organization type id changed, update all existing organizations of
-    // that type.
-    if ($update && $this->getOriginalId() != $this->id()) {
-      $update_count = $this->entityTypeManager()->getStorage('organization')->updateType($this->getOriginalId(), $this->id());
-      if ($update_count) {
-        \Drupal::messenger()->addMessage(\Drupal::translation()->formatPlural($update_count,
-          'Changed the organization type of 1 post from %old-type to %type.',
-          'Changed the organization type of @count posts from %old-type to %type.',
-          [
-            '%old-type' => $this->getOriginalId(),
-            '%type' => $this->id(),
-          ]));
-      }
-    }
-    if ($update) {
-      // Clear the cached field definitions as some settings affect the field
-      // definitions.
-      $this->entityTypeManager()->clearCachedDefinitions();
-      \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
-    }
   }
 
   /**

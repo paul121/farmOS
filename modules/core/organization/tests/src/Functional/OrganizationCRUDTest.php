@@ -6,6 +6,7 @@ namespace Drupal\Tests\organization\Functional;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\organization\Entity\Organization;
+use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 
 /**
  * Tests the organization CRUD.
@@ -116,6 +117,9 @@ class OrganizationCRUDTest extends OrganizationTestBase {
   public function testArchiveOrganization() {
     $organization = $this->createOrganizationEntity();
     $organization->save();
+
+    // Assert field type for PHPStan checks.
+    $this->assertInstanceOf(StateItemInterface::class, $organization->get('status')->first());
 
     $this->assertEquals($organization->get('status')->first()->getString(), 'active', 'New organizations are active by default');
     $this->assertNull($organization->getArchivedTime(), 'Archived timestamp is null by default');

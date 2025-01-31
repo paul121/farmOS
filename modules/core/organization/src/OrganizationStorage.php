@@ -15,6 +15,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -80,13 +81,16 @@ class OrganizationStorage extends SqlContentEntityStorage {
    * {@inheritdoc}
    */
   protected function doPreSave(EntityInterface $entity) {
-    /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+    /** @var \Drupal\organization\Entity\OrganizationInterface $entity */
     $id = parent::doPreSave($entity);
 
     // If there is no original entity, bail.
     if (empty($entity->original)) {
       return $id;
     }
+
+    // Assert field type for PHPStan checks.
+    assert($entity->get('status')->first() instanceof StateItemInterface);
 
     // Load new and original states.
     $new_state = $entity->get('status')->first()->getString();
