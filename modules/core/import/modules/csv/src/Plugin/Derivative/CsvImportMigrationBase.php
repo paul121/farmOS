@@ -236,6 +236,18 @@ abstract class CsvImportMigrationBase extends DeriverBase implements ContainerDe
           $description[] = $this->t('Accepts asset names, ID tags, UUIDs, and IDs.');
         }
 
+        // Organization reference.
+        if ($field_definition->getSetting('target_type') == 'organization') {
+          $plugin = [
+            'plugin' => 'organization_lookup',
+          ];
+          if (!empty($field_definition->getSetting('handler_settings')['target_bundles'])) {
+            $plugin['bundle'] = array_keys($field_definition->getSetting('handler_settings')['target_bundles']);
+          }
+          $process[] = $plugin;
+          $description[] = $this->t('Accepts organization names, UUIDs, and IDs.');
+        }
+
         // Term reference.
         elseif ($field_definition->getSetting('target_type') == 'taxonomy_term') {
           $process[] = [
