@@ -34,6 +34,12 @@ parameters:
       map_type:
         class: Drupal\farm_map\Entity\MapType
         storage: Drupal\Core\Config\Entity\ConfigEntityStorage
+      organization:
+        class: Drupal\organization\Entity\Organization
+        storage: Drupal\organization\OrganizationStorage
+      organization_type:
+        class: Drupal\organization\Entity\OrganizationType
+        storage: Drupal\Core\Config\Entity\ConfigEntityStorage
       plan:
         class: Drupal\plan\Entity\Plan
         storage: Drupal\plan\PlanStorage
