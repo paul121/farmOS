@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Drupal\organization\Plugin\Action;
 
+use Drupal\Core\Action\Attribute\Action;
 use Drupal\Core\Action\Plugin\Action\EntityActionBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\organization\Entity\OrganizationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Action that clones an organization.
- *
- * @Action(
- *   id = "organization_clone_action",
- *   label = @Translation("Clone an organization"),
- *   type = "organization"
- * )
  */
+#[Action(
+  id: 'organization_clone_action',
+  label: new TranslatableMarkup('Clone an organization'),
+  type: 'organization',
+)]
 class OrganizationClone extends EntityActionBase {
 
   /**
