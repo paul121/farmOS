@@ -32,7 +32,7 @@
         "drupal/geofield": "^1.62",
         "drupal/gin": "4.0.6",
         "drupal/inline_entity_form": "^3.0@RC",
-        "drupal/inspire_tree": "^1.0",
+        "drupal/inspire_tree": "^1.0.6",
         "drupal/jsonapi_schema": "1.0-rc1",
         "drupal/log": "^2.3.1",
         "drupal/migrate_plus": "^6.0.5",
