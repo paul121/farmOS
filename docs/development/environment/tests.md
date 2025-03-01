@@ -7,14 +7,14 @@ dependencies necessary for running automated tests via
 The following command will run all automated tests provided by farmOS:
 
 ```sh
-docker exec -it -u www-data farmos_www_1 phpunit --verbose --debug /opt/drupal/web/profiles/farm
+docker exec -it -u www-data farmos_www_1 phpunit /opt/drupal/web/profiles/farm
 ```
 
 Tests from other projects/dependencies can be run in a similar fashion. For
 example, the following command will run all tests in the Log module:
 
 ```sh
-docker exec -it -u www-data farmos_www_1 phpunit --verbose --debug /opt/drupal/web/modules/log
+docker exec -it -u www-data farmos_www_1 phpunit /opt/drupal/web/modules/log
 ```
 
 ## Chrome/Selenium Container
@@ -50,13 +50,13 @@ In a docker-compose.yml based off [docker-compose.development.yml], this might l
 The tests could then be run via `docker compose exec` as follows:
 
 ```sh
-docker compose exec -u www-data -T www phpunit --verbose --debug /opt/drupal/web/profiles/farm
+docker compose exec -u www-data -T www phpunit /opt/drupal/web/profiles/farm
 ```
 
 Alternatively, the `XDEBUG_MODE` environment variable can be specified directly:
 
 ```sh
-docker compose exec -u www-data -T --env XDEBUG_MODE=off www phpunit --verbose --debug /opt/drupal/web/profiles/farm
+docker compose exec -u www-data -T --env XDEBUG_MODE=off www phpunit /opt/drupal/web/profiles/farm
 ```
 
 [run-tests.yml]: https://raw.githubusercontent.com/farmOS/farmOS/4.x/.github/workflows/run-tests.yml
