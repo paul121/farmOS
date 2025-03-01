@@ -157,7 +157,7 @@ jobs:
             test_cmd: paratest -vv
           - dbms: sqlite
             DB_URL: sqlite://localhost/sites/default/files/db.sqlite
-            test_cmd: phpunit --verbose --debug
+            test_cmd: phpunit
     steps:
       - name: Print test matrix variables
         run: echo "matrix.platform=${{ matrix.platform }}, matrix.dbms=${{ matrix.dbms }}, matrix.DB_URL=${{ matrix.DB_URL }}"
