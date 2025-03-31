@@ -232,11 +232,6 @@ class CsvImportController extends ControllerBase {
     }
 
     // Add the importer form.
-    // PHPStan level 2+ throws the following error on the next line:
-    // Method Drupal\Core\Form\FormBuilderInterface::getForm() invoked with 2
-    // parameters, 1 required.
-    // We ignore this because we are following Drupal core's pattern.
-    // @phpstan-ignore arguments.count
     $build['form'] = $this->formBuilder->getForm('Drupal\farm_import_csv\Form\CsvImportForm', $migration_id);
 
     // If entities have been created by this importer, display a View of them.

@@ -113,11 +113,6 @@ class QuickFormTest extends KernelTestBase {
     $form_state = (new FormState())->setValues([
       'test' => '12',
     ]);
-    // PHPStan level 2+ throws the following error on the next line:
-    // Method Drupal\Core\Form\FormBuilderInterface::submitForm() invoked with
-    // 3 parameters, 2 required.
-    // We ignore this because we are following Drupal core's pattern.
-    // @phpstan-ignore arguments.count
     \Drupal::formBuilder()->submitForm('\Drupal\farm_quick\Form\QuickForm', $form_state, 'test');
 
     // Load the form state storage.
