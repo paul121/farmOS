@@ -92,7 +92,7 @@ class KmlNormalizer implements NormalizerInterface, DenormalizerInterface {
   /**
    * {@inheritdoc}
    */
-  public function denormalize($data, $type, $format = NULL, array $context = []) {
+  public function denormalize($data, $type, $format = NULL, array $context = []): mixed {
 
     // Build array of geometry wrappers to return.
     $geometries = [];
