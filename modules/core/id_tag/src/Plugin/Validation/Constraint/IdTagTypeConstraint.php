@@ -22,6 +22,6 @@ class IdTagTypeConstraint extends SymfonyConstraint {
    *
    * @var string
    */
-  public $message = 'Invalid ID tag type: @type';
+  public string $message = 'Invalid ID tag type: @type';
 
 }

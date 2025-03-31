@@ -22,6 +22,6 @@ class CircularAssetLocationConstraint extends SymfonyConstraint {
    *
    * @var string
    */
-  public $message = '%asset cannot be located within itself.';
+  public string $message = '%asset cannot be located within itself.';
 
 }

@@ -22,6 +22,6 @@ class CircularGroupMembershipConstraint extends SymfonyConstraint {
    *
    * @var string
    */
-  public $message = '%asset cannot be a member of itself.';
+  public string $message = '%asset cannot be a member of itself.';
 
 }

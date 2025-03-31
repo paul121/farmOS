@@ -22,6 +22,6 @@ class UniqueBirthLogConstraint extends SymfonyConstraint {
    *
    * @var string
    */
-  public $message = '%child already has a birth log. More than one birth log cannot reference the same child.';
+  public string $message = '%child already has a birth log. More than one birth log cannot reference the same child.';
 
 }
