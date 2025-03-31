@@ -106,7 +106,7 @@ class ContentEntityGeometryNormalizer implements NormalizerInterface, Serializer
   /**
    * {@inheritdoc}
    */
-  public function supportsNormalization($data, $format = NULL): bool {
+  public function supportsNormalization($data, $format = NULL, array $context = []): bool {
 
     // Check that the data is a content entity.
     // Only formats that are prefixed with "geometry_" are supported.

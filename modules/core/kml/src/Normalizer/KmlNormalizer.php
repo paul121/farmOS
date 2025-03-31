@@ -85,7 +85,7 @@ class KmlNormalizer implements NormalizerInterface, DenormalizerInterface {
   /**
    * {@inheritdoc}
    */
-  public function supportsNormalization($data, $format = NULL): bool {
+  public function supportsNormalization($data, $format = NULL, array $context = []): bool {
     return $data instanceof GeometryWrapper && $format == static::FORMAT;
   }
 
@@ -136,7 +136,7 @@ class KmlNormalizer implements NormalizerInterface, DenormalizerInterface {
   /**
    * {@inheritdoc}
    */
-  public function supportsDenormalization($data, $type, $format = NULL): bool {
+  public function supportsDenormalization($data, $type, $format = NULL, array $context = []): bool {
     return $type === static::TYPE && $format === static::FORMAT;
   }
 
