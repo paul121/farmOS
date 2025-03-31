@@ -17,7 +17,7 @@ class TaxonomyTermTasksTest extends FarmBrowserTestBase {
   /**
    * Test user.
    *
-   * @var \Drupal\user\Entity\User
+   * @var \Drupal\user\Entity\User|bool
    */
   protected $user;
 
