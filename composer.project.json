@@ -7,7 +7,7 @@
         "behat/mink": "^1.11",
         "behat/mink-browserkit-driver": "^2.2",
         "behat/mink-selenium2-driver": "^1.7",
-        "brianium/paratest": "^6",
+        "brianium/paratest": "^7",
         "drupal/coder": "^8.3.10",
         "mglaman/phpstan-drupal": "^1.2.10",
         "mikey179/vfsstream": "^1.6.11",
