@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\farm_entity_bundle_fields_test\Plugin\Plan\PlanType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\entity\BundleFieldDefinition;
+use Drupal\farm_entity\Attribute\PlanType;
 use Drupal\farm_entity\Plugin\Plan\PlanType\FarmPlanType;
 
 /**
  * Provides the second test plan type.
- *
- * @PlanType(
- *   id = "second",
- *   label = @Translation("Second"),
- * )
  */
+#[PlanType(
+  id: 'second',
+  label: new TranslatableMarkup('Second'),
+)]
 class Second extends FarmPlanType {
 
   /**
