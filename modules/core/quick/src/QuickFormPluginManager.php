@@ -7,6 +7,7 @@ namespace Drupal\farm_quick;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\farm_quick\Attribute\QuickForm;
 
 /**
  * Quick form manager class.
@@ -30,6 +31,7 @@ class QuickFormPluginManager extends DefaultPluginManager {
       $namespaces,
       $module_handler,
       'Drupal\farm_quick\Plugin\QuickForm\QuickFormInterface',
+      QuickForm::class,
       'Drupal\farm_quick\Annotation\QuickForm'
     );
     $this->alterInfo('quick_form_info');
