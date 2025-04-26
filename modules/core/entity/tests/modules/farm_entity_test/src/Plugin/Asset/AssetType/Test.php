@@ -13,7 +13,6 @@ use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
  */
 #[AssetType(
   id: 'test',
-  label: new TranslatableMarkup('Test'),
 )]
 class Test extends FarmAssetType {
 
