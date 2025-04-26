@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_plant\Plugin\Asset\AssetType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\AssetType;
 use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
 
 /**
  * Provides the plant asset type.
- *
- * @AssetType(
- *   id = "plant",
- *   label = @Translation("Plant"),
- * )
  */
+#[AssetType(
+  id: 'plant',
+  label: new TranslatableMarkup('Plant'),
+)]
 class Plant extends FarmAssetType {
 
   /**

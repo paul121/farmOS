@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\farm_sensor\Plugin\Asset\AssetType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\data_stream\Entity\DataStream;
+use Drupal\farm_entity\Attribute\AssetType;
 use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
 
 /**
  * Provides the sensor asset type.
- *
- * @AssetType(
- *   id = "sensor",
- *   label = @Translation("Sensor"),
- * )
  */
+#[AssetType(
+  id: 'sensor',
+  label: new TranslatableMarkup('Sensor'),
+)]
 class Sensor extends FarmAssetType {
 
   /**

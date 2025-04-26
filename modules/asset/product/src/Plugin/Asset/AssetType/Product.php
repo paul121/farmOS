@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_product\Plugin\Asset\AssetType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\AssetType;
 use Drupal\farm_entity\Plugin\Asset\AssetType\FarmAssetType;
 
 /**
  * Provides the product asset type.
- *
- * @AssetType(
- *   id = "product",
- *   label = @Translation("Product"),
- * )
  */
+#[AssetType(
+  id: 'product',
+  label: new TranslatableMarkup('Product'),
+)]
 class Product extends FarmAssetType {
 
   /**
