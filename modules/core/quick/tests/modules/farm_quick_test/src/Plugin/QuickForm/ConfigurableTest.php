@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Drupal\farm_quick_test\Plugin\QuickForm;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\Traits\ConfigurableQuickFormTrait;
 
 /**
  * Test configurable quick form.
- *
- * @QuickForm(
- *   id = "configurable_test",
- *   label = @Translation("Test configurable quick form"),
- *   description = @Translation("Test configurable quick form description."),
- *   helpText = @Translation("Test configurable quick form help text."),
- *   permissions = {
- *     "create test log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'configurable_test',
+  label: new TranslatableMarkup('Test configurable quick form'),
+  description: new TranslatableMarkup('Test configurable quick form description.'),
+  helpText: new TranslatableMarkup('Test configurable quick form help text.'),
+  permissions: [
+    'create test log',
+  ],
+)]
 class ConfigurableTest extends Test implements ConfigurableQuickFormInterface {
 
   use ConfigurableQuickFormTrait;
