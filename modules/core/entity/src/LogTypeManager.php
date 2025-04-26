@@ -8,6 +8,7 @@ use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\farm_entity\Attribute\LogType;
 
 /**
  * Manages discovery and instantiation of log type plugins.
@@ -29,7 +30,7 @@ class LogTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/Log/LogType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Log\LogType\LogTypeInterface', 'Drupal\farm_entity\Annotation\LogType');
+    parent::__construct('Plugin/Log/LogType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Log\LogType\LogTypeInterface', LogType::class, 'Drupal\farm_entity\Annotation\LogType');
 
     $this->alterInfo('log_type_info');
     $this->setCacheBackend($cache_backend, 'log_type_plugins');
