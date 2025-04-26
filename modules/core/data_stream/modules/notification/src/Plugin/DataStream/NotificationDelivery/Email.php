@@ -8,22 +8,25 @@ use Drupal\Component\Utility\EmailValidatorInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Plugin\Context\ContextDefinition;
+use Drupal\Core\Plugin\Context\EntityContextDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\data_stream_notification\Attribute\NotificationDelivery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Email notification delivery.
- *
- * @NotificationDelivery(
- *   id = "email",
- *   label = @Translation("Email"),
- *   context_definitions = {
- *     "value" = @ContextDefinition("float", label = @Translation("value")),
- *     "data_stream" = @ContextDefinition("entity:data_stream", label = @Translation("Data stream")),
- *     "data_stream_notification" = @ContextDefinition("entity:data_stream_notification", label = @Translation("Data stream notification")),
- *     "condition_summaries" = @ContextDefinition("list", label = @Translation("Condition summaries"))
- *   }
- * )
  */
+#[NotificationDelivery(
+  id: 'email',
+  label: new TranslatableMarkup('Email'),
+  context_definitions: [
+    'value' => new ContextDefinition('float', label: new TranslatableMarkup('value')),
+    'data_stream' => new EntityContextDefinition('data_stream', new TranslatableMarkup('Data stream')),
+    'data_stream_notification' => new EntityContextDefinition('data_stream_notification', new TranslatableMarkup('Data stream notification')),
+    'condition_summaries' => new ContextDefinition('list', label: new TranslatableMarkup('Condition summaries')),
+  ]
+)]
 class Email extends NotificationDeliveryBase implements ContainerFactoryPluginInterface {
 
   /**
