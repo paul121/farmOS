@@ -9,6 +9,7 @@ use Drupal\Core\Executable\ExecutableException;
 use Drupal\Core\Executable\ExecutableInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\data_stream_notification\Attribute\NotificationCondition;
 use Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition\NotificationConditionInterface;
 
 /**
@@ -33,6 +34,7 @@ class NotificationConditionManager extends DefaultPluginManager implements Notif
       $namespaces,
       $module_handler,
       'Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition\NotificationConditionInterface',
+      NotificationCondition::class,
       'Drupal\data_stream_notification\Annotation\NotificationCondition',
     );
     $this->alterInfo('data_stream_notification_condition_info');
