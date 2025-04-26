@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_lab_test\Plugin\Log\LogType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\LogType;
 use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
 
 /**
  * Provides the lab test log type.
- *
- * @LogType(
- *   id = "lab_test",
- *   label = @Translation("LabTest"),
- * )
  */
+#[LogType(
+  id: 'lab_test',
+  label: new TranslatableMarkup('LabTest'),
+)]
 class LabTest extends FarmLogType {
 
   /**

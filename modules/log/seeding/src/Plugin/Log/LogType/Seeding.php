@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_seeding\Plugin\Log\LogType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\LogType;
 use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
 
 /**
  * Provides the seeding log type.
- *
- * @LogType(
- *   id = "seeding",
- *   label = @Translation("Seeding"),
- * )
  */
+#[LogType(
+  id: 'seeding',
+  label: new TranslatableMarkup('Seeding'),
+)]
 class Seeding extends FarmLogType {
 
   /**

@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_birth\Plugin\Log\LogType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\LogType;
 use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
 
 /**
  * Provides the birth log type.
- *
- * @LogType(
- *   id = "birth",
- *   label = @Translation("Birth"),
- * )
  */
+#[LogType(
+  id: 'birth',
+  label: new TranslatableMarkup('Birth'),
+)]
 class Birth extends FarmLogType {
 
   /**

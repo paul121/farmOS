@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_medical\Plugin\Log\LogType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\LogType;
 use Drupal\farm_entity\Plugin\Log\LogType\FarmLogType;
 
 /**
  * Provides the medical log type.
- *
- * @LogType(
- *   id = "medical",
- *   label = @Translation("Medical"),
- * )
  */
+#[LogType(
+  id: 'medical',
+  label: new TranslatableMarkup('Medical'),
+)]
 class Medical extends FarmLogType {
 
   /**
