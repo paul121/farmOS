@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Drupal\farm_quantity_material\Plugin\Quantity\QuantityType;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_entity\Attribute\QuantityType;
 use Drupal\farm_entity\Plugin\Quantity\QuantityType\FarmQuantityType;
 
 /**
  * Provides the material quantity type.
- *
- * @QuantityType(
- *   id = "material",
- *   label = @Translation("Material"),
- * )
  */
+#[QuantityType(
+  id: 'material',
+  label: new TranslatableMarkup('Material'),
+)]
 class Material extends FarmQuantityType {
 
   /**
