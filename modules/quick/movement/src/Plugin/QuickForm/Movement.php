@@ -10,9 +10,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_geo\Traits\WktTrait;
 use Drupal\farm_location\AssetLocationInterface;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormInterface;
 use Drupal\farm_quick\Traits\QuickFormElementsTrait;
@@ -23,17 +25,16 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Movement quick form.
- *
- * @QuickForm(
- *   id = "movement",
- *   label = @Translation("Movement"),
- *   description = @Translation("Record the movement of assets."),
- *   helpText = @Translation("Use this form to record the movement of assets to a new location."),
- *   permissions = {
- *     "create activity log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'movement',
+  label: new TranslatableMarkup('Movement'),
+  description: new TranslatableMarkup('Record the movement of assets.'),
+  helpText: new TranslatableMarkup('Use this form to record the movement of assets to a new location.'),
+  permissions: [
+    'create activity log',
+  ],
+)]
 class Movement extends QuickFormBase implements QuickFormInterface {
 
   use QuickLogTrait;

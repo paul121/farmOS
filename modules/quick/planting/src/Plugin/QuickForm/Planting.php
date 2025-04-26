@@ -12,6 +12,8 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickAssetTrait;
 use Drupal\farm_quick\Traits\QuickFormElementsTrait;
@@ -24,18 +26,17 @@ use Psr\Container\ContainerInterface;
 /**
  * Planting quick form.
  *
- * @QuickForm(
- *   id = "planting",
- *   label = @Translation("Planting"),
- *   description = @Translation("Record a planting."),
- *   helpText = @Translation("This form will create a plant asset, along with optional logs to represent seeding date, harvest date, etc."),
- *   permissions = {
- *     "create plant asset",
- *   }
- * )
- *
  * @internal
  */
+#[QuickForm(
+  id: 'planting',
+  label: new TranslatableMarkup('Planting'),
+  description: new TranslatableMarkup('Record a planting'),
+  helpText: new TranslatableMarkup('This form will create a plant asset, along with optional logs to represent seeding date, harvest date, etc.'),
+  permissions: [
+    'create plant asset',
+  ],
+)]
 class Planting extends QuickFormBase {
 
   use QuickAssetTrait;

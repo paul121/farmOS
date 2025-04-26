@@ -11,8 +11,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_inventory\AssetInventoryInterface;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\ConfigurableQuickFormTrait;
@@ -25,15 +27,14 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Inventory quick form.
- *
- * @QuickForm(
- *   id = "inventory",
- *   label = @Translation("Inventory"),
- *   description = @Translation("Record asset inventory adjustments."),
- *   helpText = @Translation("Use this form to increment, decrement, or reset the inventory of an asset. A new log will be created to record the adjustment."),
- *   permissions = {}
- * )
  */
+#[QuickForm(
+  id: 'inventory',
+  label: new TranslatableMarkup('Inventory'),
+  description: new TranslatableMarkup('Record asset inventory adjustments.'),
+  helpText: new TranslatableMarkup('Use this form to increment, decrement, or reset the inventory of an asset. A new log will be created to record the adjustment.'),
+  permissions: [],
+)]
 class Inventory extends QuickFormBase implements ConfigurableQuickFormInterface {
 
   use ConfigurableQuickFormTrait;

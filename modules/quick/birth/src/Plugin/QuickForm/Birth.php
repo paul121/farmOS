@@ -12,8 +12,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\farm_group\GroupMembershipInterface;
 use Drupal\farm_location\AssetLocationInterface;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickAssetTrait;
 use Drupal\farm_quick\Traits\QuickLogTrait;
@@ -22,19 +24,18 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Birth quick form.
- *
- * @QuickForm(
- *   id = "birth",
- *   label = @Translation("Birth"),
- *   description = @Translation("Record an animal birth."),
- *   helpText = @Translation("Use this form to record the birth of one or more animals. A new birth log will be created, along with the new child animal asset records."),
- *   permissions = {
- *     "create animal asset",
- *     "create birth log",
- *     "create observation log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'birth',
+  label: new TranslatableMarkup('Birth'),
+  description: new TranslatableMarkup('Record an animal birth.'),
+  helpText: new TranslatableMarkup('Use this form to record the birth of one or more animals. A new birth log will be created, along with the new child animal asset records.'),
+  permissions: [
+    'create animal asset',
+    'create birth log',
+    'create observation log',
+  ],
+)]
 class Birth extends QuickFormBase {
 
   use QuickAssetTrait;

@@ -10,8 +10,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\asset\Entity\AssetInterface;
 use Drupal\farm_group\GroupMembershipInterface;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormInterface;
 use Drupal\farm_quick\Traits\QuickFormElementsTrait;
@@ -22,17 +24,16 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Group quick form.
- *
- * @QuickForm(
- *   id = "group",
- *   label = @Translation("Group membership"),
- *   description = @Translation("Record asset group membership changes."),
- *   helpText = @Translation("Use this form to assign assets to a group. A new observation log will be created to record the group membership change."),
- *   permissions = {
- *     "create observation log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'group',
+  label: new TranslatableMarkup('Group membership'),
+  description: new TranslatableMarkup('Record asset group membership changes.'),
+  helpText: new TranslatableMarkup('Use this form to assign assets to a group. A new observation log will be created to record the group membership change.'),
+  permissions: [
+    'create observation log',
+  ],
+)]
 class Group extends QuickFormBase implements QuickFormInterface {
 
   use QuickLogTrait;

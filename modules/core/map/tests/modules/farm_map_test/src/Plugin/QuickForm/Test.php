@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Drupal\farm_map_test\Plugin\QuickForm;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 
 /**
  * Test quick form.
- *
- * @QuickForm(
- *   id = "test",
- *   label = @Translation("Test quick form"),
- *   description = @Translation("Test quick form description."),
- *   helpText = @Translation("Test quick form help text."),
- *   permissions = {
- *     "create test log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'test',
+  label: new TranslatableMarkup('Test quick form'),
+  description: new TranslatableMarkup('Test quick form description.'),
+  helpText: new TranslatableMarkup('Test quick form help text.'),
+  permissions: [
+    'create test log',
+  ],
+)]
 class Test extends QuickFormBase {
 
   use QuickLogTrait;
