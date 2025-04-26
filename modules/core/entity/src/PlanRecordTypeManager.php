@@ -34,7 +34,6 @@ class PlanRecordTypeManager extends DefaultPluginManager {
       $module_handler,
       PlanRecordTypeInterface::class,
       PlanRecordType::class,
-      'Drupal\farm_entity\Annotation\PlanRecordType',
     );
     $this->alterInfo('plan_record_type_info');
     $this->setCacheBackend($cache_backend, 'plan_record_type_plugins');

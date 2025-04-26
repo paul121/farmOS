@@ -34,7 +34,6 @@ class AssetTypeManager extends DefaultPluginManager {
       $module_handler,
       AssetTypeInterface::class,
       AssetType::class,
-      'Drupal\farm_entity\Annotation\AssetType',
     );
     $this->alterInfo('asset_type_info');
     $this->setCacheBackend($cache_backend, 'asset_type_plugins');

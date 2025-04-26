@@ -33,7 +33,6 @@ class QuickFormPluginManager extends DefaultPluginManager {
       $module_handler,
       QuickFormInterface::class,
       QuickForm::class,
-      'Drupal\farm_quick\Annotation\QuickForm'
     );
     $this->alterInfo('quick_form_info');
     $this->setCacheBackend($cache_backend, 'quick_forms');
