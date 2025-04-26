@@ -9,9 +9,10 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\data_stream\Attribute\DataStreamType;
+use Drupal\data_stream\Plugin\DataStream\DataStreamType\DataStreamTypeInterface;
 
 /**
- * Manages discovery and instantiation of data stream type plugins.
+ * Data Stream Type plugin manager.
  */
 class DataStreamTypeManager extends DefaultPluginManager {
 
@@ -27,8 +28,14 @@ class DataStreamTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/DataStream/DataStreamType', $namespaces, $module_handler, 'Drupal\data_stream\Plugin\DataStream\DataStreamType\DataStreamTypeInterface', DataStreamType::class, 'Drupal\data_stream\Annotation\DataStreamType');
-
+    parent::__construct(
+      'Plugin/DataStream/DataStreamType',
+      $namespaces,
+      $module_handler,
+      DataStreamTypeInterface::class,
+      DataStreamType::class,
+      'Drupal\data_stream\Annotation\DataStreamType',
+    );
     $this->alterInfo('data_stream_type_info');
     $this->setCacheBackend($cache_backend, 'data_stream_type_plugins');
   }

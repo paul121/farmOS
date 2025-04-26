@@ -9,12 +9,10 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\farm_entity\Attribute\QuantityType;
+use Drupal\farm_entity\Plugin\Quantity\QuantityType\QuantityTypeInterface;
 
 /**
- * Manages discovery and instantiation of quantity type plugins.
- *
- * @see \Drupal\farm_entity\Annotation\QuantityType
- * @see plugin_api
+ * Quantity Type plugin manager.
  */
 class QuantityTypeManager extends DefaultPluginManager {
 
@@ -30,8 +28,14 @@ class QuantityTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/Quantity/QuantityType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Quantity\QuantityType\QuantityTypeInterface', QuantityType::class, 'Drupal\farm_entity\Annotation\QuantityType');
-
+    parent::__construct(
+      'Plugin/Quantity/QuantityType',
+      $namespaces,
+      $module_handler,
+      QuantityTypeInterface::class,
+      QuantityType::class,
+      'Drupal\farm_entity\Annotation\QuantityType',
+    );
     $this->alterInfo('quantity_type_info');
     $this->setCacheBackend($cache_backend, 'quantity_type_plugins');
   }

@@ -9,12 +9,10 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\farm_entity\Attribute\PlanRecordType;
+use Drupal\farm_entity\Plugin\PlanRecord\PlanRecordType\PlanRecordTypeInterface;
 
 /**
- * Manages discovery and instantiation of plan record relationship type plugins.
- *
- * @see \Drupal\farm_entity\Annotation\PlanType
- * @see plugin_api
+ * Plan Record Type plugin manager.
  */
 class PlanRecordTypeManager extends DefaultPluginManager {
 
@@ -30,8 +28,14 @@ class PlanRecordTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/PlanRecord/PlanRecordType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\PlanRecord\PlanRecordType\PlanRecordTypeInterface', PlanRecordType::class, 'Drupal\farm_entity\Annotation\PlanRecordType');
-
+    parent::__construct(
+      'Plugin/PlanRecord/PlanRecordType',
+      $namespaces,
+      $module_handler,
+      PlanRecordTypeInterface::class,
+      PlanRecordType::class,
+      'Drupal\farm_entity\Annotation\PlanRecordType',
+    );
     $this->alterInfo('plan_record_type_info');
     $this->setCacheBackend($cache_backend, 'plan_record_type_plugins');
   }

@@ -9,12 +9,10 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\farm_entity\Attribute\PlanType;
+use Drupal\farm_entity\Plugin\Plan\PlanType\PlanTypeInterface;
 
 /**
- * Manages discovery and instantiation of plan type plugins.
- *
- * @see \Drupal\farm_entity\Annotation\PlanType
- * @see plugin_api
+ * Plan Type plugin manager.
  */
 class PlanTypeManager extends DefaultPluginManager {
 
@@ -30,8 +28,14 @@ class PlanTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/Plan/PlanType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Plan\PlanType\PlanTypeInterface', PlanType::class, 'Drupal\farm_entity\Annotation\PlanType');
-
+    parent::__construct(
+      'Plugin/Plan/PlanType',
+      $namespaces,
+      $module_handler,
+      PlanTypeInterface::class,
+      PlanType::class,
+      'Drupal\farm_entity\Annotation\PlanType',
+    );
     $this->alterInfo('plan_type_info');
     $this->setCacheBackend($cache_backend, 'plan_type_plugins');
   }

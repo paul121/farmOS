@@ -13,7 +13,7 @@ use Drupal\data_stream_notification\Attribute\NotificationCondition;
 use Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition\NotificationConditionInterface;
 
 /**
- * Plugin manager for notification condition plugins.
+ * Notification Condition plugin manager.
  */
 class NotificationConditionManager extends DefaultPluginManager implements NotificationConditionManagerInterface {
 
@@ -33,7 +33,7 @@ class NotificationConditionManager extends DefaultPluginManager implements Notif
       'Plugin/DataStream/NotificationCondition',
       $namespaces,
       $module_handler,
-      'Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition\NotificationConditionInterface',
+      NotificationConditionInterface::class,
       NotificationCondition::class,
       'Drupal\data_stream_notification\Annotation\NotificationCondition',
     );
