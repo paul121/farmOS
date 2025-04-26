@@ -34,7 +34,6 @@ class DataStreamTypeManager extends DefaultPluginManager {
       $module_handler,
       DataStreamTypeInterface::class,
       DataStreamType::class,
-      'Drupal\data_stream\Annotation\DataStreamType',
     );
     $this->alterInfo('data_stream_type_info');
     $this->setCacheBackend($cache_backend, 'data_stream_type_plugins');

@@ -34,7 +34,6 @@ class PlanTypeManager extends DefaultPluginManager {
       $module_handler,
       PlanTypeInterface::class,
       PlanType::class,
-      'Drupal\farm_entity\Annotation\PlanType',
     );
     $this->alterInfo('plan_type_info');
     $this->setCacheBackend($cache_backend, 'plan_type_plugins');

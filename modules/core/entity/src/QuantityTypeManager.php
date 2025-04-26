@@ -34,7 +34,6 @@ class QuantityTypeManager extends DefaultPluginManager {
       $module_handler,
       QuantityTypeInterface::class,
       QuantityType::class,
-      'Drupal\farm_entity\Annotation\QuantityType',
     );
     $this->alterInfo('quantity_type_info');
     $this->setCacheBackend($cache_backend, 'quantity_type_plugins');

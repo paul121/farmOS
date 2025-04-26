@@ -34,7 +34,6 @@ class LogTypeManager extends DefaultPluginManager {
       $module_handler,
       LogTypeInterface::class,
       LogType::class,
-      'Drupal\farm_entity\Annotation\LogType',
     );
     $this->alterInfo('log_type_info');
     $this->setCacheBackend($cache_backend, 'log_type_plugins');
