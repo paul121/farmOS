@@ -39,17 +39,4 @@ class PlanRecordTypeManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'plan_record_type_plugins');
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function processDefinition(&$definition, $plugin_id) {
-    parent::processDefinition($definition, $plugin_id);
-
-    foreach (['id', 'label'] as $required_property) {
-      if (empty($definition[$required_property])) {
-        throw new PluginException(sprintf('The plan record relationship type %s must define the %s property.', $plugin_id, $required_property));
-      }
-    }
-  }
-
 }
