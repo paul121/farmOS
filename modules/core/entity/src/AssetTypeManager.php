@@ -8,6 +8,7 @@ use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\farm_entity\Attribute\AssetType;
 
 /**
  * Manages discovery and instantiation of asset type plugins.
@@ -29,7 +30,7 @@ class AssetTypeManager extends DefaultPluginManager {
    *   The module handler.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/Asset/AssetType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Asset\AssetType\AssetTypeInterface', 'Drupal\farm_entity\Annotation\AssetType');
+    parent::__construct('Plugin/Asset/AssetType', $namespaces, $module_handler, 'Drupal\farm_entity\Plugin\Asset\AssetType\AssetTypeInterface', AssetType::class, 'Drupal\farm_entity\Annotation\AssetType');
 
     $this->alterInfo('asset_type_info');
     $this->setCacheBackend($cache_backend, 'asset_type_plugins');
