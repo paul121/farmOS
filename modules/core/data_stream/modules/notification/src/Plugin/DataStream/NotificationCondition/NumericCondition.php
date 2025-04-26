@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Drupal\data_stream_notification\Plugin\DataStream\NotificationCondition;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Plugin\Context\ContextDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\data_stream_notification\Attribute\NotificationCondition;
 
 /**
  * Numeric notification condition.
- *
- * @NotificationCondition(
- *   id = "numeric",
- *   label = @Translation("Numeric"),
- *   context_definitions = {
- *     "value" = @ContextDefinition("float", label = @Translation("value"))
- *   }
- * )
  */
+#[NotificationCondition(
+  id: 'numeric',
+  label: new TranslatableMarkup('Numeric'),
+  context_definitions: [
+    'value' => new ContextDefinition('float', label: new TranslatableMarkup('value')),
+  ],
+)]
 class NumericCondition extends NotificationConditionBase {
 
   /**

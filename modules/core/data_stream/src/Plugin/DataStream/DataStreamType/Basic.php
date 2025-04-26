@@ -7,6 +7,8 @@ namespace Drupal\data_stream\Plugin\DataStream\DataStreamType;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\data_stream\Attribute\DataStreamType;
 use Drupal\data_stream\DataStreamApiInterface;
 use Drupal\data_stream\DataStreamEventDispatcherInterface;
 use Drupal\data_stream\DataStreamStorageInterface;
@@ -26,12 +28,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * Provides the basic data stream type.
- *
- * @DataStreamType(
- *   id = "basic",
- *   label = @Translation("Basic"),
- * )
  */
+#[DataStreamType(
+  id: 'basic',
+  label: new TranslatableMarkup('Basic'),
+)]
 class Basic extends DataStreamTypeBase implements DataStreamStorageInterface, DataStreamApiInterface, DataStreamEventDispatcherInterface {
 
   use DataStreamPrivateKeyAccess;
