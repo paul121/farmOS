@@ -47,22 +47,23 @@ namespace Drupal\farm_quick_harvest\Plugin\QuickForm;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 
 /**
  * Harvest quick form.
- *
- * @QuickForm(
- *   id = "harvest",
- *   label = @Translation("Harvest"),
- *   description = @Translation("Record when a harvest takes place."),
- *   helpText = @Translation("Use this form to record a harvest."),
- *   permissions = {
- *     "create harvest log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'harvest',
+  label: new TranslatableMarkup('Harvest'),
+  description: new TranslatableMarkup('Record when a harvest takes place.'),
+  helpText: new TranslatableMarkup('Use this form to record a harvest.'),
+  permissions: [
+    'create harvest log',
+  ],
+)]
 class Harvest extends QuickFormBase {
 
   use QuickLogTrait;
@@ -257,6 +258,8 @@ namespace Drupal\farm_quick_harvest\Plugin\QuickForm;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\ConfigurableQuickFormInterface;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\ConfigurableQuickFormTrait;
@@ -264,17 +267,16 @@ use Drupal\farm_quick\Traits\QuickLogTrait;
 
 /**
  * Harvest quick form.
- *
- * @QuickForm(
- *   id = "harvest",
- *   label = @Translation("Harvest"),
- *   description = @Translation("Record when a harvest takes place."),
- *   helpText = @Translation("Use this form to record a harvest."),
- *   permissions = {
- *     "create harvest log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'harvest',
+  label: new TranslatableMarkup('Harvest'),
+  description: new TranslatableMarkup('Record when a harvest takes place.'),
+  helpText: new TranslatableMarkup('Use this form to record a harvest.'),
+  permissions: [
+    'create harvest log',
+  ],
+)]
 class Harvest extends QuickFormBase implements ConfigurableQuickFormInterface {
 
   use ConfigurableQuickFormTrait;
@@ -555,23 +557,24 @@ namespace Drupal\farm_quick_harvest\Plugin\QuickForm;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\farm_quick\Attribute\QuickForm;
 use Drupal\farm_quick\Plugin\QuickForm\QuickFormBase;
 use Drupal\farm_quick\Traits\QuickLogTrait;
 use Drupal\farm_quick\Traits\QuickPrepopulateTrait;
 
 /**
  * Harvest quick form.
- *
- * @QuickForm(
- *   id = "harvest",
- *   label = @Translation("Harvest"),
- *   description = @Translation("Record when a harvest takes place."),
- *   helpText = @Translation("Use this form to record a harvest."),
- *   permissions = {
- *     "create harvest log",
- *   }
- * )
  */
+#[QuickForm(
+  id: 'harvest',
+  label: new TranslatableMarkup('Harvest'),
+  description: new TranslatableMarkup('Record when a harvest takes place.'),
+  helpText: new TranslatableMarkup('Use this form to record a harvest.'),
+  permissions: [
+    'create harvest log',
+  ],
+)]
 class Harvest extends QuickFormBase {
 
   use QuickLogTrait;
