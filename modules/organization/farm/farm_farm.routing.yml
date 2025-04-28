@@ -1,0 +1,6 @@
+farm_farm.asset_farm_action_form:
+  path: '/asset/assign-farm'
+  defaults:
+    _form: 'Drupal\farm_farm\Form\AssetFarmActionForm'
+  requirements:
+    _user_is_logged_in: 'TRUE'

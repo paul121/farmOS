@@ -1,0 +1,279 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Drupal\farm_farm\Form;
+
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Form\ConfirmFormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Drupal\Core\Url;
+use Drupal\asset\Entity\AssetInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Provides a form for assigning asset to a farm organization.
+ */
+class AssetFarmActionForm extends ConfirmFormBase {
+
+  /**
+   * The private temp store.
+   *
+   * @var \Drupal\Core\TempStore\PrivateTempStore
+   */
+  protected $tempStore;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $user;
+
+  /**
+   * The entity type.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeInterface
+   */
+  protected $entityType;
+
+  /**
+   * The assets to update.
+   *
+   * @var \Drupal\asset\Entity\AssetInterface[]
+   */
+  protected $entities;
+
+  /**
+   * The current Request object.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $request;
+
+  /**
+   * Constructs an AssetFarmActionForm form object.
+   *
+   * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
+   *   The tempstore factory.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   The current user.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current Request object.
+   */
+  public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityTypeManagerInterface $entity_type_manager, AccountInterface $user, Request $request) {
+    $this->tempStore = $temp_store_factory->get('asset_farm_confirm');
+    $this->entityTypeManager = $entity_type_manager;
+    $this->user = $user;
+    $this->request = $request;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('tempstore.private'),
+      $container->get('entity_type.manager'),
+      $container->get('current_user'),
+      $container->get('request_stack')->getCurrentRequest(),
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormId() {
+    return 'asset_farm_action_confirm_form';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getQuestion() {
+    return $this->formatPlural(count($this->entities), 'Are you sure you want to assign farm for this @item?', 'Are you sure you want to assign farms for these @items?', [
+      '@item' => $this->entityType->getSingularLabel(),
+      '@items' => $this->entityType->getPluralLabel(),
+    ]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCancelUrl() {
+    if ($this->entityType->hasLinkTemplate('collection')) {
+      return new Url('entity.' . $this->entityType->id() . '.collection');
+    }
+    else {
+      return new Url('<front>');
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfirmText() {
+    return $this->t('Save');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, FormStateInterface $form_state): array|RedirectResponse {
+
+    // Check if asset IDs were provided in the asset query param.
+    if ($asset_ids = $this->request->get('asset')) {
+
+      // Wrap in an array, if necessary.
+      if (!is_array($asset_ids)) {
+        $asset_ids = [$asset_ids];
+      }
+
+      // Add each asset the user has view access to.
+      $this->entities = array_filter($this->entityTypeManager->getStorage('asset')->loadMultiple($asset_ids), function (AssetInterface $asset) {
+        return $asset->access('view', $this->user);
+      });
+    }
+    // Else load entities from the tempStore state.
+    else {
+      $this->entities = $this->tempStore->get((string) $this->user->id());
+    }
+
+    $this->entityType = $this->entityTypeManager->getDefinition('asset');
+    if (!$this->entityType || empty($this->entities)) {
+      return new RedirectResponse($this->getCancelUrl()
+        ->setAbsolute()
+        ->toString());
+    }
+
+    $form['farm'] = [
+      '#type' => 'entity_autocomplete',
+      '#title' => $this->t('Farm'),
+      '#description' => $this->t('What farm is this associated with?'),
+      '#target_type' => 'organization',
+      '#selection_handler' => 'default:organization',
+      '#selection_settings' => [
+        'sort' => [
+          'field' => 'name',
+          'direction' => 'asc',
+        ],
+      ],
+      '#tags' => TRUE,
+      '#validate_reference' => FALSE,
+      '#maxlength' => 1024,
+      '#required' => TRUE,
+    ];
+
+    $form['operation'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Append or replace'),
+      '#description' => $this->t('Select "Append" if you want to add a farm, but keep the existing asset farms. Select "Replace" if you want to replace the existing asset farm with the ones specified above.'),
+      '#options' => [
+        'append' => $this->t('Append'),
+        'replace' => $this->t('Replace'),
+      ],
+      '#default_value' => 'append',
+      '#required' => TRUE,
+    ];
+
+    // Delegate to the parent method.
+    $form = parent::buildForm($form, $form_state);
+
+    // Remove form description text.
+    unset($form['description']);
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+
+    // Filter out entities the user doesn't have access to.
+    $inaccessible_entities = [];
+    $accessible_entities = [];
+    foreach ($this->entities as $entity) {
+      if (!$entity->access('update', $this->currentUser())) {
+        $inaccessible_entities[] = $entity;
+        continue;
+      }
+      $accessible_entities[] = $entity;
+    }
+
+    // Get submitted farm ids.
+    $submitted_farm_ids = array_column($form_state->getValue('farm', []), 'target_id');
+
+    // Update farm on accessible entities.
+    $total_count = 0;
+    foreach ($accessible_entities as $entity) {
+      /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface $farm_field */
+      $farm_field = $entity->get('farm');
+
+      // Save existing values if appending.
+      $existing_values = [];
+      if ($form_state->getValue('operation') === 'append') {
+        $existing_values = array_column($farm_field->getValue(), 'target_id');
+      }
+
+      // Empty the field.
+      $farm_field->setValue([]);
+
+      $new_values = array_unique(array_merge($existing_values, $submitted_farm_ids));
+      foreach ($new_values as $farm_id) {
+        $farm_field->appendItem($farm_id);
+      }
+
+      // Validate the entity before saving.
+      $violations = $entity->validate();
+      if ($violations->count() > 0) {
+        $this->messenger()->addWarning(
+          $this->t('Could not assign farm for <a href=":entity_link">%entity_label</a>: validation failed.',
+            [
+              ':entity_link' => $entity->toUrl()->setAbsolute()->toString(),
+              '%entity_label' => $entity->label(),
+            ],
+          ),
+        );
+        continue;
+      }
+
+      $entity->save();
+      $total_count++;
+    }
+
+    // Add warning message for inaccessible entities.
+    if (!empty($inaccessible_entities)) {
+      $inaccessible_count = count($inaccessible_entities);
+      $this->messenger()->addWarning($this->formatPlural($inaccessible_count, 'Could not assign farm for @count @item because you do not have the necessary permissions.', 'Could not assign farm for @count @items because you do not have the necessary permissions.', [
+        '@item' => $this->entityType->getSingularLabel(),
+        '@items' => $this->entityType->getPluralLabel(),
+      ]));
+    }
+
+    // Add confirmation message.
+    if (!empty($total_count)) {
+      $this->messenger()->addStatus($this->formatPlural($total_count, 'Assigned farm for @count @item.', 'Assigned farm for @count @items', [
+        '@item' => $this->entityType->getSingularLabel(),
+        '@items' => $this->entityType->getPluralLabel(),
+      ]));
+    }
+
+    $this->tempStore->delete((string) $this->currentUser()->id());
+    $form_state->setRedirectUrl($this->getCancelUrl());
+  }
+
+}
