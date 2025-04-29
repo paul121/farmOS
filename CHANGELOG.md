@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [Add an Organization entity type with a Farm bundle #849](https://github.com/farmOS/farmOS/pull/849)
+
 ### Changed
 
 - farmOS 4.x requires PHP 8.3+.
