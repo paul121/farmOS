@@ -41,3 +41,8 @@ services:
     arguments: [ '@entity_type.manager', '@asset.location' ]
     tags:
       - { name: access_check, applies_to: _location_assets_access }
+  farm_ui_views.organization_assets_access:
+    class: Drupal\farm_ui_views\Access\FarmOrganizationAssetViewsAccessCheck
+    arguments: [ '@entity_type.manager' ]
+    tags:
+      - { name: access_check, applies_to: _organization_assets_access }

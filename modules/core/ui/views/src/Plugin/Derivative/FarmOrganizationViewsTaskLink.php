@@ -53,6 +53,7 @@ class FarmOrganizationViewsTaskLink extends DeriverBase implements ContainerDeri
       return $links;
     }
 
+    // Add primary tab for assets.
     $asset_entity = $this->entityTypeManager->getDefinition('asset');
     $links['assets'] = [
       'title' => $asset_entity->getCollectionLabel(),
@@ -60,6 +61,33 @@ class FarmOrganizationViewsTaskLink extends DeriverBase implements ContainerDeri
       'base_route' => 'entity.organization.canonical',
       'weight' => 50,
     ] + $base_plugin_definition;
+
+    // Build the parent ID from the base ID.
+    $base_id = $base_plugin_definition['id'];
+    $parent_id = "$base_id:assets";
+
+    // Add default "All" secondary tab.
+    $links['all'] = [
+      'title' => $this->t('All'),
+      'parent_id' => $parent_id,
+      'route_name' => 'view.farm_organization_asset.page',
+      'route_parameters' => [
+        'asset_type' => 'all',
+      ],
+    ] + $base_plugin_definition;
+
+    // Add secondary tab for each bundle.
+    $bundles = $this->entityTypeManager->getStorage('asset_type')->loadMultiple();
+    foreach ($bundles as $type => $bundle) {
+      $links[$type] = [
+        'title' => $bundle->label(),
+        'parent_id' => $parent_id,
+        'route_name' => 'view.farm_organization_asset.page_type',
+        'route_parameters' => [
+          'asset_type' => $type,
+        ],
+      ];
+    }
 
     return $links;
   }

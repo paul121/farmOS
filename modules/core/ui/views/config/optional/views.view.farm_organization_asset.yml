@@ -673,6 +673,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -1051,8 +1052,8 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-          handler: views
           widget: select
+          handler: views
           handler_settings:
             view:
               view_name: farm_people
@@ -1207,6 +1208,136 @@ display:
         collapsible_filter:
           collapsible: true
       path: organization/%organization/assets
+      menu:
+        type: none
+        title: Assets
+        description: ''
+        weight: 0
+        expanded: false
+        menu_name: admin
+        parent: farm.records
+        context: '0'
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags: {  }
+  page_type:
+    id: page_type
+    display_title: 'All assets (page)'
+    display_plugin: page
+    position: 1
+    display_options:
+      arguments:
+        farm_target_id:
+          id: farm_target_id
+          table: asset__farm
+          field: farm_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: asset
+          entity_field: farm
+          plugin_id: entity_target_id
+          default_action: 'not found'
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:organization'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              farm: farm
+            access: true
+            operation: view
+            multiple: 0
+          break_phrase: false
+          not: false
+          target_entity_type_id: organization
+        type:
+          id: type
+          table: asset_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: asset
+          entity_field: type
+          plugin_id: string
+          default_action: 'not found'
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:asset_type'
+            fail: 'not found'
+          validate_options:
+            bundles: {  }
+            access: false
+            operation: view
+            multiple: 0
+          glossary: false
+          limit: 0
+          case: none
+          path_case: none
+          transform_dash: false
+          break_phrase: false
+      defaults:
+        arguments: false
+        footer: false
+      display_description: ''
+      footer:
+        result:
+          id: result
+          table: views
+          field: result
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: result
+          empty: false
+          content: 'Displaying @start - @end of @total'
+      display_extenders:
+        collapsible_filter:
+          collapsible: true
+      path: organization/%organization/assets/%asset_type
       menu:
         type: none
         title: Assets
