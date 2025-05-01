@@ -10,13 +10,72 @@ id: farm_worker
 label: 'Worker'
 weight: 1
 is_admin: false
-permissions: { }
+permissions:
+  - revert all asset revisions
+  - revert all log revisions
+  - revert all quantity revisions
 third_party_settings:
   farm_role:
     access:
       config: false
       entity:
         view all: true
-        create all: true
-        update all: true
-        delete all: true
+        type:
+          asset:
+            create:
+              - all
+            update any:
+              - all
+            update own:
+              - all
+            delete any:
+              - all
+            delete own:
+              - all
+          data_stream:
+            create:
+              - all
+            update:
+              - all
+            delete:
+              - all
+          log:
+            create:
+              - all
+            update any:
+              - all
+            update own:
+              - all
+            delete any:
+              - all
+            delete own:
+              - all
+          plan:
+            create:
+              - all
+            update any:
+              - all
+            update own:
+              - all
+            delete any:
+              - all
+            delete own:
+              - all
+          quantity:
+            create:
+              - all
+            update any:
+              - all
+            update own:
+              - all
+            delete any:
+              - all
+            delete own:
+              - all
+          taxonomy_term:
+            create:
+              - all
+            update:
+              - all
+            delete:
+              - all
