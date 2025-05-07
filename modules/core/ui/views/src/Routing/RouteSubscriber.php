@@ -74,6 +74,18 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('view.farm_organization_asset.page_type')) {
       $route->setRequirement('_organization_assets_access', 'Drupal\farm_ui_views\Access\FarmOrganizationAssetViewsAccessCheck::access');
     }
+
+    // Organization logs view routes.
+    // Set default log_type to mark primary tab as active.
+    if ($route = $collection->get('view.farm_organization_log.page')) {
+      $route->setDefault('log_type', 'all');
+    }
+
+    // Add our _organization_logs_access requirement to
+    // view.farm_organization_log.page_type.
+    if ($route = $collection->get('view.farm_organization_log.page_type')) {
+      $route->setRequirement('_organization_logs_access', 'Drupal\farm_ui_views\Access\FarmOrganizationLogViewsAccessCheck::access');
+    }
   }
 
 }

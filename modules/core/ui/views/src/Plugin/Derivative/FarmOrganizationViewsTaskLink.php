@@ -67,7 +67,7 @@ class FarmOrganizationViewsTaskLink extends DeriverBase implements ContainerDeri
     $parent_id = "$base_id:assets";
 
     // Add default "All" secondary tab.
-    $links['all'] = [
+    $links['all_assets'] = [
       'title' => $this->t('All'),
       'parent_id' => $parent_id,
       'route_name' => 'view.farm_organization_asset.page',
@@ -79,12 +79,48 @@ class FarmOrganizationViewsTaskLink extends DeriverBase implements ContainerDeri
     // Add secondary tab for each bundle.
     $bundles = $this->entityTypeManager->getStorage('asset_type')->loadMultiple();
     foreach ($bundles as $type => $bundle) {
-      $links[$type] = [
+      $links["asset_$type"] = [
         'title' => $bundle->label(),
         'parent_id' => $parent_id,
         'route_name' => 'view.farm_organization_asset.page_type',
         'route_parameters' => [
           'asset_type' => $type,
+        ],
+      ];
+    }
+
+    // Add primary tab for logs.
+    $log_entity = $this->entityTypeManager->getDefinition('log');
+    $links['logs'] = [
+      'title' => $log_entity->getCollectionLabel(),
+      'route_name' => 'view.farm_organization_log.page',
+      'base_route' => 'entity.organization.canonical',
+      'weight' => 60,
+    ] + $base_plugin_definition;
+
+    // Build the parent ID from the base ID.
+    $base_id = $base_plugin_definition['id'];
+    $parent_id = "$base_id:logs";
+
+    // Add default "All" secondary tab.
+    $links['all_logs'] = [
+      'title' => $this->t('All'),
+      'parent_id' => $parent_id,
+      'route_name' => 'view.farm_organization_log.page',
+      'route_parameters' => [
+        'log_type' => 'all',
+      ],
+    ] + $base_plugin_definition;
+
+    // Add secondary tab for each bundle.
+    $bundles = $this->entityTypeManager->getStorage('log_type')->loadMultiple();
+    foreach ($bundles as $type => $bundle) {
+      $links["log_$type"] = [
+        'title' => $bundle->label(),
+        'parent_id' => $parent_id,
+        'route_name' => 'view.farm_organization_log.page_type',
+        'route_parameters' => [
+          'log_type' => $type,
         ],
       ];
     }
