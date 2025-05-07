@@ -4,8 +4,7 @@ on:
     - cron: '0 8 * * *' # Run at 8AM UTC.
   push:
     branches:
-      - '4.x'
-      - '4.x-**'
+      - '**'
     tags:
       - '4.*'
   pull_request:
