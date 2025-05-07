@@ -7,6 +7,7 @@ namespace Drupal\Tests\farm_ui_views\Functional;
 use Drupal\Tests\farm_test\Functional\FarmBrowserTestBase;
 use Drupal\asset\Entity\Asset;
 use Drupal\log\Entity\Log;
+use Drupal\organization\Entity\Organization;
 use Drupal\quantity\Entity\Quantity;
 
 /**
@@ -22,6 +23,7 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   protected static $modules = [
     'farm_activity',
     'farm_equipment',
+    'farm_farm',
     'farm_inventory',
     'farm_observation',
     'farm_quantity_standard',
@@ -36,9 +38,13 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   protected function setUp(): void {
     parent::setUp();
 
-    // Create and login a user with permission to view assets, logs, and
-    // quantities.
-    $user = $this->createUser(['view any asset', 'view any log', 'view any quantity']);
+    // Create and login a user with necessary permissions.
+    $user = $this->createUser([
+      'view any asset',
+      'view any log',
+      'view any organization',
+      'view any quantity',
+    ]);
     $this->drupalLogin($user);
 
     // Disable entity_reference_integrity_enforce module's protections, so we
@@ -71,6 +77,12 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
     $this->deleteAllEntities();
 
     $this->doTestAssetLogsView();
+    $this->deleteAllEntities();
+
+    $this->doTestOrganizationAssetViews();
+    $this->deleteAllEntities();
+
+    $this->doTestOrganizationLogViews();
     $this->deleteAllEntities();
   }
 
@@ -394,10 +406,219 @@ class FarmUiViewsTest extends FarmBrowserTestBase {
   }
 
   /**
+   * Test farm_organization_asset View's page and page_type displays.
+   */
+  public function doTestOrganizationAssetViews() {
+
+    // Create a farm organization.
+    $farm = Organization::create([
+      'type' => 'farm',
+      'name' => 'Farm 1',
+    ]);
+    $farm->save();
+    $farm_id = $farm->id();
+
+    // Create an unrelated asset.
+    $unrelated = Asset::create([
+      'name' => 'Unrelated asset',
+      'type' => 'water',
+      'status' => 'active',
+    ]);
+    $unrelated->save();
+
+    // Check that /assets shows "No assets found.".
+    $this->drupalGet("/organization/$farm_id/assets");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('No assets found.');
+
+    // Create assets for the farm organization.
+    $equipment = Asset::create([
+      'name' => 'Equipment asset',
+      'type' => 'equipment',
+      'status' => 'active',
+      'farm' => $farm,
+    ]);
+    $equipment->save();
+    $water = Asset::create([
+      'name' => 'Water asset',
+      'type' => 'water',
+      'status' => 'active',
+      'farm' => $farm,
+    ]);
+    $water->save();
+
+    // Check that only organization assets are visible in /assets.
+    $this->drupalGet("/organization/$farm_id/assets");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($equipment->label());
+    $this->assertSession()->pageTextContains($water->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
+
+    // Check that only water assets are visible in /assets/water.
+    $this->drupalGet("/organization/$farm_id/assets/water");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains($equipment->label());
+    $this->assertSession()->pageTextContains($water->label());
+    $this->assertSession()->pageTextNotContains($unrelated->label());
+
+    // Check that /assets/equipment includes bundle view logic.
+    $this->drupalGet("/organization/$farm_id/assets/equipment");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains('Asset type');
+    $this->assertSession()->pageTextContains('Manufacturer');
+    $this->assertSession()->pageTextContains('Model');
+    $this->assertSession()->pageTextContains('Serial number');
+
+    // Check that invalid organization IDs are handled gracefully by the access
+    // check.
+    $this->drupalGet('/organization/0/assets');
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet('/organization/-1/assets');
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet('/organization/foo/assets');
+    $this->assertSession()->statusCodeEquals(404);
+
+    // Check that an invalid asset_type parameter is handled gracefully by the
+    // access check. /organization/%/assets/0 will be passed on to the Views
+    // contextual filter validation, so it should return a 404.
+    // /organization/%/assets/-1 and /organization/%/assets/foo will be caught
+    // by the access check, but will 403 because no logs will be found
+    // of that type.
+    $this->drupalGet("/organization/$farm_id/assets/0");
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet("/organization/$farm_id/assets/-1");
+    $this->assertSession()->statusCodeEquals(403);
+    $this->drupalGet("/organization/$farm_id/assets/foo");
+    $this->assertSession()->statusCodeEquals(403);
+  }
+
+  /**
+   * Test farm_organization_log View's page and page_type displays.
+   */
+  public function doTestOrganizationLogViews() {
+
+    // Create a farm organization.
+    $farm = Organization::create([
+      'type' => 'farm',
+      'name' => 'Farm 1',
+    ]);
+    $farm->save();
+    $farm_id = $farm->id();
+
+    // Create unrelated asset and log.
+    $unrelated_asset = Asset::create([
+      'name' => 'Unrelated asset',
+      'type' => 'water',
+      'status' => 'active',
+    ]);
+    $unrelated_asset->save();
+    $unrelated_activity = Log::create([
+      'name' => 'Unrelated water activity',
+      'type' => 'activity',
+      'asset' => $unrelated_asset,
+      'location' => $unrelated_asset,
+      'status' => 'done',
+    ]);
+    $unrelated_activity->save();
+
+    // Check that /logs shows "No logs found.".
+    $this->drupalGet("/organization/$farm_id/logs");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains('No logs found.');
+
+    // Create assets for the farm organization.
+    $equipment = Asset::create([
+      'name' => 'Equipment asset',
+      'type' => 'equipment',
+      'status' => 'active',
+      'farm' => $farm,
+    ]);
+    $equipment->save();
+    $water = Asset::create([
+      'name' => 'Water asset',
+      'type' => 'water',
+      'status' => 'active',
+      'farm' => $farm,
+    ]);
+    $water->save();
+
+    // Create logs reference the organization assets.
+    $activity = Log::create([
+      'name' => 'Equipment activity',
+      'type' => 'activity',
+      'location' => $equipment,
+      'status' => 'done',
+    ]);
+    $activity->save();
+    $observation = Log::create([
+      'name' => 'Equipment observation',
+      'type' => 'observation',
+      'asset' => $equipment,
+      'location' => $water,
+      'status' => 'done',
+    ]);
+    $observation->save();
+
+    // Check that only organization logs are visible in /logs.
+    $this->drupalGet("/organization/$farm_id/logs");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($activity->label());
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextContains($equipment->label());
+    $this->assertSession()->pageTextContains($water->label());
+    $this->assertSession()->pageTextNotContains($unrelated_activity->label());
+
+    // Check that only activity logs are visible in /logs/activity.
+    $this->drupalGet("/organization/$farm_id/logs/activity");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains($activity->label());
+    $this->assertSession()->pageTextNotContains($observation->label());
+    $this->assertSession()->pageTextContains($equipment->label());
+    $this->assertSession()->pageTextNotContains($water->label());
+    $this->assertSession()->pageTextNotContains($unrelated_activity->label());
+
+    // Check that only observation logs are visible in /logs/observation.
+    $this->drupalGet("/organization/$farm_id/logs/observation");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains($activity->label());
+    $this->assertSession()->pageTextContains($observation->label());
+    $this->assertSession()->pageTextContains($equipment->label());
+    $this->assertSession()->pageTextContains($water->label());
+    $this->assertSession()->pageTextNotContains($unrelated_activity->label());
+
+    // Check that /logs/activity includes bundle view logic.
+    $this->drupalGet("/organization/$farm_id/logs/activity");
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextNotContains('Log type');
+
+    // Check that invalid organization IDs are handled gracefully by the access
+    // check.
+    $this->drupalGet('/organization/0/logs');
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet('/organization/-1/logs');
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet('/organization/foo/logs');
+    $this->assertSession()->statusCodeEquals(404);
+
+    // Check that an invalid log_type parameter is handled gracefully by the
+    // access check. /organization/%/logs/0 will be passed on to the Views
+    // contextual filter validation, so it should return a 404.
+    // /organization/%/logs/-1 and /organization/%/logs/foo will be caught
+    // by the access check, but will 403 because no logs will be found
+    // of that type.
+    $this->drupalGet("/organization/$farm_id/logs/0");
+    $this->assertSession()->statusCodeEquals(404);
+    $this->drupalGet("/organization/$farm_id/logs/-1");
+    $this->assertSession()->statusCodeEquals(403);
+    $this->drupalGet("/organization/$farm_id/logs/foo");
+    $this->assertSession()->statusCodeEquals(403);
+  }
+
+  /**
    * Delete all entities.
    */
   protected function deleteAllEntities() {
-    foreach (['asset', 'log'] as $type) {
+    foreach (['asset', 'log', 'organization'] as $type) {
       $storage = \Drupal::entityTypeManager()->getStorage($type);
       $storage->delete($storage->loadMultiple());
     }
