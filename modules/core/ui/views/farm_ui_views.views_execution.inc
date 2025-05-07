@@ -23,6 +23,7 @@ function farm_ui_views_views_pre_view(ViewExecutable $view, $display_id, array &
     'farm_log',
     'farm_log_quantity',
     'farm_organization_asset',
+    'farm_organization_log',
     'farm_plan',
   ])) {
     return;

@@ -289,7 +289,7 @@ function farm_ui_views_get_bundle_argument(ViewExecutable $view, string $display
   elseif (in_array($view->id(), ['farm_asset', 'farm_log']) && $display_id == 'page_term' && !empty($args[1]) && $args[1] != 'all') {
     $bundle = $args[1];
   }
-  elseif ($view->id() == 'farm_organization_asset' && $display_id == 'page_type' && !empty($args[1]) && $args[1] != 'all') {
+  elseif (in_array($view->id(), ['farm_organization_asset', 'farm_organization_log']) && $display_id == 'page_type' && !empty($args[1]) && $args[1] != 'all') {
     $bundle = $args[1];
   }
   elseif ($display_id == 'page_type' && !empty($args[0])) {
