@@ -38,6 +38,17 @@ function farm_ui_views_views_data_alter(array &$data) {
     ];
   }
 
+  // Provide an organization_asset argument for views of logs.
+  if (isset($data['log_field_data'])) {
+    $data['log_field_data']['organization_asset'] = [
+      'title' => t('Organization asset'),
+      'help' => t('Assets that are a part of the organization.'),
+      'argument' => [
+        'id' => 'organization_asset',
+      ],
+    ];
+  }
+
   // Provide an asset_taxonomy_term_reference argument for views of assets.
   if (isset($data['asset_field_data'])) {
     $data['asset_field_data']['asset_taxonomy_term_reference'] = [
