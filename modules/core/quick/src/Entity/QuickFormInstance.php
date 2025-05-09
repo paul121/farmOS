@@ -153,21 +153,21 @@ class QuickFormInstance extends ConfigEntityBase implements QuickFormInstanceInt
    * {@inheritdoc}
    */
   public function getLabel() {
-    return $this->label;
+    return (string) $this->label;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDescription() {
-    return $this->description;
+    return (string) $this->description;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getHelpText() {
-    return $this->helpText;
+    return (string) $this->helpText;
   }
 
   /**
