@@ -14,8 +14,8 @@ use Drupal\farm_quick\Plugin\Action\QuickFormActionBase;
 #[Action(
   id: 'quick_movement',
   label: new TranslatableMarkup('Record movement'),
-  type: 'asset',
   confirm_form_route_name: 'farm.quick.movement',
+  type: 'asset',
 )]
 class Movement extends QuickFormActionBase {
 

@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[Action(
   id: 'log_categorize_action',
   action_label: new TranslatableMarkup('Categorize log'),
-  type: 'log',
   confirm_form_route_name: 'farm_log_category.log_categorize_action_form',
+  type: 'log',
 )]
 class LogCategorize extends EntityActionBase {
 

@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[Action(
   id: 'asset_add_log_action',
   label: new TranslatableMarkup('Add a log referencing assets.'),
-  type: 'asset',
   confirm_form_route_name: 'farm_log.asset_add_log_action_form',
+  type: 'asset',
 )]
 class AssetAddLog extends EntityActionBase {
 

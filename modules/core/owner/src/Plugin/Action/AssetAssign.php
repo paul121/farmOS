@@ -13,8 +13,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[Action(
   id: 'asset_assign_action',
   label: new TranslatableMarkup('Assign assets to users.'),
-  type: 'asset',
   confirm_form_route_name: 'farm_owner.asset_assign_action_form',
+  type: 'asset',
 )]
 class AssetAssign extends AssignBase {
 

@@ -18,8 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 #[Action(
   id: 'asset_parent_action',
   label: new TranslatableMarkup('Assign asset parent.'),
-  type: 'asset',
   confirm_form_route_name: 'farm_parent.asset_parent_action_form',
+  type: 'asset',
 )]
 class AssetParent extends EntityActionBase {
 

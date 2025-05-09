@@ -13,8 +13,8 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 #[Action(
   id: 'log_assign_action',
   label: new TranslatableMarkup('Assign logs to users.'),
-  type: 'log',
   confirm_form_route_name: 'farm_owner.log_assign_action_form',
+  type: 'log',
 )]
 class LogAssign extends AssignBase {
 
