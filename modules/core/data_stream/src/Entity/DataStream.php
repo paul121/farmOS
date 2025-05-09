@@ -54,7 +54,6 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
  *     "langcode" = "langcode",
  *   },
  *   bundle_entity_type = "data_stream_type",
- *   bundle_plugin_type = "data_stream_type",
  *   field_ui_base_route = "entity.data_stream_type.edit_form",
  *   common_reference_target = TRUE,
  *   permission_granularity = "bundle",
