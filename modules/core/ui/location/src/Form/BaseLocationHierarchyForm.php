@@ -6,6 +6,7 @@ namespace Drupal\farm_ui_location\Form;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -183,28 +184,14 @@ abstract class BaseLocationHierarchyForm extends FormBase {
    */
   protected function getLocations(?AssetInterface $asset = NULL) {
 
-    // Query unarchived location assets.
-    $storage = $this->entityTypeManager->getStorage('asset');
-    $query = $storage->getQuery()
-      ->accessCheck(TRUE)
-      ->condition('is_location', TRUE)
-      ->condition('status', 'archived', '!=');
-
-    // Limit to a specific parent or no parent.
-    if ($asset) {
-      $query->condition('parent', $asset->id());
-    }
-    else {
-      $query->condition('parent', NULL, 'IS NULL');
-    }
-
-    // Query and load the assets.
-    $asset_ids = $query->execute();
+    // Query and load location assets.
+    $asset_ids = $this->getLocationQuery($asset)->execute();
     if (empty($asset_ids)) {
       return [];
     }
     /** @var \Drupal\asset\Entity\AssetInterface[] $assets */
-    $assets = $storage->loadMultiple($asset_ids);
+    $assets = $this->entityTypeManager->getStorage('asset')
+      ->loadMultiple($asset_ids);
 
     // Filter out assets that the user cannot view.
     $assets = array_filter($assets, function ($asset) {
@@ -217,6 +204,32 @@ abstract class BaseLocationHierarchyForm extends FormBase {
     });
 
     return $assets;
+  }
+
+  /**
+   * Helper function to build a query for location assets.
+   *
+   * @param \Drupal\asset\Entity\AssetInterface|null $parent
+   *   Optional parent asset.
+   *
+   * @return \Drupal\Core\Entity\Query\QueryInterface
+   *   The entity query.
+   */
+  protected function getLocationQuery(?AssetInterface $parent = NULL): QueryInterface {
+
+    // Query unarchived location assets.
+    $query = $this->entityTypeManager->getStorage('asset')
+      ->getQuery()
+      ->accessCheck(TRUE)
+      ->condition('is_location', TRUE)
+      ->condition('status', 'archived', '!=');
+    if ($parent) {
+      $query->condition('parent', $parent->id());
+    }
+    else {
+      $query->condition('parent', NULL, 'IS NULL');
+    }
+    return $query;
   }
 
   /**
