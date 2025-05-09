@@ -64,6 +64,15 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get clean
 
+# Update SQLite4 to 3.45.1 for Drupal 11.
+# @todo Remove when the drupal:11.x Docker image is based on Debian 13.
+ARG TARGETARCH
+RUN SQLITE_VERSION=3.45.1 \
+  && if [ "${TARGETARCH}" = "arm" ]; then SQLITE_ARCH="armhf"; else SQLITE_ARCH="${TARGETARCH}"; fi \
+  && curl -Lo /tmp/libsqlite3-0.deb "https://snapshot.debian.org/archive/debian/20240506T211830Z/pool/main/s/sqlite3/libsqlite3-0_${SQLITE_VERSION}-1_${SQLITE_ARCH}.deb" \
+  && dpkg -i /tmp/libsqlite3-0.deb \
+  && rm /tmp/libsqlite3-0.deb
+
 # Set the COMPOSER_MEMORY_LIMIT environment variable to unlimited.
 ENV COMPOSER_MEMORY_LIMIT=-1
 
