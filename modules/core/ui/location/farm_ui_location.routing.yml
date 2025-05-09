@@ -1,19 +1,19 @@
 farm.locations:
   path: '/locations'
   defaults:
-    _title_callback: '\Drupal\farm_ui_location\Form\LocationHierarchyForm::getTitle'
-    _form: '\Drupal\farm_ui_location\Form\LocationHierarchyForm'
+    _title: 'Locations'
+    _form: \Drupal\farm_ui_location\Form\LocationHierarchyForm
   requirements:
     _permission: 'access locations overview'
 
 farm.asset.locations:
   path: '/asset/{asset}/locations'
   defaults:
-    _title_callback: '\Drupal\farm_ui_location\Form\LocationHierarchyForm::getTitle'
-    _form: '\Drupal\farm_ui_location\Form\LocationHierarchyForm'
+    _title_callback: \Drupal\farm_ui_location\Form\ParentLocationHierarchyForm::getTitle
+    _form: \Drupal\farm_ui_location\Form\ParentLocationHierarchyForm
   requirements:
-    _custom_access: '\Drupal\farm_ui_location\Form\LocationHierarchyForm::access'
-    _module_dependencies: 'asset'
+    _custom_access: \Drupal\farm_ui_location\Form\ParentLocationHierarchyForm::access
+    _module_dependencies: asset
     asset: \d+
   options:
     parameters:
