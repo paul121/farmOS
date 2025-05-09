@@ -3,3 +3,8 @@ farm.asset.locations:
   title: 'Locations'
   base_route: entity.asset.canonical
   weight: 100
+farm.organization.locations:
+  route_name: farm.organization.locations
+  title: 'Locations'
+  base_route: entity.organization.canonical
+  weight: 100

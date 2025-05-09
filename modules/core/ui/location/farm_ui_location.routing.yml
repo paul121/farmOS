@@ -19,3 +19,18 @@ farm.asset.locations:
     parameters:
       asset:
         type: entity:asset
+
+farm.organization.locations:
+  path: '/organization/{organization}/locations'
+  defaults:
+    _title_callback: Drupal\farm_ui_location\Form\OrganizationLocationHierarchyForm::getTitle
+    _form: Drupal\farm_ui_location\Form\OrganizationLocationHierarchyForm
+  requirements:
+    _entity_access: organization.view
+    _module_dependencies: farm_farm
+  options:
+    parameters:
+      organization:
+        type: entity:organization
+        bundle:
+          - farm
