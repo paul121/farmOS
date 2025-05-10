@@ -20,6 +20,19 @@ function farm_ui_map_views_pre_view(ViewExecutable $view, $display_id, array &$a
   // exposed filters that are present in the farm_asset View.
   if ($view->id() == 'farm_asset_geojson' && in_array($display_id, ['full', 'centroid'])) {
 
+    // Get the entity field manager service.
+    /** @var \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager */
+    $entity_field_manager = \Drupal::service('entity_field.manager');
+
+    // Add filter handlers for base fields provided by other modules.
+    $base_fields = \Drupal::moduleHandler()->invokeAll('farm_ui_views_base_fields', [$view->getBaseEntityType()->id()]);
+    foreach ($entity_field_manager->getBaseFieldDefinitions($view->getBaseEntityType()->id()) as $field_definition) {
+      if (!in_array($field_definition->getName(), $base_fields)) {
+        continue;
+      }
+      farm_ui_views_add_handlers($view, $display_id, 'filter', $field_definition);
+    }
+
     // Load the farm_asset View. Bail if unavailable.
     $farm_asset_view = View::load('farm_asset');
     if (empty($farm_asset_view)) {
