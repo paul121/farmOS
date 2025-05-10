@@ -97,10 +97,11 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
         'is_location' => 1,
       ];
 
-      // Add layer for all asset types are locations by default.
+      // Add separate layers for all asset types that are locations by default.
+      $other_location_asset_types = [];
       foreach ($this->assetTypes as $type) {
 
-        // Only add a layer if the asset type is a location by default.
+        // Add a dedicated layer if the asset type is a location by default.
         if ($type->getThirdPartySetting('farm_location', 'is_location', FALSE)) {
 
           // Load the map layer style.
@@ -119,6 +120,21 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
             'zoom' => TRUE,
           ];
         }
+        // Else save the asset type for the "Other locations" layer.
+        else {
+          $other_location_asset_types[] = $type->id();
+        }
+      }
+
+      // Add a layer of location assets of other asset types.
+      if (count($other_location_asset_types)) {
+        $layers['other_locations'] = [
+          'group' => $group,
+          'label' => $this->t('Other locations'),
+          'filters' => $filters + ['type' => $other_location_asset_types],
+          'color' => 'orange',
+          'zoom' => TRUE,
+        ];
       }
 
       // Add the asset_type_layers behavior.
