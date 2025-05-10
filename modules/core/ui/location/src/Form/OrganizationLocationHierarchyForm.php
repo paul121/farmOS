@@ -76,6 +76,15 @@ class OrganizationLocationHierarchyForm extends BaseLocationHierarchyForm {
       return $form;
     }
 
+    // Show a map of organization locations.
+    $form['map'] = [
+      '#type' => 'farm_map',
+      '#map_type' => 'locations',
+      '#location_filters' => [
+        'farm_target_id' => $organization->label(),
+      ],
+    ];
+
     // Build location form.
     return parent::buildLocationForm(
       $form,
