@@ -6,7 +6,7 @@ namespace Drupal\farm_field\Plugin\Validation\Constraint;
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Validation\Attribute\Constraint;
-use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 /**
  * Checks that a URI is valid.
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\Url;
   id: 'Uri',
   label: new TranslatableMarkup('Valid URI', ['context' => 'Validation']),
 )]
-class Uri extends Url {
+class Uri extends SymfonyConstraint {
 
   /**
    * The default violation message.
