@@ -136,6 +136,7 @@ RUN cp -p ${BUILD_PATH}/web/core/phpunit.xml.dist ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|bootstrap="tests/bootstrap.php"|bootstrap="web/core/tests/bootstrap.php"|g' ${BUILD_PATH}/phpunit.xml \
   && sed -i '/failOnWarning="true"/a \         failOnIncomplete="true"' ${BUILD_PATH}/phpunit.xml \
   && sed -i '/failOnWarning="true"/a \         failOnSkipped="true"' ${BUILD_PATH}/phpunit.xml \
+  && sed -i '/displayDetailsOnTestsThatTriggerDeprecations="true"/a \         displayDetailsOnSkippedTests="true"' ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|name="SIMPLETEST_BASE_URL" value=""|name="SIMPLETEST_BASE_URL" value="http://www"|g' ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|name="SIMPLETEST_DB" value=""|name="SIMPLETEST_DB" value="pgsql://farm:farm@db/farm"|g' ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|value="sites/simpletest/browser_output"|value="web/sites/simpletest/browser_output"|g' ${BUILD_PATH}/phpunit.xml \
