@@ -66,6 +66,9 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
     // land type.
     if (in_array('locations', $event->getMapBehaviors())) {
       $layers = [];
+      $filters = [
+        'is_location' => 1,
+      ];
 
       // Define the parent group.
       $group = $this->t('Locations');
@@ -95,7 +98,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
           'group' => $this->landAssetType->label(),
           'label' => $land_type->label(),
           'asset_type' => 'land',
-          'filters' => ['land_type_value[]' => $land_type->id()],
+          'filters' => $filters + ['land_type_value[]' => $land_type->id()],
           'color' => $color ?? 'orange',
           'zoom' => TRUE,
         ];

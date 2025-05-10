@@ -66,6 +66,9 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
     // structure type.
     if (in_array('locations', $event->getMapBehaviors())) {
       $layers = [];
+      $filters = [
+        'is_location' => 1,
+      ];
 
       // Define the parent group.
       $group = $this->t('Locations');
@@ -95,7 +98,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
           'group' => $this->structureAssetType->label(),
           'label' => $structure_type->label(),
           'asset_type' => 'structure',
-          'filters' => ['structure_type_value[]' => $structure_type->id()],
+          'filters' => $filters + ['structure_type_value[]' => $structure_type->id()],
           'color' => $color ?? 'orange',
           'zoom' => TRUE,
         ];
