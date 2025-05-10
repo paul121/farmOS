@@ -37,7 +37,6 @@ class ManagedRolePermissionsTest extends KernelTestBase {
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('log');
-    $this->installSchema('system', ['sequences']);
     $this->installConfig(['farm_role', 'farm_role_test', 'log']);
   }
 

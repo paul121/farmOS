@@ -35,7 +35,6 @@ class LogOwnerTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->installSchema('system', 'sequences');
     $this->installEntitySchema('log');
     $this->installEntitySchema('user');
     $this->installConfig(['farm_owner_test']);
