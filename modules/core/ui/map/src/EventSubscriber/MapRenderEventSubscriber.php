@@ -95,7 +95,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
       $group = $this->t('Locations');
       $filters = [
         'is_location' => 1,
-      ];
+      ] + ($event->element['#location_filters'] ?? []);
 
       // Add separate layers for all asset types that are locations by default.
       $other_location_asset_types = [];

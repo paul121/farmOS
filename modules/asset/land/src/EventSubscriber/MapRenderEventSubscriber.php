@@ -68,7 +68,7 @@ class MapRenderEventSubscriber implements EventSubscriberInterface {
       $layers = [];
       $filters = [
         'is_location' => 1,
-      ];
+      ] + ($event->element['#location_filters'] ?? []);
 
       // Define the parent group.
       $group = $this->t('Locations');
