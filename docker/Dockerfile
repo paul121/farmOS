@@ -144,7 +144,7 @@ RUN cp -p ${BUILD_PATH}/web/core/phpunit.xml.dist ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|\./|\./web/core/|g' ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|\.\./web/core/|\./web/|g' ${BUILD_PATH}/phpunit.xml \
   && sed -i 's|  </php>|    <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>'"\n"'  </php>|g' ${BUILD_PATH}/phpunit.xml \
-  && sed -i '\|<exclude>|a\      <directory>./web/profiles/**/tests/modules</directory>' ${BUILD_PATH}/phpunit.xml \
+  && sed -i '\|<exclude>|a\      <directory>/opt/drupal/web/profiles/**/tests/modules</directory>' ${BUILD_PATH}/phpunit.xml \
   && mkdir -p ${BUILD_PATH}/web/sites/simpletest/browser_output
 
 # Change back to the root user.
